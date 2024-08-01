@@ -27,11 +27,11 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              '소담',
-              textAlign: TextAlign.center,
+              "소담",
               style: TextStyle(
-                fontSize: 80,
-                color: Pallete.sodamBrown,
+                color: Pallete.sodamBeige,
+                fontSize: 95,
+                fontWeight: FontWeight.w400,
                 fontFamily: "Gugi",
               ),
             ),
@@ -43,7 +43,8 @@ class LoginScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 30,
-                color: Colors.black,
+                color: Pallete.sodamDarkPink,
+                fontFamily: "IBMPlexSansKRBold",
               ),
             ),
             const SizedBox(
