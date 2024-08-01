@@ -17,3 +17,24 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: Gugi
+      fonts:
+      - asset: assets\fonts\Gugi-Regular.ttf
+      
+    - family: PoorStory
+      fonts:
+      - asset: assets\fonts\PoorStory-Regular.ttf
+
+    - family: IBMPlexSansBold
+      fonts:
+      - asset: assets\fonts\IBMPlexSans-Bold.ttf
+
+    - family: IBMPlexSansRegular
+      fonts:
+      - asset: assets\fonts\IBMPlexSans-Regular.ttf
+
+    - family: IBMPlexSansSemiBold
+      fonts:
+      - asset: assets\fonts\IBMPlexSans-SemiBold.ttf
