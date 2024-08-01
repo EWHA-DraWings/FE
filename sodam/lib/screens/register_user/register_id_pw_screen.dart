@@ -18,6 +18,7 @@ class UserRegisterIdPwScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w800,
+            fontFamily: "PoorStory",
           ),
         ),
       ),
@@ -29,8 +30,9 @@ class UserRegisterIdPwScreen extends StatelessWidget {
               '사용할 아이디와\n비밀번호를\n입력해주세요.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 45,
+                fontSize: 40,
                 fontWeight: FontWeight.normal,
+                fontFamily: "IBMPlexSansKRRegular",
               ),
             ),
             const SizedBox(
@@ -44,6 +46,7 @@ class UserRegisterIdPwScreen extends StatelessWidget {
                   labelText: '아이디',
                   labelStyle: TextStyle(
                     fontSize: 30,
+                    fontFamily: "PoorStory",
                   ),
                   border: OutlineInputBorder(),
                 ),
@@ -60,6 +63,7 @@ class UserRegisterIdPwScreen extends StatelessWidget {
                   labelText: '비밀번호',
                   labelStyle: TextStyle(
                     fontSize: 30,
+                    fontFamily: "PoorStory",
                   ),
                   border: OutlineInputBorder(),
                 ),
@@ -76,6 +80,7 @@ class UserRegisterIdPwScreen extends StatelessWidget {
                   labelText: '비밀번호 확인',
                   labelStyle: TextStyle(
                     fontSize: 30,
+                    fontFamily: "PoorStory",
                   ),
                   border: OutlineInputBorder(),
                 ),
@@ -108,6 +113,7 @@ class UserRegisterIdPwScreen extends StatelessWidget {
                     fontSize: 30,
                     fontWeight: FontWeight.normal,
                     color: Colors.black,
+                    fontFamily: "PoorStory",
                   ),
                 ),
               ),

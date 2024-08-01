@@ -21,20 +21,17 @@ flutter:
   fonts:
     - family: Gugi
       fonts:
-      - asset: assets\fonts\Gugi-Regular.ttf
-      
+        - asset: lib/assets/fonts/Gugi-Regular.ttf  
     - family: PoorStory
       fonts:
-      - asset: assets\fonts\PoorStory-Regular.ttf
-
-    - family: IBMPlexSansBold
+        - asset: lib/assets/fonts/PoorStory-Regular.ttf
+    - family: IBMPlexSansKRBold
       fonts:
-      - asset: assets\fonts\IBMPlexSans-Bold.ttf
-
-    - family: IBMPlexSansRegular
+        - asset: lib/assets/fonts/IBMPlexSansKR-Bold.ttf
+    - family: IBMPlexSansKRRegular
       fonts:
-      - asset: assets\fonts\IBMPlexSans-Regular.ttf
-
-    - family: IBMPlexSansSemiBold
+        - asset: lib/assets/fonts/IBMPlexSansKR-Regular.ttf
+    - family: IBMPlexSansKRLight
       fonts:
-      - asset: assets\fonts\IBMPlexSans-SemiBold.ttf
+        - asset: lib/assets/fonts/IBMPlexSansKR-Light.ttf
+
