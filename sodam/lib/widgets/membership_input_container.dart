@@ -23,23 +23,21 @@ class MembershipInputContainer extends StatelessWidget {
         color: Pallete.sodamBeige.withOpacity(0.5),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50),
-        child: TextField(
-          textAlign: TextAlign.center,
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: hintText,
-            hintStyle: TextStyle(
-              fontSize: 20,
-              fontFamily: 'IBMPlexSansKRRegular',
-              color: Colors.grey[600],
-            ),
-          ),
-          style: const TextStyle(
-            fontSize: 20,
+      child: TextField(
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: hintText,
+          hintStyle: TextStyle(
+            fontSize: 25,
             fontFamily: 'IBMPlexSansKRRegular',
+            color: Colors.grey[600],
           ),
+          contentPadding: EdgeInsets.only(top: height / 5),
+        ),
+        style: const TextStyle(
+          fontSize: 20,
+          fontFamily: 'IBMPlexSansKRRegular',
         ),
       ),
     );
