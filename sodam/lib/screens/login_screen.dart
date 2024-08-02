@@ -18,6 +18,7 @@ class LoginScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w800,
+            fontFamily: "PoorStory",
           ),
         ),
       ),
@@ -29,9 +30,9 @@ class LoginScreen extends StatelessWidget {
               '소담',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 60,
-                fontWeight: FontWeight.w900,
+                fontSize: 80,
                 color: Pallete.sodamBrown,
+                fontFamily: "Gugi",
               ),
             ),
             const SizedBox(
