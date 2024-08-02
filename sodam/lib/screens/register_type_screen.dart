@@ -28,6 +28,7 @@ class RegisterTypeScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w800,
+                fontFamily: "PoorStory",
               ),
             ),
           ],
@@ -42,7 +43,7 @@ class RegisterTypeScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 45,
-                fontWeight: FontWeight.normal,
+                fontFamily: "IBMPlexSansKRRegular",
               ),
             ),
             const SizedBox(
@@ -73,6 +74,7 @@ class RegisterTypeScreen extends StatelessWidget {
                     fontSize: 40,
                     fontWeight: FontWeight.normal,
                     color: Colors.black,
+                    fontFamily: "PoorStory",
                   ),
                 ),
               ),
@@ -105,6 +107,7 @@ class RegisterTypeScreen extends StatelessWidget {
                     fontSize: 40,
                     fontWeight: FontWeight.normal,
                     color: Colors.black,
+                    fontFamily: "PoorStory",
                   ),
                 ),
               ),
@@ -134,8 +137,8 @@ class RegisterTypeScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
-                    fontWeight: FontWeight.normal,
                     color: Colors.white,
+                    fontFamily: "IBMPlexSansKRRegular",
                   ),
                 ),
               ),
