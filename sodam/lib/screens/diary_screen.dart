@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
+import 'package:sodam/widgets/diary_button_widget.dart';
 
 class DiaryScreen extends StatelessWidget {
   const DiaryScreen({super.key});
@@ -20,9 +21,9 @@ class DiaryScreen extends StatelessWidget {
           ),
         ),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(4.0), // 선의 높이
+          preferredSize: const Size.fromHeight(6.5), // 선의 높이
           child: Container(
-            color: Pallete.sodamBeige, // 선의 색상
+            color: Pallete.sodamBeige,
             height: 3, // 선의 두께
           ),
         ),
@@ -37,7 +38,8 @@ class DiaryScreen extends StatelessWidget {
               width: 330,
               height: 70,
               decoration: BoxDecoration(
-                color: Pallete.sodamBeige,
+                color:
+                    const Color.fromARGB(255, 203, 242, 255).withOpacity(0.8),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Center(
@@ -83,62 +85,26 @@ class DiaryScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 DiaryButtonWidget(
+                  //나중에 onpressed 구현시 수정 필요
                   text: "<",
-                  backgroundColor: Color.fromARGB(255, 205, 205, 205),
+                  backgroundColor: Pallete.sodamBeige.withOpacity(0.8),
                 ),
                 DiaryButtonWidget(
                   text: "듣기",
-                  backgroundColor: Pallete.sodamBeige,
+                  backgroundColor:
+                      const Color.fromARGB(255, 203, 242, 255).withOpacity(0.8),
                 ),
                 DiaryButtonWidget(
                   text: ">",
-                  backgroundColor: Color.fromARGB(255, 205, 205, 205),
+                  backgroundColor: Pallete.sodamBeige.withOpacity(0.8),
                 ),
               ],
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class DiaryButtonWidget extends StatelessWidget {
-  final String text;
-  final Color backgroundColor;
-
-  const DiaryButtonWidget({
-    super.key,
-    required this.text,
-    required this.backgroundColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 100,
-      height: 50,
-      child: ElevatedButton(
-        onPressed: () {
-          // 버튼 1의 동작
-        },
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor, // 버튼 배경색
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12), // 버튼의 모서리 둥글기
-          ),
-        ),
-        child: Text(
-          text,
-          style: const TextStyle(
-            fontSize: 20,
-            fontFamily: "IBMPlexSansKRBold",
-            color: Colors.black, // 텍스트 색상
-          ),
         ),
       ),
     );
