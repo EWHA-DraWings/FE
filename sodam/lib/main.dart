@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sodam/screens/diary_screen.dart';
 import 'package:sodam/screens/main_screen.dart';
 import 'package:sodam/screens/register_type_screen.dart';
 
@@ -12,9 +13,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: MainScreen(
-        isGuardian: true,
-      ),
+      home: DiaryScreen(),
     );
   }
 }
