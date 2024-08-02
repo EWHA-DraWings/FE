@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/register_elderly/membership_idpw_screen.dart';
+import 'package:sodam/screens/Guardian_membership/membership_idpw_screen.dart';
 import 'package:sodam/widgets/main_page_button.dart';
 
 //GuardianMainScreen(isGuardian : true); 면 보호자 화면 랜더링, false면 사용자 화면 랜더링.
