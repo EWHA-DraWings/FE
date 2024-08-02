@@ -16,6 +16,7 @@ class UserRegisterPhoneScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w800,
+            fontFamily: "PoorStory",
           ),
         ),
       ),
@@ -27,8 +28,9 @@ class UserRegisterPhoneScreen extends StatelessWidget {
               '보호자의 연락처를\n입력해주세요.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 45,
+                fontSize: 43,
                 fontWeight: FontWeight.normal,
+                fontFamily: "IBMPlexSansKRRegular",
               ),
             ),
             const SizedBox(
@@ -40,6 +42,7 @@ class UserRegisterPhoneScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.normal,
+                fontFamily: "IBMPlexSansKRRegular",
               ),
             ),
             const Padding(
@@ -53,6 +56,7 @@ class UserRegisterPhoneScreen extends StatelessWidget {
                   labelText: '010-xxxx-xxxx',
                   labelStyle: TextStyle(
                     fontSize: 30,
+                    fontFamily: "IBMPlexSansKRRegular",
                   ),
                   border: OutlineInputBorder(),
                 ),
@@ -73,6 +77,7 @@ class UserRegisterPhoneScreen extends StatelessWidget {
                   fontSize: 30,
                   fontWeight: FontWeight.normal,
                   color: Colors.black,
+                  fontFamily: "PoorStory",
                 ),
               ),
             ),
