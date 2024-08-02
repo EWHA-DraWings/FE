@@ -18,6 +18,7 @@ class UserRegisterNameScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w800,
+            fontFamily: "PoorStory",
           ),
         ),
       ),
@@ -31,6 +32,7 @@ class UserRegisterNameScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 45,
                 fontWeight: FontWeight.normal,
+                fontFamily: "IBMPlexSansKRRegular",
               ),
             ),
             const SizedBox(
@@ -44,6 +46,7 @@ class UserRegisterNameScreen extends StatelessWidget {
                   labelText: '이름',
                   labelStyle: TextStyle(
                     fontSize: 30,
+                    fontFamily: "PoorStory",
                   ),
                   border: OutlineInputBorder(),
                 ),
@@ -73,6 +76,7 @@ class UserRegisterNameScreen extends StatelessWidget {
                     fontSize: 30,
                     fontWeight: FontWeight.normal,
                     color: Colors.black,
+                    fontFamily: "PoorStory",
                   ),
                 ),
               ),
