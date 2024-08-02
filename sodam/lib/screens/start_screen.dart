@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sodam/pallete.dart';
+import 'package:sodam/screens/Guardian_membership/membership_screen.dart';
 import 'package:sodam/screens/login_screen.dart';
 import 'package:sodam/screens/register_type_screen.dart';
 import 'package:sodam/screens/report/report_calendar_screen.dart';
@@ -95,8 +96,8 @@ class StartScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        const RegisterTypeScreen(), //회원 가입 화면으로 전환
+                    builder: (context) => const MembershipScreen(),
+                    //const RegisterTypeScreen(), //회원 가입 화면(YE ver)으로 전환
                   ),
                 );
               },

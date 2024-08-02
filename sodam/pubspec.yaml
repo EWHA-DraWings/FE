@@ -21,6 +21,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  assets:
+    - lib/assets/images/
+
   fonts:
     - family: Gugi
       fonts:
@@ -37,4 +40,9 @@ flutter:
     - family: IBMPlexSansKRLight
       fonts:
         - asset: lib/assets/fonts/IBMPlexSansKR-Light.ttf
+    - family: DoHyeon
+      fonts:
+        - asset: lib/assets/fonts/Dohyeon-Regular.ttf
+
+
 
