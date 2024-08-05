@@ -7,4 +7,5 @@ class Pallete {
   static const sodamLightBrown = Color(0xff5E3E00);
   static const sodamPink = Color(0xff803262);
   static const sodamDarkPink = Color(0xff67455A);
+  static const sodamGray = Color.fromARGB(217, 219, 219, 219);
 }
