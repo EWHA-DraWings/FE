@@ -2,6 +2,9 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
+import 'package:sodam/screens/main_screen.dart';
+import 'package:sodam/widgets/membership_input_container.dart';
+import 'package:sodam/widgets/membership_next_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -22,11 +25,11 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               "소담",
               style: TextStyle(
                 color: Pallete.sodamBeige,
@@ -35,10 +38,10 @@ class LoginScreen extends StatelessWidget {
                 fontFamily: "Gugi",
               ),
             ),
-            const SizedBox(
+            SizedBox(
               height: 5,
             ),
-            const Text(
+            Text(
               '로그인',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -47,10 +50,10 @@ class LoginScreen extends StatelessWidget {
                 fontFamily: "IBMPlexSansKRBold",
               ),
             ),
-            const SizedBox(
+            SizedBox(
               height: 50,
             ),
-            const Padding(
+            Padding(
               //id
               padding: EdgeInsets.all(20),
               child: Row(
@@ -68,24 +71,12 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  SizedBox(
-                    width: 220,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Pallete.sodamBeige,
-                        labelText: '아이디',
-                        labelStyle: TextStyle(
-                          fontSize: 30,
-                        ),
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
+                  MembershipInputContainer(
+                      width: 220, height: 60, hintText: ""),
                 ],
               ),
             ),
-            const Padding(
+            Padding(
               //password
               padding: EdgeInsets.all(20),
               child: Row(
@@ -103,41 +94,18 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  SizedBox(
-                    width: 220,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Pallete.sodamBeige,
-                        labelText: '비밀번호',
-                        labelStyle: TextStyle(
-                          fontSize: 30,
-                        ),
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
+                  MembershipInputContainer(
+                      width: 220, height: 60, hintText: ""),
                 ],
               ),
             ),
-            const SizedBox(
+            SizedBox(
               height: 30,
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Pallete.sodamBeige.withOpacity(0.5),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: const Text(
-                '로그인',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black,
-                ),
-              ),
-            ),
+            MembershipNextButton(
+                destination: MainScreen(
+              isGuardian: true,
+            )), //여기 바꿔줘야 됨
           ],
         ),
       ),
