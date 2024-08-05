@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
+import 'package:sodam/screens/self_diagnosis/guardian_totalscore_screen.dart';
 
 class GuardianDiagnosisScreen extends StatefulWidget {
   const GuardianDiagnosisScreen({super.key});
@@ -27,8 +28,8 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
     "혼자 대중교통 수단을 이용하여 목적지에 가기 힘들다.(신체적인 문제로 인한 것은 제외)",
     "내복이나 옷이 더러워져도 갈아입지 않으려고 한다."
   ];
-  final List<String?> _selectedOptions = List<String?>.filled(16, null);
-  final List<int> _scores = List<int>.filled(16, 0);
+  final List<String?> _selectedOptions = List<String?>.filled(15, null);
+  final List<int> _scores = List<int>.filled(15, 0);
 
   void _onButtonPressed(int index, String value) {
     setState(() {
@@ -64,120 +65,147 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
           ),
         ),
       ),
-      body: Center(
-        child: ListView.builder(
-          itemCount: 15,
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                SizedBox(
-                  width: 340,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Q${index + 1}",
-                      style: const TextStyle(
-                        fontFamily: "IBMPlexSansKRBold",
-                        fontSize: 30,
-                        color: Pallete.sodamBeige,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 340,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Pallete.sodamBeige,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 25,
-                      horizontal: 20,
-                    ),
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      _questions[index],
-                      style: const TextStyle(
-                        fontFamily: "IBMPlexSansKRBold",
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 100),
-                      width: _selectedOptions[index] == '예' ? 100 : 90,
-                      height: 45,
-                      child: ElevatedButton(
-                        onPressed: () => _onButtonPressed(index, '예'),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(90, 45),
-                          backgroundColor: _selectedOptions[index] == '예'
-                              ? const Color.fromARGB(255, 56, 81, 56)
-                              : Pallete.sodamGray,
-                          foregroundColor: _selectedOptions[index] == '예'
-                              ? const Color.fromARGB(255, 255, 255, 255)
-                              : Colors.black,
-                        ),
-                        child: const Text(
-                          '예',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: "Poorstory",
+      body: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: ListView.builder(
+                itemCount: 15,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      SizedBox(
+                        width: 340,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Q${index + 1}",
+                            style: const TextStyle(
+                              fontFamily: "IBMPlexSansKRBold",
+                              fontSize: 30,
+                              color: Pallete.sodamBeige,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 100),
-                      width: _selectedOptions[index] == '아니오' ? 110 : 100,
-                      height: 45,
-                      child: ElevatedButton(
-                        onPressed: () => _onButtonPressed(index, '아니오'),
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(100, 45),
-                          backgroundColor: _selectedOptions[index] == '아니오'
-                              ? const Color.fromARGB(255, 56, 81, 56)
-                              : Pallete.sodamGray,
-                          foregroundColor: _selectedOptions[index] == '아니오'
-                              ? const Color.fromARGB(255, 255, 255, 255)
-                              : Colors.black,
+                      Container(
+                        width: 340,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Pallete.sodamBeige,
                         ),
-                        child: const Text(
-                          '아니오',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: "Poorstory",
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 25,
+                            horizontal: 20,
+                          ),
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            _questions[index],
+                            style: const TextStyle(
+                              fontFamily: "IBMPlexSansKRBold",
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 100),
+                            width: _selectedOptions[index] == '예' ? 100 : 90,
+                            height: 45,
+                            child: ElevatedButton(
+                              onPressed: () => _onButtonPressed(index, '예'),
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(90, 45),
+                                backgroundColor: _selectedOptions[index] == '예'
+                                    ? const Color.fromARGB(255, 56, 81, 56)
+                                    : Pallete.sodamGray,
+                                foregroundColor: _selectedOptions[index] == '예'
+                                    ? const Color.fromARGB(255, 255, 255, 255)
+                                    : Colors.black,
+                              ),
+                              child: const Text(
+                                '예',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: "Poorstory",
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 100),
+                            width: _selectedOptions[index] == '아니오' ? 110 : 100,
+                            height: 45,
+                            child: ElevatedButton(
+                              onPressed: () => _onButtonPressed(index, '아니오'),
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(100, 45),
+                                backgroundColor:
+                                    _selectedOptions[index] == '아니오'
+                                        ? const Color.fromARGB(255, 56, 81, 56)
+                                        : Pallete.sodamGray,
+                                foregroundColor: _selectedOptions[index] ==
+                                        '아니오'
+                                    ? const Color.fromARGB(255, 255, 255, 255)
+                                    : Colors.black,
+                              ),
+                              child: const Text(
+                                '아니오',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: "Poorstory",
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 40),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: _allOptionsSelected()
+                ? ElevatedButton(
+                    onPressed: () {
+                      final totalScore = _calculateTotalScore();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              GuardianTotalscoreScreen(score: totalScore),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                      backgroundColor: const Color.fromARGB(255, 206, 138, 178),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 40),
-              ],
-            );
-          },
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          _allOptionsSelected()
-              ? "총 점수: ${_calculateTotalScore()}"
-              : "모든 질문에 답변해 주세요",
-          style: const TextStyle(fontSize: 18),
-        ),
+                    child: const Text(
+                      '제출하기',
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
+                  )
+                : const Text(
+                    "모든 질문에 답변해 주세요",
+                    style: TextStyle(fontSize: 18),
+                  ),
+          ),
+        ],
       ),
     );
   }
