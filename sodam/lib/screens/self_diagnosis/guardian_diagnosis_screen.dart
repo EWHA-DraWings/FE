@@ -75,36 +75,44 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
                   return Column(
                     children: [
                       SizedBox(
-                        width: 340,
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Q${index + 1}",
-                            style: const TextStyle(
-                              fontFamily: "IBMPlexSansKRBold",
-                              fontSize: 30,
-                              color: Pallete.sodamBeige,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 30),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Q${index + 1}",
+                              style: const TextStyle(
+                                fontFamily: "IBMPlexSansKRBold",
+                                fontSize: 30,
+                                color: Pallete.sodamBeige,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      Container(
-                        width: 340,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Pallete.sodamBeige,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 25,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 25,
-                            horizontal: 20,
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Pallete.sodamBeige,
                           ),
-                          child: Text(
-                            textAlign: TextAlign.center,
-                            _questions[index],
-                            style: const TextStyle(
-                              fontFamily: "IBMPlexSansKRBold",
-                              fontSize: 20,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 25,
+                              horizontal: 20,
+                            ),
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              _questions[index],
+                              style: const TextStyle(
+                                fontFamily: "IBMPlexSansKRBold",
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                         ),
@@ -124,7 +132,7 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(90, 45),
                                 backgroundColor: _selectedOptions[index] == '예'
-                                    ? const Color.fromARGB(255, 56, 81, 56)
+                                    ? Pallete.sodamDarkGreen
                                     : Pallete.sodamGray,
                                 foregroundColor: _selectedOptions[index] == '예'
                                     ? const Color.fromARGB(255, 255, 255, 255)
@@ -152,7 +160,7 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
                                 minimumSize: const Size(100, 45),
                                 backgroundColor:
                                     _selectedOptions[index] == '아니오'
-                                        ? const Color.fromARGB(255, 56, 81, 56)
+                                        ? Pallete.sodamDarkGreen
                                         : Pallete.sodamGray,
                                 foregroundColor: _selectedOptions[index] ==
                                         '아니오'
@@ -197,12 +205,25 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
                     ),
                     child: const Text(
                       '제출하기',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
                     ),
                   )
-                : const Text(
-                    "모든 질문에 답변해 주세요",
-                    style: TextStyle(fontSize: 18),
+                : ElevatedButton(
+                    onPressed: null,
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                      backgroundColor: Colors.grey,
+                    ),
+                    child: const Text(
+                      "모든 질문에 답변해 주세요",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Color.fromARGB(255, 220, 220, 220),
+                      ),
+                    ),
                   ),
           ),
         ],
