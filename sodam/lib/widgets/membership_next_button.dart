@@ -2,21 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
 
 class MembershipNextButton extends StatelessWidget {
-  final Widget destination; //destination : 넘어갈 다음 화면
+  final VoidCallback onPressed;
 
   const MembershipNextButton({
     super.key,
-    required this.destination,
+    required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => destination), // 다음 화면
-        );
+        onPressed();
       },
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.black,
