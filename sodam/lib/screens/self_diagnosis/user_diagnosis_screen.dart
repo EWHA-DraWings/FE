@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_totalscore_screen.dart';
+import 'package:sodam/screens/self_diagnosis/user_totalscore_screen.dart';
 
 class UserDiagnosisScreen extends StatefulWidget {
   const UserDiagnosisScreen({super.key});
@@ -72,7 +73,7 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
               vertical: 20,
             ),
             child: Text(
-              '글자를 누르면 소리 내어 읽어드려요!',
+              '아래의 질문들은 누구나 가끔씩 겪을 수 있는 \n소소한 기억 문제에 관한 것들이에요. \n이러한 일들을 얼마나 자주 경험하시나요?',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: "IBMPlexSansKRBold",
@@ -288,7 +289,7 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              GuardianTotalscoreScreen(score: totalScore),
+                              UserTotalscoreScreen(score: totalScore),
                         ),
                       );
                     },
