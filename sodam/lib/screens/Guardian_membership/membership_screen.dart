@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sodam/models/elderly_data.dart';
 import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/Guardian_membership/membership_name_screen.dart';
+import 'package:sodam/screens/register_user/register_name_screen.dart';
 
 class MembershipScreen extends StatefulWidget {
   const MembershipScreen({super.key});
@@ -11,7 +13,8 @@ class MembershipScreen extends StatefulWidget {
 }
 
 class _MembershipScreenState extends State<MembershipScreen> {
-  void _navigateToNextScreen(String role) {
+  
+  void _guardianNextScreen(String role) {
     // GuardianData 객체를 생성합니다.
     final guardianData = GuardianData(role: role);
 
@@ -19,6 +22,18 @@ class _MembershipScreenState extends State<MembershipScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => MembershipNameScreen(data: guardianData),
+      ),
+    );
+  }
+
+  void _elderlyNextScreen(String role) {
+    // ElderlyData 객체를 생성합니다.
+    final elderlyData = ElderlyData(role: role);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MembershipNameElderlyScreen(data: elderlyData),
       ),
     );
   }
@@ -56,7 +71,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    _navigateToNextScreen(
+                    _elderlyNextScreen(
                         "elderly"); // Set role to "elderly" and navigate
                   },
                   child: Container(
@@ -84,7 +99,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
-                    _navigateToNextScreen(
+                    _guardianNextScreen(
                         "guardian"); // Set role to "guardian" and navigate
                   },
                   child: Container(
