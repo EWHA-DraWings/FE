@@ -1,4 +1,5 @@
 class GuardianData {
+  //guardian info
   String? id;
   String? name;
   String? password;
@@ -7,11 +8,13 @@ class GuardianData {
   String? address;
   String? birth;
   String? job;
-  String? residenceArea;
-  //String? existingConditions;
+  //elderly info
+  String? existingConditions;
+  String? elderlyName;
   String? elderlyPhone;
   String? elderlyAddress;
-  //String? role; // 추가된 필드
+  String? elderlyBirthday;
+  String? role;
 
   GuardianData({
     this.id,
@@ -22,11 +25,12 @@ class GuardianData {
     this.address,
     this.birth,
     this.job,
-    this.residenceArea,
-    //this.existingConditions,
+    this.existingConditions,
+    this.elderlyName,
     this.elderlyPhone,
+    this.elderlyBirthday,
     this.elderlyAddress,
-    //this.role,
+    this.role,
   });
 
   GuardianData copyWith({
@@ -38,11 +42,12 @@ class GuardianData {
     String? address,
     String? birth,
     String? job,
-    String? residenceArea,
-    //String? existingConditions,
+    String? existingConditions,
+    String? elderlyName,
     String? elderlyPhone,
     String? elderlyAddress,
-    //String? role,
+    String? elderlyBirthday,
+    String? role,
   }) {
     return GuardianData(
       id: id ?? this.id,
@@ -53,11 +58,12 @@ class GuardianData {
       address: address ?? this.address,
       birth: birth ?? this.birth,
       job: job ?? this.job,
-      residenceArea: residenceArea ?? this.residenceArea,
-      //existingConditions: existingConditions ?? this.existingConditions,
+      existingConditions: existingConditions ?? this.existingConditions,
+      elderlyName: elderlyName ?? this.elderlyName,
       elderlyPhone: elderlyPhone ?? this.elderlyPhone,
       elderlyAddress: elderlyAddress ?? this.elderlyAddress,
-      //role: role ?? this.role,
+      elderlyBirthday: elderlyBirthday ?? this.elderlyBirthday,
+      role: role ?? this.role,
     );
   }
 }

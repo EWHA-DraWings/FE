@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
+import 'package:sodam/screens/Guardian_membership/membership_elderly_extraInfo_screen.dart';
 import 'package:sodam/screens/login_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
+import 'package:sodam/widgets/membership_next_button.dart';
 import 'dart:convert'; //JSON 변환을 위해 필요
 import 'package:intl/intl.dart'; // Date Format 사용시 사용하는 패키지
 
@@ -24,7 +26,7 @@ class _MemebershipExtrainfoScreenState
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _jobController = TextEditingController();
-  final _residenceController = TextEditingController();
+  final _addressController = TextEditingController();
 
   //생년월일
   DateTime? tempPickedDate;
@@ -40,21 +42,21 @@ class _MemebershipExtrainfoScreenState
       final phoneNumber = _phoneController.text;
       final email = _emailController.text;
       final job = _jobController.text;
-      final residenceArea = _residenceController.text;
+      final address = _addressController.text;
 
-      final updatedGuardianData2 = widget.data.copyWith(
+      final extraGuardianData = widget.data.copyWith(
         birth: birthday,
         phone: phoneNumber,
         email: email,
         job: job,
-        residenceArea: residenceArea,
+        address: address,
       );
 
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => LoginScreen(
-            data: updatedGuardianData2, //
+          builder: (context) => MemebershipElderlyExtraInfoScreen(
+            data: extraGuardianData, //
           ),
         ),
       );
@@ -208,7 +210,7 @@ class _MemebershipExtrainfoScreenState
               const SizedBox(height: 10),
               const Text(
                 textAlign: TextAlign.center,
-                "사용자님의 정보를 입력해주세요.",
+                "보호자님의 정보를 입력해주세요.",
                 style: TextStyle(
                   fontSize: 15,
                   fontFamily: 'IBMPlexSansKRRegular',
@@ -280,7 +282,7 @@ class _MemebershipExtrainfoScreenState
                       width: 300,
                       height: 50,
                       hintText: "거주 지역",
-                      controller: _residenceController,
+                      controller: _addressController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return '거주 지역을 입력해주세요.';
@@ -292,21 +294,8 @@ class _MemebershipExtrainfoScreenState
                       height: 30,
                     ),
                     //제출 버튼
-                    ElevatedButton(
+                    MembershipNextButton(
                       onPressed: _onNextButtonPressed,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Pallete.sodamDarkPink, // 버튼 색상
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 50, vertical: 15),
-                      ),
-                      child: const Text(
-                        "제출하기",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'IBMPlexSansKRRegular',
-                          color: Colors.white,
-                        ),
-                      ),
                     ),
                   ],
                 ),
