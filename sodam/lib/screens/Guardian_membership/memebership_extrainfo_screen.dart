@@ -1,10 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/Guardian_membership/membership_screen.dart';
 import 'package:sodam/screens/login_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
-import 'package:sodam/widgets/membership_next_button.dart';
+import 'dart:convert'; //JSON 변환을 위해 필요
+import 'package:intl/intl.dart'; // Date Format 사용시 사용하는 패키지
 
 class MemebershipExtrainfoScreen extends StatefulWidget {
   final GuardianData data;
@@ -27,11 +29,12 @@ class _MemebershipExtrainfoScreenState
   //생년월일
   DateTime? tempPickedDate;
   DateTime _selectedDate = DateTime.now();
-   
+
   //form
   final _formKey = GlobalKey<FormState>();
 
-  void _onNextButtonPressed() {
+  void _onNextButtonPressed() async {
+    //async여야 함?
     if (_formKey.currentState!.validate()) {
       final birthday = _birthdayController.text;
       final phoneNumber = _phoneController.text;
@@ -56,6 +59,111 @@ class _MemebershipExtrainfoScreenState
         ),
       );
     }
+  }
+
+  //생년월일 위젯
+  Widget birthdayText() {
+    return Container(
+      width: 300,
+      height: 50,
+      decoration: BoxDecoration(
+        color: Pallete.sodamBeige.withOpacity(0.5), // 배경색
+        borderRadius: BorderRadius.circular(10), // borderRadius
+      ),
+      child: GestureDetector(
+        onTap: () {
+          HapticFeedback.mediumImpact();
+          _selectDate();
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              enabled: false,
+              decoration: const InputDecoration(
+                hintText: '생년월일을 선택해주세요',
+                hintStyle: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey,
+                ),
+                border: InputBorder.none,
+              ),
+              controller: _birthdayController,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 20),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _selectDate() async {
+    DateTime? pickedDate = await showModalBottomSheet<DateTime>(
+      backgroundColor: ThemeData.light().scaffoldBackgroundColor,
+      context: context,
+      builder: (context) {
+        // DateTime tempPickedDate;
+        return SizedBox(
+          height: 300,
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  CupertinoButton(
+                    child: const Text('취소'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      FocusScope.of(context).unfocus();
+                    },
+                  ),
+                  CupertinoButton(
+                    child: const Text('완료'),
+                    onPressed: () {
+                      Navigator.of(context).pop(tempPickedDate);
+                      FocusScope.of(context).unfocus();
+                    },
+                  ),
+                ],
+              ),
+              const Divider(
+                height: 0,
+                thickness: 1,
+              ),
+              Expanded(
+                child: CupertinoDatePicker(
+                  backgroundColor: ThemeData.light().scaffoldBackgroundColor,
+                  minimumYear: 1900,
+                  maximumYear: DateTime.now().year,
+                  initialDateTime: DateTime.now(),
+                  maximumDate: DateTime.now(),
+                  mode: CupertinoDatePickerMode.date,
+                  onDateTimeChanged: (DateTime dateTime) {
+                    tempPickedDate = dateTime;
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    if (pickedDate != null && pickedDate != _selectedDate) {
+      setState(() {
+        _selectedDate = pickedDate;
+        _birthdayController.text = pickedDate.toString();
+        convertDateTimeDisplay(_birthdayController.text);
+      });
+    }
+  }
+
+  String convertDateTimeDisplay(String date) {
+    final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
+    final DateFormat serverFormater = DateFormat('yyyy-MM-dd');
+    final DateTime displayDate = displayFormater.parse(date);
+    return _birthdayController.text = serverFormater.format(displayDate);
   }
 
   @override
@@ -115,19 +223,8 @@ class _MemebershipExtrainfoScreenState
                     const SizedBox(
                       height: 10,
                     ),
-                    MembershipInputContainer(
-                      width: 300,
-                      height: 50,
-                      hintText: "생년월일",
-                      controller: _birthdayController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '생년월일을 입력해주세요.';
-                        }
-                        // 여기에 생년월일 형식 검증 로직 추가 가능
-                        return null;
-                      },
-                    ),
+                    //생년월일.
+                    birthdayText(),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
                       width: 300,
