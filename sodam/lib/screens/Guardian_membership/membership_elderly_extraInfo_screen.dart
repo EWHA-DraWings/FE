@@ -359,7 +359,7 @@ class _MemebershipElderlyExtraInfoScreenstate
                             horizontal: 50, vertical: 15),
                       ),
                       child: const Text(
-                        "제출하기",
+                        "가입하기",
                         style: TextStyle(
                           fontSize: 16,
                           fontFamily: 'IBMPlexSansKRRegular',
