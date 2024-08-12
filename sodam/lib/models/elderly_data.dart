@@ -4,7 +4,7 @@ class ElderlyData {
   String? password;
   String? birth;
   int? guardianId;
-  //String? role;
+  String? role;
 
   ElderlyData({
     required this.id,
@@ -12,6 +12,6 @@ class ElderlyData {
     required this.password,
     required this.birth,
     required this.guardianId,
-    //required this.role,
+    required this.role,
   });
 }

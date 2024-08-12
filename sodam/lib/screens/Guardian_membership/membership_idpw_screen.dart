@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/Guardian_membership/memebership_extrainfo_screen.dart';
+import 'package:sodam/screens/Guardian_membership/membership_guardian_extraInfo_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
 import 'package:sodam/widgets/membership_next_button.dart';
 
@@ -26,7 +26,7 @@ class _MembershipIdpwScreenState extends State<MembershipIdpwScreen> {
       final password = _passwordController.text;
 
       // 객체에 id,pw도 추가
-      final updatedGuardianData = widget.data.copyWith(
+      final updatedGuardianData2 = widget.data.copyWith(
         id: id,
         password: password,
       );
@@ -36,7 +36,7 @@ class _MembershipIdpwScreenState extends State<MembershipIdpwScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => MemebershipExtrainfoScreen(
-            data: updatedGuardianData, // 업데이트된 GuardianData 객체
+            data: updatedGuardianData2, // 업데이트된 GuardianData 객체
           ),
         ),
       );

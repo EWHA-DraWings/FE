@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/Guardian_membership/membership_name_screen.dart';
 
@@ -10,6 +11,18 @@ class MembershipScreen extends StatefulWidget {
 }
 
 class _MembershipScreenState extends State<MembershipScreen> {
+  void _navigateToNextScreen(String role) {
+    // GuardianData 객체를 생성합니다.
+    final guardianData = GuardianData(role: role);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MembershipNameScreen(data: guardianData),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,13 +56,8 @@ class _MembershipScreenState extends State<MembershipScreen> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const MembershipNameScreen(), // 사용자 화면 => 나중에 다르게 랜더링 해야될듯?
-                      ),
-                    );
+                    _navigateToNextScreen(
+                        "elderly"); // Set role to "elderly" and navigate
                   },
                   child: Container(
                     width: 300,
@@ -76,13 +84,8 @@ class _MembershipScreenState extends State<MembershipScreen> {
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const MembershipNameScreen(), // 보호자 화면
-                      ),
-                    );
+                    _navigateToNextScreen(
+                        "guardian"); // Set role to "guardian" and navigate
                   },
                   child: Container(
                     width: 300,
