@@ -36,7 +36,7 @@ class _MembershipIdpwScreenState extends State<MembershipIdpwScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => MemebershipExtrainfoScreen(
-              data: updatedGuardianData, // 업데이트된 GuardianData 객체
+            data: updatedGuardianData, // 업데이트된 GuardianData 객체
           ),
         ),
       );
@@ -66,7 +66,7 @@ class _MembershipIdpwScreenState extends State<MembershipIdpwScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "${widget.data.name}님, 사용할 아이디와\n비밀번호를\n입력해주세요.", // 빼도 됨
+                "${widget.data.name}님,\n사용할 아이디와\n비밀번호를\n입력해주세요.", // 빼도 됨
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 40,
