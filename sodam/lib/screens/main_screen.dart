@@ -99,7 +99,9 @@ class MainScreen extends StatelessWidget {
     return Stack(
       children: [
         MainPageButton(
-          destination: const MembershipIdpwScreen(),
+          destination: const MainScreen(
+            isGuardian: true,
+          ), //나중에 수정 필요
           text: text,
           iconPath: iconPath,
           enabled: !isDisabled, // 버튼 비활성화 여부

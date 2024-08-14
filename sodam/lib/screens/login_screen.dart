@@ -1,8 +1,10 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/main_screen.dart';
+import 'package:sodam/widgets/login_input_container.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
 import 'package:sodam/widgets/membership_next_button.dart';
 
@@ -71,8 +73,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  MembershipInputContainer(
-                      width: 220, height: 60, hintText: ""),
+                  LoginInputContainer(width: 220, height: 60, hintText: ""),
                 ],
               ),
             ),
@@ -94,18 +95,17 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  MembershipInputContainer(
-                      width: 220, height: 60, hintText: ""),
+                  LoginInputContainer(width: 220, height: 60, hintText: ""),
                 ],
               ),
             ),
             SizedBox(
               height: 30,
             ),
-            MembershipNextButton(
-                destination: MainScreen(
-              isGuardian: true,
-            )), //여기 바꿔줘야 됨
+            // MembershipNextButton(//로그인 하기 버튼 새로 구현 필요.
+            //     destination: MainScreen(
+            //   isGuardian: true,
+            // )), //여기 바꿔줘야 됨
           ],
         ),
       ),

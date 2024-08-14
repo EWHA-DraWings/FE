@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:sodam/screens/Guardian_membership/membership_screen.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
 import 'package:sodam/screens/start_screen.dart';
@@ -24,7 +25,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: UserDiagnosisScreen(),
+      home: StartScreen(),
     );
   }
 }
