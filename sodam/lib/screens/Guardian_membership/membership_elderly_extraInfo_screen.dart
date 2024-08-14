@@ -8,23 +8,23 @@ import 'package:sodam/widgets/membership_input_container.dart';
 import 'dart:convert'; //JSON 변환을 위해 필요
 import 'package:intl/intl.dart'; // Date Format 사용시 사용하는 패키지
 
-class MemebershipExtrainfoScreen extends StatefulWidget {
+class MemebershipElderlyExtraInfoScreen extends StatefulWidget {
   final GuardianData data;
-  const MemebershipExtrainfoScreen({super.key, required this.data});
+  const MemebershipElderlyExtraInfoScreen({super.key, required this.data});
 
   @override
-  State<MemebershipExtrainfoScreen> createState() =>
-      _MemebershipExtrainfoScreenState();
+  State<MemebershipElderlyExtraInfoScreen> createState() =>
+      _MemebershipElderlyExtraInfoScreenstate();
 }
 
-class _MemebershipExtrainfoScreenState
-    extends State<MemebershipExtrainfoScreen> {
+class _MemebershipElderlyExtraInfoScreenstate
+    extends State<MemebershipElderlyExtraInfoScreen> {
   //textField controller
-  final _birthdayController = TextEditingController();
+  final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _jobController = TextEditingController();
-  final _residenceController = TextEditingController();
+  final _birthdayController = TextEditingController();
+  final _addressController = TextEditingController();
+  final _conditionController = TextEditingController();
 
   //생년월일
   DateTime? tempPickedDate;
@@ -33,29 +33,91 @@ class _MemebershipExtrainfoScreenState
   //form
   final _formKey = GlobalKey<FormState>();
 
-  void _onNextButtonPressed() async {
+  void _onSubmitButtonPressed() async {
     //async여야 함?
     if (_formKey.currentState!.validate()) {
-      final birthday = _birthdayController.text;
-      final phoneNumber = _phoneController.text;
-      final email = _emailController.text;
-      final job = _jobController.text;
-      final residenceArea = _residenceController.text;
+      final elderlyName = _nameController.text;
+      final elderlyPhone = _phoneController.text;
+      final elderlyBirthday = _birthdayController.text;
+      final elderlyAddress = _addressController.text;
+      final existingConditions = _conditionController.text;
 
-      final updatedGuardianData2 = widget.data.copyWith(
-        birth: birthday,
-        phone: phoneNumber,
-        email: email,
-        job: job,
-        residenceArea: residenceArea,
+      final totalGuardianData = widget.data.copyWith(
+        existingConditions: existingConditions,
+        elderlyName: elderlyName,
+        elderlyPhone: elderlyPhone,
+        elderlyBirthday: elderlyBirthday,
+        elderlyAddress: elderlyAddress,
       );
 
+      //잘 전달 되었는지 콘솔에 출력해봄.잘 된다!
+      print('Collected Guardian Data:');
+      print('Name: ${totalGuardianData.name}');
+      print('Role: ${totalGuardianData.role}');
+      print('ID: ${totalGuardianData.id}');
+      print('Password: ${totalGuardianData.password}');
+      print('Birth: ${totalGuardianData.birth}');
+      print('Phone: ${totalGuardianData.phone}');
+      print('Email: ${totalGuardianData.email}');
+      print('Job: ${totalGuardianData.job}');
+      print('role: ${totalGuardianData.role}');
+      print('elderlyName: ${totalGuardianData.elderlyName}');
+      print('elderlyPhone: ${totalGuardianData.elderlyPhone}');
+      print('elderlyAddress: ${totalGuardianData.elderlyAddress}');
+      print('elderlyBirthday: ${totalGuardianData.elderlyBirthday}');
+      print('existingConditions: ${totalGuardianData.existingConditions}');
+
+      //백엔드에 전송할 데이터를 Map으로 생성
+      final Map<String, dynamic> requestBody = {
+        //guardian info
+        "id": totalGuardianData.id,
+        "name": totalGuardianData.name,
+        "password": totalGuardianData.password,
+        "email": totalGuardianData.email,
+        "phone": totalGuardianData.phone,
+        "address": totalGuardianData.address,
+        "birth": totalGuardianData.birth,
+        "job": totalGuardianData.job,
+        "role": totalGuardianData.role,
+        //elderly info
+        "elderlyName": totalGuardianData.elderlyName,
+        "elderlyPhone": totalGuardianData.elderlyPhone,
+        "elderlyAddress": totalGuardianData.elderlyAddress,
+        "elderlyBirthday": totalGuardianData.elderlyBirthday,
+        "existingConditions": totalGuardianData.existingConditions,
+      };
+      //서버 연동 전, json 형태로 잘 전달되는지 출력
+      String jsonString = jsonEncode(requestBody);
+      print('Request Body in JSON format: $jsonString');
+      // 백엔드로 HTTP POST 요청 보내기
+      // final url = Uri.parse(
+      //     'https://your-backend-url.com/api/register'); // 실제 API 엔드포인트로 변경 필요
+      // final response = await http.post(
+      //   url,
+      //   headers: {'Content-Type': 'application/json'},
+      //   body: jsonEncode(requestBody),
+      // );
+
+      // // 서버 응답 결과에 따라서 처리
+      // if (response.statusCode == 200) {
+      //   // 서버로부터의 성공 응답 처리
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => const LoginScreen(), // 회원가입 후 로그인 화면으로 이동
+      //     ),
+      //   );
+      // } else {
+      //   // 서버로부터의 실패 응답 처리
+      //   print('Failed to register: ${response.body}');
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //     const SnackBar(content: Text('회원가입에 실패했습니다. 다시 시도해주세요.')),
+      //   );
+      // }
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => LoginScreen(
-            data: updatedGuardianData2, //
-          ),
+          builder: (context) => const LoginScreen(), // 회원가입 후 로그인 화면으로 이동
         ),
       );
     }
@@ -208,7 +270,7 @@ class _MemebershipExtrainfoScreenState
               const SizedBox(height: 10),
               const Text(
                 textAlign: TextAlign.center,
-                "사용자님의 정보를 입력해주세요.",
+                "보호자님과 연동할 사용자님의 정보를 입력해주세요.",
                 style: TextStyle(
                   fontSize: 15,
                   fontFamily: 'IBMPlexSansKRRegular',
@@ -223,8 +285,18 @@ class _MemebershipExtrainfoScreenState
                     const SizedBox(
                       height: 10,
                     ),
-                    //생년월일.
-                    birthdayText(),
+                    MembershipInputContainer(
+                      width: 300,
+                      height: 50,
+                      hintText: "이름",
+                      controller: _nameController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '이름을 입력해주세요.';
+                        }
+                        return null;
+                      },
+                    ),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
                       width: 300,
@@ -245,42 +317,14 @@ class _MemebershipExtrainfoScreenState
                       },
                     ),
                     const SizedBox(height: 20),
-                    MembershipInputContainer(
-                      width: 300,
-                      height: 50,
-                      hintText: "이메일",
-                      controller: _emailController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '이메일을 입력해주세요.';
-                        }
-                        if (!RegExp(
-                                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-                            .hasMatch(value)) {
-                          return '유효한 이메일 주소를 입력해주세요.';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    MembershipInputContainer(
-                      width: 300,
-                      height: 50,
-                      hintText: "직업",
-                      controller: _jobController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return '직업을 입력해주세요.';
-                        }
-                        return null;
-                      },
-                    ),
+                    //생년월일.
+                    birthdayText(),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
                       width: 300,
                       height: 50,
                       hintText: "거주 지역",
-                      controller: _residenceController,
+                      controller: _addressController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return '거주 지역을 입력해주세요.';
@@ -288,19 +332,33 @@ class _MemebershipExtrainfoScreenState
                         return null;
                       },
                     ),
+                    const SizedBox(height: 20),
+                    MembershipInputContainer(
+                      width: 300,
+                      height: 50,
+                      hintText: "현재 가지고 있는 질환/질병, 건강상태",
+                      controller: _conditionController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return '건강상태를 입력해주세요. 없는 경우 "없음"이라고 기입해주세요.';
+                        }
+                        return null;
+                      },
+                    ),
                     const SizedBox(
                       height: 30,
                     ),
+
                     //제출 버튼
                     ElevatedButton(
-                      onPressed: _onNextButtonPressed,
+                      onPressed: _onSubmitButtonPressed,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Pallete.sodamDarkPink, // 버튼 색상
                         padding: const EdgeInsets.symmetric(
                             horizontal: 50, vertical: 15),
                       ),
                       child: const Text(
-                        "제출하기",
+                        "가입하기",
                         style: TextStyle(
                           fontSize: 16,
                           fontFamily: 'IBMPlexSansKRRegular',
