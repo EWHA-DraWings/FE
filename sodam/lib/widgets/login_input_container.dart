@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
 
-class MembershipInputContainer extends StatelessWidget {
+class LoginInputContainer extends StatelessWidget {
   //이 위젯은 너비, 높이와 hintText를 지정할 수 있는 입력 컨테이너.
   final double width;
   final double height;
   final String hintText;
-  final TextEditingController controller;
-  final bool obscureText;
-  final String? Function(String?)? validator;
 
-  const MembershipInputContainer({
+  const LoginInputContainer({
     super.key,
     required this.width,
     required this.height,
     required this.hintText,
-    required this.controller,
-    this.obscureText = false, //false로 초기화
-    this.validator,
   });
 
   @override
@@ -29,11 +23,7 @@ class MembershipInputContainer extends StatelessWidget {
         color: Pallete.sodamBeige.withOpacity(0.5),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: TextFormField(
-        //TextField => TextFormField 로 유효성 검사가 용이하게 바꿈.
-        controller: controller,
-        obscureText: obscureText,
-        validator: validator,
+      child: TextField(
         textAlign: TextAlign.center,
         decoration: InputDecoration(
           border: InputBorder.none,
