@@ -9,8 +9,7 @@ import 'package:sodam/widgets/membership_input_container.dart';
 import 'package:sodam/widgets/membership_next_button.dart';
 
 class LoginScreen extends StatelessWidget {
-  final GuardianData data; //잠시 추가
-  const LoginScreen({super.key, required this.data});
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

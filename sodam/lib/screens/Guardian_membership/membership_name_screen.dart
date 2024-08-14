@@ -6,7 +6,8 @@ import 'package:sodam/widgets/membership_input_container.dart';
 import 'package:sodam/widgets/membership_next_button.dart';
 
 class MembershipNameScreen extends StatefulWidget {
-  const MembershipNameScreen({super.key});
+  final GuardianData data;
+  const MembershipNameScreen({super.key, required this.data});
 
   @override
   State<MembershipNameScreen> createState() => _MembershipNameScreenState();
@@ -21,14 +22,16 @@ class _MembershipNameScreenState extends State<MembershipNameScreen> {
     if (_formKey.currentState!.validate()) {
       // 폼이 유효할 경우, 입력된 이름을 가져옴.
       final name = _nameController.text;
-      // GuardianData 객체를 생성합니다.
-      final guardianData = GuardianData(name: name);
+
+      final updatedguardianData = widget.data.copyWith(
+        name: name,
+      );
       // 다음 화면으로 이동하며, 현재 화면의 데이터를 전달합니다.
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => MembershipIdpwScreen(
-            data: guardianData, //생성한 guardianData 객체를 전달.
+            data: updatedguardianData, //생성한 guardianData 객체를 전달.
           ),
         ),
       );
