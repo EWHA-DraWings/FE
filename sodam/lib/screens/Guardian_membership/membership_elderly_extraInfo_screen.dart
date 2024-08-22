@@ -7,6 +7,7 @@ import 'package:sodam/screens/login_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
 import 'dart:convert'; //JSON 변환을 위해 필요
 import 'package:intl/intl.dart'; // Date Format 사용시 사용하는 패키지
+import 'package:http/http.dart' as http; // http 패키지 추가
 
 class MemebershipElderlyExtraInfoScreen extends StatefulWidget {
   final GuardianData data;

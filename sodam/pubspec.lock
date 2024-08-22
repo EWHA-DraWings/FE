@@ -5,10 +5,10 @@ packages:
     dependency: transitive
     description:
       name: ansicolor
-      sha256: "8bf17a8ff6ea17499e40a2d2542c2f481cd7615760c6d34065cb22bfd22e6880"
+      sha256: "50e982d500bc863e1d703448afdbf9e5a72eb48840a4f766fa361ffd6877055f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   archive:
     dependency: transitive
     description:
@@ -106,10 +106,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_native_splash
-      sha256: aa06fec78de2190f3db4319dd60fdc8d12b2626e93ef9828633928c2dcaea840
+      sha256: edf39bcf4d74aca1eb2c1e43c3e445fd9f494013df7f0da752fefe72020eedc0
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.1"
+    version: "2.4.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -332,19 +332,15 @@ packages:
       sha256: b3d56ff4341b8f182b96aceb2fa20e3dcb336b9f867bc0eafc0de10f1048e957
       url: "https://pub.dev"
     source: hosted
-//SY
-    version: "14.2.1"
+    version: "13.0.0"
   web:
     dependency: transitive
     description:
       name: web
-      sha256: d43c1d6b787bf0afad444700ae7f4db8827f701bc61c255ac8d328c6f4d52062
+      sha256: "97da13628db363c635202ad97068d47c5b8aa555808e7a9411963c533b449b27"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
-
-//    version: "13.0.0"
-//>>>>>>> main
+    version: "0.5.1"
   xml:
     dependency: transitive
     description:
@@ -362,10 +358,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-//SY
-  dart: ">=3.4.0 <4.0.0"
-  flutter: ">=3.18.0-18.0.pre.54"
-
-//  dart: ">=3.3.4 <4.0.0"
-//  flutter: ">=2.5.0"
-//>>>>>>> main
+  dart: ">=3.3.4 <4.0.0"
+  flutter: ">=2.5.0"
