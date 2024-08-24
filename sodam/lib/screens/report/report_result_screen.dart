@@ -1,9 +1,17 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/pallete.dart';
 
 class ReportResultScreen extends StatelessWidget {
-  const ReportResultScreen({super.key});
+  final List<EmotionData> emotions = [
+    EmotionData(emotion: '당황', percentage: 40.0),
+    EmotionData(emotion: '불안', percentage: 30.0),
+    EmotionData(emotion: '행복', percentage: 20.0),
+  ]; //top3 감정 리스트
+
+  ReportResultScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +129,7 @@ class ReportResultScreen extends StatelessWidget {
                     ),
                   ),
                   alignment: Alignment.center,
-                  child: const Center(
+                  child: Center(
                     child: /*ConditionWidget(
                       user: '홍길동',
                       conditionStatus: '저녁을 드시고 소화가 안 되어\n소화제를 드셨대요.',
@@ -129,6 +137,7 @@ class ReportResultScreen extends StatelessWidget {
                         EmoAnalysisWidget(
                       user: '홍길동',
                       mainEmo: '당황',
+                      emotions: emotions,
                     ),
                   ),
                 ),
@@ -144,11 +153,13 @@ class ReportResultScreen extends StatelessWidget {
 class EmoAnalysisWidget extends StatelessWidget {
   final String user;
   final String mainEmo; //대표 감정
+  final List<EmotionData> emotions; //top3 감정 리스트
 
   const EmoAnalysisWidget({
     super.key,
     required this.user,
     required this.mainEmo,
+    required this.emotions,
   });
 
   @override
@@ -180,6 +191,54 @@ class EmoAnalysisWidget extends StatelessWidget {
           style: TextStyle(
             fontSize: 26,
             fontFamily: "PoorStory",
+          ),
+        ),
+        const SizedBox(height: 20),
+        SizedBox(
+          width: 200,
+          height: 200,
+          child: PieChart(
+            PieChartData(
+              centerSpaceRadius: 20,
+              sections: [
+                PieChartSectionData(
+                  value: emotions[0].percentage,
+                  title: emotions[0].emotion,
+                  color: Colors.lightBlue,
+                  radius: 70,
+                  titleStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "PoorStory",
+                  ),
+                ),
+                PieChartSectionData(
+                  value: emotions[1].percentage,
+                  title: emotions[1].emotion,
+                  color: Colors.pink,
+                  radius: 70,
+                  titleStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "PoorStory",
+                  ),
+                ),
+                PieChartSectionData(
+                  value: emotions[2].percentage,
+                  title: emotions[2].emotion,
+                  color: Colors.green,
+                  radius: 70,
+                  titleStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "PoorStory",
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
