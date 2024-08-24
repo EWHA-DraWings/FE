@@ -151,7 +151,7 @@ class StartScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        const ReportResultScreen(), //리포트 달력 화면으로 전환
+                        ReportResultScreen(), //리포트 달력 화면으로 전환(const 일시적으로 지움)
                   ),
                 );
               },
