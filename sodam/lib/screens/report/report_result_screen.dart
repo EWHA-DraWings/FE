@@ -5,13 +5,13 @@ import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/pallete.dart';
 
 class ReportResultScreen extends StatelessWidget {
+  ReportResultScreen({super.key});
+
   final List<EmotionData> emotions = [
     EmotionData(emotion: '당황', percentage: 40.0),
     EmotionData(emotion: '불안', percentage: 30.0),
     EmotionData(emotion: '행복', percentage: 20.0),
-  ]; //top3 감정 리스트
-
-  ReportResultScreen({super.key});
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -111,10 +111,17 @@ class ReportResultScreen extends StatelessWidget {
                   height: 20,
                 ),
                 const Row(
+                  //배치 맘에 안 들어서 수정 필요
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ResultTypeButton(resultType: '컨디션', isSelected: true),
-                    ResultTypeButton(resultType: '감정 분석', isSelected: true),
-                    ResultTypeButton(resultType: '기억 점수', isSelected: true),
+                    ResultTypeButton(
+                      resultType: '컨디션',
+                      isSelected: true,
+                    ),
+                    ResultTypeButton(
+                      resultType: '감정 분석',
+                      isSelected: false,
+                    ),
                   ],
                 ),
                 Container(
