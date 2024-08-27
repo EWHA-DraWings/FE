@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:sodam/screens/Guardian_membership/membership_screen.dart';
 import 'package:sodam/screens/main_screen.dart';
-import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
-import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
-import 'package:sodam/screens/start_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
