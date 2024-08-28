@@ -52,10 +52,10 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.sodamGreen,
+      backgroundColor: Pallete.sodamIvory,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamGreen,
-        foregroundColor: Pallete.sodamBeige, //글씨 색
+        backgroundColor: Pallete.sodamIvory,
+        foregroundColor: Colors.black, //글씨 색
         title: const Center(
           child: Text(
             "PRMQ 자가진단",
@@ -100,7 +100,7 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
                               style: const TextStyle(
                                 fontFamily: "IBMPlexSansKRBold",
                                 fontSize: 30,
-                                color: Pallete.sodamBeige,
+                                color: Pallete.sodamYellow,
                               ),
                             ),
                           ),
@@ -114,7 +114,7 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Pallete.sodamBeige,
+                            color: Pallete.sodamYellow.withOpacity(0.7),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -147,7 +147,7 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(90, 45),
                                 backgroundColor: _selectedOptions[index] == '1'
-                                    ? Pallete.sodamDarkGreen
+                                    ? Pallete.sodamNewGreen
                                     : Pallete.sodamGray,
                                 foregroundColor: _selectedOptions[index] == '1'
                                     ? const Color.fromARGB(255, 255, 255, 255)
@@ -174,7 +174,7 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(100, 45),
                                 backgroundColor: _selectedOptions[index] == '2'
-                                    ? Pallete.sodamDarkGreen
+                                    ? Pallete.sodamNewGreen
                                     : Pallete.sodamGray,
                                 foregroundColor: _selectedOptions[index] == '2'
                                     ? const Color.fromARGB(255, 255, 255, 255)
@@ -201,7 +201,7 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(90, 45),
                                 backgroundColor: _selectedOptions[index] == '3'
-                                    ? Pallete.sodamDarkGreen
+                                    ? Pallete.sodamNewGreen
                                     : Pallete.sodamGray,
                                 foregroundColor: _selectedOptions[index] == '3'
                                     ? const Color.fromARGB(255, 255, 255, 255)
@@ -228,7 +228,7 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(100, 45),
                                 backgroundColor: _selectedOptions[index] == '4'
-                                    ? Pallete.sodamDarkGreen
+                                    ? Pallete.sodamNewGreen
                                     : Pallete.sodamGray,
                                 foregroundColor: _selectedOptions[index] == '4'
                                     ? const Color.fromARGB(255, 255, 255, 255)
@@ -255,7 +255,7 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(100, 45),
                                 backgroundColor: _selectedOptions[index] == '5'
-                                    ? Pallete.sodamDarkGreen
+                                    ? Pallete.sodamNewGreen
                                     : Pallete.sodamGray,
                                 foregroundColor: _selectedOptions[index] == '5'
                                     ? const Color.fromARGB(255, 255, 255, 255)
@@ -295,12 +295,13 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: const Color.fromARGB(255, 206, 138, 178),
+                      backgroundColor: Pallete.sodamNewDarkPink,
                     ),
                     child: const Text(
                       '제출하기',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontFamily: 'IBMPlexSansKRRegular',
+                        fontSize: 25,
                         color: Colors.white,
                       ),
                     ),
@@ -309,13 +310,13 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
                     onPressed: null,
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: Colors.grey,
+                      backgroundColor: Pallete.sodamOrange,
                     ),
                     child: const Text(
                       "모든 질문에 답변해 주세요",
                       style: TextStyle(
                         fontSize: 18,
-                        color: Color.fromARGB(255, 220, 220, 220),
+                        color: Colors.white,
                       ),
                     ),
                   ),
