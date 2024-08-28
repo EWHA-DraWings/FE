@@ -26,7 +26,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: MainScreen(isGuardian: false),
+      //home: MainScreen(isGuardian: false),
+      home: MembershipScreen(),
     );
   }
 }
