@@ -1,111 +1,111 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/widgets/diary_button_widget.dart';
 
 class DiaryScreen extends StatelessWidget {
   const DiaryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      backgroundColor: Pallete.sodamGreen,
+      backgroundColor: Pallete.sodamIvory,
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Pallete.sodamGreen,
-        title: const Text(
-          "일기장",
-          style: TextStyle(
-            fontSize: 30,
-            fontFamily: "PoorStory",
-            color: Pallete.sodamBeige,
-          ),
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(6.5), // 선의 높이
-          child: Container(
-            color: Pallete.sodamBeige,
-            height: 3, // 선의 두께
-          ),
-        ),
+        backgroundColor: Pallete.sodamIvory,
+        scrolledUnderElevation: 0, //스크롤 시 appbar 색상이 바뀌는 점 해결.
       ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: 330,
-              height: 70,
-              decoration: BoxDecoration(
-                color:
-                    const Color.fromARGB(255, 203, 242, 255).withOpacity(0.8),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: const Center(
-                child: Text(
-                  "5월  27일 (화)",
-                  style: TextStyle(
-                    fontFamily: "IBMPlexSansKRRegular",
-                    fontSize: 35,
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: screenWidth * 0.08),
+                    child: const Text(
+                      "5월 27일 화요일",
+                      style: TextStyle(
+                        fontFamily: "IBMPlexSansKRRegular",
+                        fontSize: 22,
+                      ),
+                    ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.only(right: screenWidth * 0.05),
+                    child: TextButton(
+                      //일기 내용 읽어주는 버튼
+                      onPressed: () {
+                        // 버튼 클릭 시 동작. 나중에 수정필요
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        padding: EdgeInsets.zero,
+                      ),
+                      child: Image.asset(
+                        "lib/assets/images/listen.png",
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                width: screenWidth * 0.9,
+                height: screenHeight * 0.75,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 30,
                 ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: 330,
-              height: 600,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 15,
-                vertical: 20,
-              ),
-              decoration: BoxDecoration(
-                color: Pallete.sodamBeige,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: const Center(
-                child: SingleChildScrollView(
-                  //스크롤 가능하게
-                  child: Text(
-                    """ 오늘은 아침부터 비가 내렸다. 비 소리를 들으니 마음이 차분해지는 것 같았다. 아침 식사로는 따뜻한 미역국을 끓여 먹었다. 비 오는 날에는 따뜻한 국물이 최고다.
+                decoration: BoxDecoration(
+                  color: Pallete.sodamLightYellow,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: const Center(
+                  child: SingleChildScrollView(
+                    child: Text(
+                      """ 오늘은 아침부터 비가 내렸다. 비 소리를 들으니 마음이 차분해지는 것 같았다. 아침 식사로는 따뜻한 미역국을 끓여 먹었다. 비 오는 날에는 따뜻한 국물이 최고다.
   비가 와서 외출은 못했지만 집에서 할 일이 많았다. 오래된 사진첩을 정리하고, 손자들이 보내준 편지를 읽었다. 손자들이 쓴 편지를 읽으니 눈물이 핑 돌았다. 세월이 참 빠르다는 생각이 들었다.
   점심 후에는 재봉틀로 낡은 옷을 수선했다. 예전에 배운 재봉 솜씨가 아직 녹슬지 않았다. 저녁에는 간단히 계란말이와 나물반찬으로 식사를 하고, 드라마를 보면서 하루를 마무리했다.""",
-                    style: TextStyle(
-                      fontFamily: "IBMPlexSansKRRegular",
-                      fontSize: 30,
-                      height: 2.0,
+                      style: TextStyle(
+                        fontFamily: "IBMPlexSansKRRegular",
+                        fontSize: 25,
+                        height: 2.0,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                DiaryButtonWidget(
-                  //나중에 onpressed 구현시 수정 필요
-                  text: "<",
-                  backgroundColor: Pallete.sodamBeige.withOpacity(0.8),
+            ],
+          ),
+          Positioned(
+            // Container 위에 약간 겹치도록 조정
+            bottom: screenHeight * 0.03,
+            right: screenWidth * 0.03,
+            child: SizedBox(
+              width: 75,
+              height: 75,
+              child: ElevatedButton(
+                onPressed: () {
+                  // 버튼 클릭 시 동작. 나중에 수정필요
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Pallete.sodamBlueGreen,
+                  shape: const CircleBorder(), // 원형 버튼
+                  padding: EdgeInsets.zero,
                 ),
-                DiaryButtonWidget(
-                  text: "듣기",
-                  backgroundColor:
-                      const Color.fromARGB(255, 203, 242, 255).withOpacity(0.8),
+                child: Image.asset(
+                  "lib/assets/images/edit.png",
+                  //width: 70, 왜 너비를 줘도 안먹는지 모르겠음.
+                  //height: 70,
                 ),
-                DiaryButtonWidget(
-                  text: ">",
-                  backgroundColor: Pallete.sodamBeige.withOpacity(0.8),
-                ),
-              ],
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
