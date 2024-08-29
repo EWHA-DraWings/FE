@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-
-import 'package:sodam/screens/self_diagnosis/guardian_totalscore_screen.dart';
+import 'package:sodam/screens/main_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,10 +22,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      //home: MainScreen(isGuardian: false),
-      home: GuardianTotalscoreScreen(
-        score: 10,
-      ),
+      home: MainScreen(isGuardian: false),
     );
   }
 }
