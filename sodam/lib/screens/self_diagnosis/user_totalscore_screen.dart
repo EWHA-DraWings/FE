@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/self_diagnosis/guardian_totalscore_screen.dart';
+import 'package:sodam/widgets/round_next_button.dart';
+
+import '../../widgets/self_diagnosis_result_widget.dart';
+import '../../widgets/title_widget.dart';
 
 class UserTotalscoreScreen extends StatelessWidget {
   final int score;
@@ -11,15 +14,15 @@ class UserTotalscoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.sodamGreen,
+      backgroundColor: Pallete.sodamIvory,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamGreen,
-        foregroundColor: Pallete.sodamBeige, //글씨 색
+        backgroundColor: Pallete.sodamIvory,
+        foregroundColor: Colors.black, //글씨 색
         title: const Text(
           "PRMQ 진단 결과",
           style: TextStyle(
-            fontSize: 24,
-            fontFamily: "Gugi",
+            fontSize: 25,
+            fontFamily: "IBMPlexSansKRRegular",
           ),
         ),
       ),
@@ -27,8 +30,42 @@ class UserTotalscoreScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              const SizedBox(height: 20),
-              ResultWidget(score: score),
+              const TitleWidget(
+                backgroundColor: Pallete.sodamYellow,
+                textColor: Pallete.sodamBrown,
+                text: '자가진단 결과',
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SelfDiagnosisResultWidget(
+                score: score,
+                name: '홍길동',
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const RoundNextButton(
+                btnText: '결과 공유하기',
+                btnColor: Pallete.sodamOrange,
+                emoji: '🔗',
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const RoundNextButton(
+                btnText: '가까운 병원 찾아보기',
+                btnColor: Pallete.sodamNewGreen,
+                emoji: '🏥',
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const RoundNextButton(
+                btnText: '자가진단 기록 살펴보기',
+                btnColor: Pallete.sodamYellow,
+                emoji: '📊',
+              ),
             ],
           ),
         ),

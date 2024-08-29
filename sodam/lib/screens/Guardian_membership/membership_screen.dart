@@ -13,7 +13,6 @@ class MembershipScreen extends StatefulWidget {
 }
 
 class _MembershipScreenState extends State<MembershipScreen> {
-  
   void _guardianNextScreen(String role) {
     // GuardianData 객체를 생성합니다.
     final guardianData = GuardianData(role: role);
@@ -41,9 +40,9 @@ class _MembershipScreenState extends State<MembershipScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.sodamGreen,
+      backgroundColor: Pallete.sodamIvory,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamGreen,
+        backgroundColor: Pallete.sodamIvory,
         foregroundColor: Pallete.sodamDarkPink, //글씨 색
         title: const Text(
           "회원가입",
@@ -78,8 +77,16 @@ class _MembershipScreenState extends State<MembershipScreen> {
                     width: 300,
                     height: 70,
                     decoration: BoxDecoration(
-                      color: Pallete.sodamBeige.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xFFFF8F74),
+                      borderRadius: BorderRadius.circular(40),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x3F000000),
+                          blurRadius: 4,
+                          offset: Offset(0, 4),
+                          spreadRadius: 0,
+                        ),
+                      ],
                     ),
                     child: const Padding(
                       padding: EdgeInsets.symmetric(
@@ -106,8 +113,16 @@ class _MembershipScreenState extends State<MembershipScreen> {
                     width: 300,
                     height: 70,
                     decoration: BoxDecoration(
-                      color: Pallete.sodamBeige.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(20),
+                      color: Pallete.sodamNewGreen,
+                      borderRadius: BorderRadius.circular(40),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x3F000000),
+                          blurRadius: 4,
+                          offset: Offset(0, 4),
+                          spreadRadius: 0,
+                        ),
+                      ],
                     ),
                     child: const Padding(
                       padding: EdgeInsets.symmetric(

@@ -6,8 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/Guardian_membership/membership_screen.dart';
 import 'package:sodam/screens/login_screen.dart';
-import 'package:sodam/screens/register_type_screen.dart';
 import 'package:sodam/screens/report/report_calendar_screen.dart';
+import 'package:sodam/screens/report/report_result_screen.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -136,6 +136,26 @@ class StartScreen extends StatelessWidget {
               },
               child: const Text(
                 '리포트(달력화면)테스트용',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w700,
+                  color: Pallete.sodamBrown,
+                  fontFamily: "PoorStory",
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        ReportResultScreen(), //리포트 달력 화면으로 전환(const 일시적으로 지움)
+                  ),
+                );
+              },
+              child: const Text(
+                '리포트 결과 테스트용',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w700,
