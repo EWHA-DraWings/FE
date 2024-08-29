@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:sodam/screens/main_screen.dart';
+import 'package:sodam/screens/diary_screen.dart';
+import 'package:sodam/screens/report/report_result_screen.dart';
+
+import 'package:sodam/screens/self_diagnosis/guardian_totalscore_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,8 +24,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MainScreen(isGuardian: false),
+    return MaterialApp(
+      //home: MainScreen(isGuardian: false),
+      home: ReportResultScreen(reportDate: '5월 27일'),
     );
   }
 }

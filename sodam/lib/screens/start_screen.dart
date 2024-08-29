@@ -149,8 +149,9 @@ class StartScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        ReportResultScreen(), //리포트 달력 화면으로 전환(const 일시적으로 지움)
+                    builder: (context) => ReportResultScreen(
+                      reportDate: '5월 27일',
+                    ), //리포트 달력 화면으로 전환(const 일시적으로 지움)
                   ),
                 );
               },
