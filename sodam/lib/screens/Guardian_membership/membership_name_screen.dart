@@ -41,9 +41,9 @@ class _MembershipNameScreenState extends State<MembershipNameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.sodamGreen,
+      backgroundColor: Pallete.sodamIvory,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamGreen,
+        backgroundColor: Pallete.sodamIvory,
         foregroundColor: Pallete.sodamDarkPink, // 글씨 색
         title: const Text(
           "회원가입",
