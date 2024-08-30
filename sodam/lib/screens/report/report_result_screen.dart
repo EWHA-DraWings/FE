@@ -118,6 +118,7 @@ class ReportResultScreen extends StatelessWidget {
                   emoji: '🔎',
                   screen: ReportMemoryScoreScreen(
                     today: '0830',
+                    user: '홍길동',
                   ),
                 ),
               ],

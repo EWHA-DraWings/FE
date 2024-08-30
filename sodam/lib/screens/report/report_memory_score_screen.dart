@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,13 +8,16 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sodam/models/memory_score_data.dart';
 import 'package:sodam/pallete.dart';
+import 'package:sodam/screens/start_screen.dart';
+import 'package:sodam/widgets/round_next_button.dart';
 import 'package:sodam/widgets/shadow_white_container.dart';
 import 'package:sodam/widgets/title_widget.dart';
 
 class ReportMemoryScoreScreen extends StatelessWidget {
   final String today; //오늘 날짜(요일 가져와야됨)
+  final String user; //이름
 
-  ReportMemoryScoreScreen({super.key, required this.today});
+  ReportMemoryScoreScreen({super.key, required this.today, required this.user});
 
   final List<MemoryScoreData> memoryScores = [
     MemoryScoreData(date: '8/12', score: 79),
@@ -111,6 +116,19 @@ class ReportMemoryScoreScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
+                Center(
+                  child: Text(
+                    '$user님의 최근 5번의\n기억테스트 점수 기록이에요!',
+                    style: const TextStyle(
+                      fontFamily: 'IBMPlexSansKR',
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 Container(
                   width: screenWidth * 0.9,
                   height: screenHeight * 0.4,
@@ -191,6 +209,33 @@ class ReportMemoryScoreScreen extends StatelessWidget {
                       barGroups: buildBarChartGroupDatas(),
                     ),
                   ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const RoundNextButton(
+                  btnText: '결과 공유하기',
+                  btnColor: Pallete.sodamOrange,
+                  emoji: '🔗',
+                  screen: StartScreen(), //임시
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const RoundNextButton(
+                  btnText: '가까운 병원 찾아보기',
+                  btnColor: Pallete.sodamNewGreen,
+                  emoji: '🏥',
+                  screen: StartScreen(), //임시
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const RoundNextButton(
+                  btnText: '자가진단 기록 살펴보기',
+                  btnColor: Pallete.sodamYellow,
+                  emoji: '📊',
+                  screen: StartScreen(), //임시
                 ),
               ],
             ),
