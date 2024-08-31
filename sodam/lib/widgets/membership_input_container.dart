@@ -26,7 +26,7 @@ class MembershipInputContainer extends StatelessWidget {
       width: width, // 고정된 너비
       height: height, // 고정된 높이
       decoration: BoxDecoration(
-        color: Pallete.sodamBeige.withOpacity(0.5),
+        color: Pallete.sodamYellow.withOpacity(0.5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextFormField(

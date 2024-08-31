@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:sodam/screens/main_screen.dart';
-import 'package:sodam/screens/calendar/report_calendar_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +23,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: MainScreen(isGuardian: false),
+      //home: ReportResultScreen(reportDate: '5월 27일'),
     );
   }
 }

@@ -69,7 +69,7 @@ class _MemebershipExtrainfoScreenState
       width: 300,
       height: 50,
       decoration: BoxDecoration(
-        color: Pallete.sodamBeige.withOpacity(0.5), // 배경색
+        color: Pallete.sodamYellow.withOpacity(0.5), // 배경색
         borderRadius: BorderRadius.circular(10), // borderRadius
       ),
       child: GestureDetector(
@@ -171,9 +171,9 @@ class _MemebershipExtrainfoScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.sodamGreen,
+      backgroundColor: Pallete.sodamIvory,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamGreen,
+        backgroundColor: Pallete.sodamIvory,
         foregroundColor: Pallete.sodamDarkPink, //글씨 색
         title: const Text(
           "회원가입",
@@ -191,19 +191,19 @@ class _MemebershipExtrainfoScreenState
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                "앱 사용을 위해\n추가 정보를\n받고 있어요.",
+                "앱 사용을 위해\n추가 정보를 받고 있어요.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 30,
                   fontFamily: 'IBMPlexSansKRRegular',
                 ),
               ),
               const SizedBox(height: 20),
               const Text(
                 textAlign: TextAlign.center,
-                "앱의 기억점수 측정시에만 사용되는 정보에요. 탈퇴시 자동으로\n삭제되며, 앱 외의 다른 곳에서 사용되지 않으니 안심하세요!",
+                "앱의 기억점수 측정시에만 사용되는 정보에요.\n 탈퇴시 자동으로 삭제되며, 앱 외의 다른 곳에\n 사용되지 않으니 안심하세요!",
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 15,
                   fontFamily: 'IBMPlexSansKRRegular',
                 ),
               ),
@@ -212,7 +212,7 @@ class _MemebershipExtrainfoScreenState
                 textAlign: TextAlign.center,
                 "보호자님의 정보를 입력해주세요.",
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 20,
                   fontFamily: 'IBMPlexSansKRRegular',
                 ),
               ),

@@ -144,6 +144,27 @@ class StartScreen extends StatelessWidget {
                 ),
               ),
             ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReportResultScreen(
+                      reportDate: '5월 27일',
+                    ), //리포트 달력 화면으로 전환(const 일시적으로 지움)
+                  ),
+                );
+              },
+              child: const Text(
+                '리포트 결과 테스트용',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w700,
+                  color: Pallete.sodamBrown,
+                  fontFamily: "PoorStory",
+                ),
+              ),
+            ),
           ],
         ),
       ),
