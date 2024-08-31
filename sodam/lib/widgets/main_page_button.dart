@@ -39,9 +39,17 @@ class MainPageButton extends StatelessWidget {
             width: screenWidth * 0.38,
             height: screenWidth * 0.38,
             decoration: BoxDecoration(
-              color:
-                  !isDisabled ? backColor : Colors.grey.withOpacity(0.5), // 버튼 배경색
-              borderRadius: BorderRadius.circular(20),
+              color: !isDisabled
+                  ? backColor
+                  : Colors.grey.withOpacity(0.5), // 버튼 배경색
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.8), // 그림자 색상 및 투명도 설정
+                  spreadRadius: 2, // 그림자 확산 정도
+                  blurRadius: 5, // 그림자 흐림 정도
+                ),
+              ],
             ),
             child: Center(
               child: Image.asset(
