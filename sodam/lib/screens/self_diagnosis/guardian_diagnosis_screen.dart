@@ -51,17 +51,15 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.sodamGreen,
+      backgroundColor: Pallete.sodamIvory,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamGreen,
-        foregroundColor: Pallete.sodamBeige, //글씨 색
-        title: const Center(
-          child: Text(
-            "자가진단",
-            style: TextStyle(
-              fontSize: 24,
-              fontFamily: "Gugi",
-            ),
+        backgroundColor: Pallete.sodamIvory,
+        foregroundColor: Colors.black, //글씨 색
+        title: const Text(
+          "KDSQ 자가진단",
+          style: TextStyle(
+            fontSize: 24,
+            fontFamily: "Gugi",
           ),
         ),
       ),
@@ -85,7 +83,7 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
                               style: const TextStyle(
                                 fontFamily: "IBMPlexSansKRBold",
                                 fontSize: 30,
-                                color: Pallete.sodamBeige,
+                                color: Pallete.sodamNewGreen,
                               ),
                             ),
                           ),
@@ -99,7 +97,7 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Pallete.sodamBeige,
+                            color: Pallete.sodamNewGreen.withOpacity(0.6),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -125,24 +123,22 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
                         children: [
                           AnimatedContainer(
                             duration: const Duration(milliseconds: 100),
-                            width: _selectedOptions[index] == '예' ? 100 : 90,
+                            width: _selectedOptions[index] == '예' ? 120 : 110,
                             height: 45,
                             child: ElevatedButton(
                               onPressed: () => _onButtonPressed(index, '예'),
                               style: ElevatedButton.styleFrom(
                                 minimumSize: const Size(90, 45),
                                 backgroundColor: _selectedOptions[index] == '예'
-                                    ? Pallete.sodamDarkGreen
+                                    ? Pallete.sodamYellow
                                     : Pallete.sodamGray,
-                                foregroundColor: _selectedOptions[index] == '예'
-                                    ? const Color.fromARGB(255, 255, 255, 255)
-                                    : Colors.black,
+                                foregroundColor: Colors.black,
                               ),
                               child: const Text(
                                 '예',
                                 style: TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: "Poorstory",
+                                  fontSize: 20,
+                                  fontFamily: "IBMPlexSansKRRegular",
                                 ),
                               ),
                             ),
@@ -152,7 +148,7 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
                           ),
                           AnimatedContainer(
                             duration: const Duration(milliseconds: 100),
-                            width: _selectedOptions[index] == '아니오' ? 110 : 100,
+                            width: _selectedOptions[index] == '아니오' ? 120 : 110,
                             height: 45,
                             child: ElevatedButton(
                               onPressed: () => _onButtonPressed(index, '아니오'),
@@ -160,18 +156,15 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
                                 minimumSize: const Size(100, 45),
                                 backgroundColor:
                                     _selectedOptions[index] == '아니오'
-                                        ? Pallete.sodamDarkGreen
+                                        ? Pallete.sodamYellow
                                         : Pallete.sodamGray,
-                                foregroundColor: _selectedOptions[index] ==
-                                        '아니오'
-                                    ? const Color.fromARGB(255, 255, 255, 255)
-                                    : Colors.black,
+                                foregroundColor: Colors.black,
                               ),
                               child: const Text(
                                 '아니오',
                                 style: TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: "Poorstory",
+                                  fontSize: 20,
+                                  fontFamily: "IBMPlexSansKRRegular",
                                 ),
                               ),
                             ),
@@ -201,12 +194,13 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: const Color.fromARGB(255, 206, 138, 178),
+                      backgroundColor: Pallete.sodamOrange,
                     ),
                     child: const Text(
                       '제출하기',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontFamily: 'IBMPlexSansKRRegular',
+                        fontSize: 25,
                         color: Colors.white,
                       ),
                     ),
