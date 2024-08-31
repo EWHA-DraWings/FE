@@ -56,13 +56,11 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
       appBar: AppBar(
         backgroundColor: Pallete.sodamIvory,
         foregroundColor: Colors.black, //글씨 색
-        title: const Center(
-          child: Text(
-            "PRMQ 자가진단",
-            style: TextStyle(
-              fontSize: 24,
-              fontFamily: "Gugi",
-            ),
+        title: const Text(
+          "PRMQ 자가진단",
+          style: TextStyle(
+            fontSize: 24,
+            fontFamily: "Gugi",
           ),
         ),
       ),
