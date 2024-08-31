@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
 
-class MainPageButton extends StatelessWidget {
+class MainPageButton extends StatefulWidget {
   final Widget destination; // destination : 넘어갈 다음 화면
   final String text;
   final Color backColor; //버튼 배경색
@@ -18,10 +18,17 @@ class MainPageButton extends StatelessWidget {
   });
 
   @override
+  State<MainPageButton> createState() => _MainPageButtonState();
+}
+
+class _MainPageButtonState extends State<MainPageButton> {
+  bool isHovered = false; //클릭 애니메이션
+  @override
   Widget build(BuildContext context) {
     // Get the screen width
     double screenWidth = MediaQuery.of(context).size.width;
-    bool isDisabled = isGuardian && (text == "대화하기" || text == "일기장");
+    bool isDisabled =
+        widget.isGuardian && (widget.text == "대화하기" || widget.text == "일기장");
 
     return Column(
       children: [
@@ -31,42 +38,67 @@ class MainPageButton extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => destination), // 다음 화면
+                        builder: (context) => widget.destination), // 다음 화면
                   );
                 }
               : null, // 비활성화 상태일 때 클릭할 수 없게 설정
-          child: Container(
-            width: screenWidth * 0.38,
-            height: screenWidth * 0.38,
-            decoration: BoxDecoration(
-              color: !isDisabled
-                  ? backColor
-                  : Colors.grey.withOpacity(0.5), // 버튼 배경색
-              borderRadius: BorderRadius.circular(30),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.8), // 그림자 색상 및 투명도 설정
-                  spreadRadius: 2, // 그림자 확산 정도
-                  blurRadius: 5, // 그림자 흐림 정도
+          onTapDown: (_) {
+            setState(() {
+              isHovered = true;
+            });
+          },
+          onTapUp: (_) {
+            setState(() {
+              isHovered = false;
+            });
+          },
+          onTapCancel: () {
+            setState(() {
+              isHovered = false;
+            });
+          },
+          child: AnimatedScale(
+            scale: isHovered ? 1.02 : 1.0,
+            duration: const Duration(milliseconds: 50),
+            curve: Curves.easeInOut,
+            child: Container(
+              width: screenWidth * 0.38,
+              height: screenWidth * 0.38,
+              decoration: BoxDecoration(
+                color: !isDisabled
+                    ? widget.backColor
+                    : Colors.grey.withOpacity(0.5), // 버튼 배경색
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.6), // 그림자 색상 및 투명도 설정
+                    spreadRadius: 3, // 그림자 확산 정도
+                    blurRadius: 7, // 그림자 흐림 정도
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Image.asset(
+                  widget.iconPath,
+                  width: 70,
+                  color: !isDisabled ? null : Colors.grey, // 비활성화 시 아이콘 색상 변경
                 ),
-              ],
-            ),
-            child: Center(
-              child: Image.asset(
-                iconPath,
-                width: 70,
-                color: !isDisabled ? null : Colors.grey, // 비활성화 시 아이콘 색상 변경
               ),
             ),
           ),
         ),
         const SizedBox(height: 10), // 아이콘과 텍스트 사이에 간격 추가
-        Text(
-          text,
+        AnimatedDefaultTextStyle(
+          duration: const Duration(milliseconds: 50),
           style: TextStyle(
-            color: !isDisabled ? Colors.black : Colors.grey, // 비활성화 시 텍스트 색상 변경
-            fontSize: 20,
+            color: !isDisabled
+                ? Pallete.sodamBrown
+                : Colors.grey, // 비활성화 시 텍스트 색상 변경
+            fontSize: isHovered ? 21 : 20,
             fontFamily: "IBMPlexSansKRBold",
+          ),
+          child: Text(
+            widget.text,
           ),
         ),
       ],
