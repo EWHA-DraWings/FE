@@ -85,9 +85,9 @@ class _UserRegisterPhoneScreenstate extends State<UserRegisterPhoneScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.sodamGreen,
+      backgroundColor: Pallete.sodamIvory,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamGreen,
+        backgroundColor: Pallete.sodamIvory,
         foregroundColor: Pallete.sodamDarkPink, //글씨 색
         title: const Text(
           "회원가입",
@@ -151,22 +151,28 @@ class _UserRegisterPhoneScreenstate extends State<UserRegisterPhoneScreen> {
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 200,
               ),
               //제출 버튼
-              ElevatedButton(
-                onPressed: _onSubmitButtonPressed,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Pallete.sodamDarkPink, // 버튼 색상
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                ),
-                child: const Text(
-                  "가입하기",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: 'IBMPlexSansKRRegular',
-                    color: Colors.white,
+              SizedBox(
+                width: 300,
+                child: ElevatedButton(
+                  onPressed: _onSubmitButtonPressed,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Pallete.sodamNewDarkPink, // 버튼 색상
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 55, vertical: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10), // 버튼 모서리 둥글기
+                    ),
+                  ),
+                  child: const Text(
+                    "가입하기",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontFamily: 'PoorStory',
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

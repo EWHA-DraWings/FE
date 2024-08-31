@@ -176,9 +176,9 @@ class _MembershipIdpwElderlyScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.sodamGreen,
+      backgroundColor: Pallete.sodamIvory,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamGreen,
+        backgroundColor: Pallete.sodamIvory,
         foregroundColor: Pallete.sodamDarkPink, //글씨 색
         title: const Text(
           "회원가입",
@@ -243,14 +243,11 @@ class _MembershipIdpwElderlyScreenState
                       return null;
                     },
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 130),
                   MembershipNextButton(
                     onPressed: _onNextButtonPressed,
                   ),
                 ],
-              ),
-              const SizedBox(
-                height: 100,
               ),
             ],
           ),
