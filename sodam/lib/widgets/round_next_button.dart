@@ -4,12 +4,14 @@ class RoundNextButton extends StatelessWidget {
   final String btnText;
   final String emoji;
   final Color btnColor;
+  final Widget screen;
 
   const RoundNextButton({
     super.key,
     required this.btnText,
     required this.btnColor,
     required this.emoji,
+    required this.screen,
   });
 
   @override
@@ -17,7 +19,12 @@ class RoundNextButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: ElevatedButton(
-        onPressed: () {}, //나중에 함수 추가하기
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => screen),
+          );
+        }, //나중에 함수 추가하기
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(double.infinity, 50),
           backgroundColor: btnColor,

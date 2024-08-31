@@ -1,324 +1,129 @@
-import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/pallete.dart';
+import 'package:sodam/screens/report/report_memory_score_screen.dart';
+import 'package:sodam/widgets/round_next_button.dart';
+
+import '../../widgets/emo_analysis_widget.dart';
+import '../../widgets/shadow_white_container.dart';
 
 class ReportResultScreen extends StatelessWidget {
-  ReportResultScreen({super.key});
+  final String reportDate; //리포트 날짜(요일 가져와야됨)
+
+  ReportResultScreen({super.key, required this.reportDate});
 
   final List<EmotionData> emotions = [
     EmotionData(emotion: '당황', percentage: 40.0),
     EmotionData(emotion: '불안', percentage: 30.0),
-    EmotionData(emotion: '행복', percentage: 20.0),
+    EmotionData(emotion: '행복', percentage: 30.0),
   ];
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      backgroundColor: Pallete.sodamGreen,
+      backgroundColor: Pallete.sodamIvory,
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Pallete.sodamGreen,
-        foregroundColor: Colors.white, //글씨 색
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(2.0), // 선의 두께
-          child: Container(
-            color: Colors.white,
-            height: 2.0, // 선의 두께
-          ),
-        ),
-        title: const Text(
-          "리포트",
-          style: TextStyle(
-            color: Pallete.sodamBeige,
-            fontSize: 40,
-            fontWeight: FontWeight.w800,
-            fontFamily: "PoorStory",
-          ),
-        ),
+        backgroundColor: Pallete.sodamIvory,
+        foregroundColor: Colors.black,
+        scrolledUnderElevation: 0, //스크롤 시 appbar 색상이 바뀌는 점 해결.
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
+          padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.05,
           ),
           child: Center(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  reportDate,
+                  style: const TextStyle(
+                    fontFamily: "IBMPlexSansKRRegular",
+                    fontSize: 22,
+                  ),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  height: 50,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: Pallete.sodamBeige,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    '8월 14일',
+                const ShadowWhiteContainer(
+                  title: '보호자에게 전하고 싶은 말',
+                  height: 150,
+                  isRight: false,
+                  child: Text(
+                    '나는 잘 지내니 밥 잘 챙겨먹고 \n다녀라.',
                     style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "IBMPlexSansKR",
+                      fontFamily: 'IBMPlexSansKRRegular',
+                      fontSize: 20,
                     ),
+                    textAlign: TextAlign.start,
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  height: 200,
-                  width: 350,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: Colors.black, // 윤곽선 색상
-                      width: 2, // 윤곽선 두께
-                    ),
-                  ),
-                  alignment: Alignment.center,
-                  child: const Center(
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10),
-                        Text(
-                          '하고 싶은 말',
-                          style: TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "PoorStory",
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          '나는 잘 지내니\n밥 잘 챙겨먹고 다녀라.\n 연락 좀 자주해라.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontFamily: "PoorStory",
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Row(
-                  //배치 맘에 안 들어서 수정 필요
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Stack(
+                  //이미지 클립하면서 컨디션 상자 그림자 사라지는 이슈 있음
                   children: [
-                    ResultTypeButton(
-                      resultType: '컨디션',
-                      isSelected: true,
+                    const ShadowWhiteContainer(
+                      title: '컨디션',
+                      height: 160,
+                      isRight: true,
+                      child: Text(
+                        '저녁을 드시고 소화가 안 되어\n소화제를 드셨대요.',
+                        style: TextStyle(
+                          fontFamily: 'IBMPlexSansKRRegular',
+                          fontSize: 20,
+                        ),
+                        textAlign: TextAlign.end,
+                      ),
                     ),
-                    ResultTypeButton(
-                      resultType: '감정 분석',
-                      isSelected: false,
+                    Positioned(
+                      top: 50,
+                      right: 265,
+                      child: SizedBox(
+                        width: 110,
+                        child: Opacity(
+                          opacity: 0.5,
+                          child: Image.asset("lib/assets/images/health.png"),
+                        ),
+                      ),
                     ),
                   ],
                 ),
-                Container(
-                  height: 400,
-                  width: 350,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(
-                      color: Pallete.sodamPink, // 윤곽선 색상
-                      width: 5, // 윤곽선 두께
-                    ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ShadowWhiteContainer(
+                  title: '감정분석 결과',
+                  height: 300,
+                  isRight: false,
+                  child: EmoAnalysisWidget(
+                    user: '홍길동',
+                    emotions: emotions,
                   ),
-                  alignment: Alignment.center,
-                  child: Center(
-                    child: /*ConditionWidget(
-                      user: '홍길동',
-                      conditionStatus: '저녁을 드시고 소화가 안 되어\n소화제를 드셨대요.',
-                    ),*/
-                        EmoAnalysisWidget(
-                      user: '홍길동',
-                      mainEmo: '당황',
-                      emotions: emotions,
-                    ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                RoundNextButton(
+                  btnText: '기억점수 조회하기',
+                  btnColor: Pallete.sodamYellow,
+                  emoji: '🔎',
+                  screen: ReportMemoryScoreScreen(
+                    today: '0830',
+                    user: '홍길동',
                   ),
                 ),
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class EmoAnalysisWidget extends StatelessWidget {
-  final String user;
-  final String mainEmo; //대표 감정
-  final List<EmotionData> emotions; //top3 감정 리스트
-
-  const EmoAnalysisWidget({
-    super.key,
-    required this.user,
-    required this.mainEmo,
-    required this.emotions,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 10),
-        Text(
-          '$user님의 감정',
-          style: const TextStyle(
-            fontSize: 30,
-            fontFamily: "DoHyeon",
-            decoration: TextDecoration.underline, // 밑줄 추가
-            decorationColor: Colors.black, // 밑줄 색상
-            decorationThickness: 2, // 밑줄 두께
-          ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          '오늘의 대표 감정: $mainEmo',
-          style: const TextStyle(
-            fontSize: 26,
-            fontFamily: "PoorStory",
-          ),
-        ),
-        const SizedBox(height: 10),
-        const Text(
-          '감정 분석 Top3',
-          style: TextStyle(
-            fontSize: 26,
-            fontFamily: "PoorStory",
-          ),
-        ),
-        const SizedBox(height: 20),
-        SizedBox(
-          width: 200,
-          height: 200,
-          child: PieChart(
-            PieChartData(
-              centerSpaceRadius: 20,
-              sections: [
-                PieChartSectionData(
-                  value: emotions[0].percentage,
-                  title: emotions[0].emotion,
-                  color: Colors.lightBlue,
-                  radius: 70,
-                  titleStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "PoorStory",
-                  ),
-                ),
-                PieChartSectionData(
-                  value: emotions[1].percentage,
-                  title: emotions[1].emotion,
-                  color: Colors.pink,
-                  radius: 70,
-                  titleStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "PoorStory",
-                  ),
-                ),
-                PieChartSectionData(
-                  value: emotions[2].percentage,
-                  title: emotions[2].emotion,
-                  color: Colors.green,
-                  radius: 70,
-                  titleStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "PoorStory",
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class ConditionWidget extends StatelessWidget {
-  final String user;
-  final String conditionStatus;
-
-  const ConditionWidget({
-    super.key,
-    required this.user,
-    required this.conditionStatus,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 10),
-        Text(
-          '$user님의 컨디션',
-          style: const TextStyle(
-            fontSize: 30,
-            fontFamily: "DoHyeon",
-            decoration: TextDecoration.underline, // 밑줄 추가
-            decorationColor: Colors.black, // 밑줄 색상
-            decorationThickness: 2, // 밑줄 두께
-          ),
-        ),
-        const SizedBox(height: 20),
-        Text(
-          conditionStatus,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 24,
-            fontFamily: "PoorStory",
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class ResultTypeButton extends StatelessWidget {
-  final String resultType;
-  final bool isSelected;
-
-  const ResultTypeButton({
-    super.key,
-    required this.resultType,
-    required this.isSelected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      width: 100,
-      decoration: BoxDecoration(
-        color: isSelected ? Pallete.sodamPink : Pallete.sodamBeige,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        resultType,
-        style: TextStyle(
-          fontSize: 24,
-          color: isSelected ? Colors.white : Colors.black,
-          fontWeight: FontWeight.w400,
-          fontFamily: "PoorStory",
         ),
       ),
     );
