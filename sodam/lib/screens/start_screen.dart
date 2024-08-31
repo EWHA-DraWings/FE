@@ -7,7 +7,7 @@ import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/Guardian_membership/membership_screen.dart';
 import 'package:sodam/screens/login_screen.dart';
 import 'package:sodam/screens/register_type_screen.dart';
-import 'package:sodam/screens/report/report_calendar_screen.dart';
+import 'package:sodam/screens/calendar/report_calendar_screen.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
