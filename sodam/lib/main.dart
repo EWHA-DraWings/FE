@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:sodam/screens/login_screen.dart';
 import 'package:sodam/screens/main_screen.dart';
 
 Future main() async {
@@ -22,7 +23,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: MainScreen(isGuardian: false),
+      home: LoginScreen(),
+      //MainScreen(isGuardian: false),
       //home: ReportResultScreen(reportDate: '5월 27일'),
     );
   }
