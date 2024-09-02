@@ -16,12 +16,18 @@ class LoginInputContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      width: width, // 고정된 너비
-      height: height, // 고정된 높이
+      width: screenWidth * 0.9,
+      height: 55,
       decoration: BoxDecoration(
-        color: Pallete.sodamBeige.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(10),
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: Colors.grey, // 테두리 색상 블랙으로 설정
+          width: 2.0, // 테두리 두께 설정
+        ),
       ),
       child: TextField(
         textAlign: TextAlign.center,
