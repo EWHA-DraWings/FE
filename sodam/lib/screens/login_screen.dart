@@ -1,111 +1,127 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:sodam/models/guardian_data.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/main_screen.dart';
+
+import 'package:sodam/widgets/login_button.dart';
 import 'package:sodam/widgets/login_input_container.dart';
-import 'package:sodam/widgets/membership_input_container.dart';
-import 'package:sodam/widgets/membership_next_button.dart';
+
+import 'package:sodam/widgets/move_to_membership_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      backgroundColor: Pallete.sodamGreen,
+      backgroundColor: Pallete.sodamIvory,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamGreen,
-        foregroundColor: Pallete.sodamDarkPink, //글씨 색
-        title: const Text(
-          "로그인",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w800,
-            fontFamily: "PoorStory",
-          ),
-        ),
+        backgroundColor: Pallete.sodamIvory,
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "소담",
-              style: TextStyle(
-                color: Pallete.sodamBeige,
-                fontSize: 95,
-                fontWeight: FontWeight.w400,
-                fontFamily: "Gugi",
+            const SizedBox(
+              height: 20,
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 15),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "안녕하세요, 소담이에요!",
+                  style: TextStyle(
+                    color: Pallete.sodamBrown,
+                    fontFamily: "IBMPlexSansKRBold",
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 15),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "다시 만나 반가워요 :)",
+                  style: TextStyle(
+                    color: Pallete.sodamBrown,
+                    fontFamily: "IBMPlexSansKRBold",
+                    fontSize: 20,
+                  ),
+                ),
               ),
             ),
             SizedBox(
+              height: screenHeight * 0.1,
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '아이디',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                    color: Pallete.sodamBrown,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
               height: 5,
             ),
-            Text(
-              '로그인',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 30,
-                color: Pallete.sodamDarkPink,
-                fontFamily: "IBMPlexSansKRBold",
+            const LoginInputContainer(width: 220, height: 60, hintText: ""),
+            const SizedBox(
+              height: 10,
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '비밀번호',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                    color: Pallete.sodamBrown,
+                  ),
+                ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
+              height: 5,
+            ),
+            const LoginInputContainer(width: 220, height: 60, hintText: ""),
+            const SizedBox(
               height: 50,
             ),
-            Padding(
-              //id
-              padding: EdgeInsets.all(20),
+            const LoginButton(),
+            const Spacer(),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '아이디',
-                    textAlign: TextAlign.center,
+                    "아직 계정이 없으신가요?",
                     style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w900,
-                      color: Pallete.sodamBrown,
+                      color: Colors.grey,
+                      fontSize: 17,
                     ),
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  LoginInputContainer(width: 220, height: 60, hintText: ""),
+                  MoveToMembershipButton(),
                 ],
               ),
             ),
-            Padding(
-              //password
-              padding: EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    '비밀번호',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w900,
-                      color: Pallete.sodamBrown,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  LoginInputContainer(width: 220, height: 60, hintText: ""),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            // MembershipNextButton(//로그인 하기 버튼 새로 구현 필요.
-            //     destination: MainScreen(
-            //   isGuardian: true,
-            // )), //여기 바꿔줘야 됨
           ],
         ),
       ),
