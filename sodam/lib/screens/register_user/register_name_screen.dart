@@ -76,10 +76,23 @@ class _MembershipNameElderlyScreenState
                     ),
                   ),
                   const SizedBox(height: 60),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 60),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '이름',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                          color: Pallete.sodamBrown,
+                        ),
+                      ),
+                    ),
+                  ),
                   MembershipInputContainer(
-                    width: 300,
                     height: 70,
-                    hintText: "사용자님의 이름을 입력하세요.",
                     controller: _nameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {

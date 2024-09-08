@@ -25,7 +25,7 @@ class LoginInputContainer extends StatelessWidget {
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Colors.grey, // 테두리 색상 블랙으로 설정
+          color: Colors.grey,
           width: 2.0, // 테두리 두께 설정
         ),
       ),

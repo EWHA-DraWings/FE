@@ -19,4 +19,22 @@ class Pallete {
   //diary 추가 색상
   static const sodamBlueGreen = Color(0xFF50A99A);
   static const sodamLightYellow = Color(0xFFFCDA93);
+
+  //찐 최종 색상들
+  //main
+  static const mainBlue = Color(0xFF5988E4);
+  static const mainWhite = Color(0xffffffff);
+  static const mainGray = Color(0xFFE8E8E8);
+  //Report
+  static const sodamReportBlue = Color(0xFF609DF8);
+  static const sodamReportPurple = Color(0xFFE3CDF6);
+  static const sodamReportGreen = Color(0xFFDFFBDA); 
+  //button
+  static const sodamButtonPurple = Color(0xFF8C6DB4);
+  static const sodamButtonSkyBlue = Color(0xFF97C5F0);
+  static const sodamButtonDarkGreen = Color(0xFF58A1A4);
+  //additional colors
+  static const signinInputGray = Color(0xFFD9D9D9);
+  
+  
 }

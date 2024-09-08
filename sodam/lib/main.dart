@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:sodam/screens/Guardian_membership/membership_screen.dart';
 import 'package:sodam/screens/login_screen.dart';
 import 'package:sodam/screens/main_screen.dart';
 import 'package:sodam/screens/report/report_result_screen.dart';
@@ -23,9 +24,10 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      //home: MainScreen(isGuardian: true),
-      home: ReportResultScreen(reportDate: '5월 27일'),
+    return const MaterialApp(
+      home: MainScreen(isGuardian: false),
+      //home: ReportResultScreen(reportDate: '5월 27일'),
+      //home: LoginScreen(),
     );
   }
 }

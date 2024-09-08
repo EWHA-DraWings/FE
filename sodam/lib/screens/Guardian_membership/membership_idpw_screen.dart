@@ -78,9 +78,9 @@ class _MembershipIdpwScreenState extends State<MembershipIdpwScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   MembershipInputContainer(
-                    width: 300,
+                    
                     height: 60,
-                    hintText: "아이디",
+                    
                     controller: _idController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -94,9 +94,9 @@ class _MembershipIdpwScreenState extends State<MembershipIdpwScreen> {
                   ),
                   const SizedBox(height: 10),
                   MembershipInputContainer(
-                    width: 300,
+                    
                     height: 60,
-                    hintText: "비밀번호",
+                    
                     controller: _passwordController,
                     obscureText: true,
                     validator: (value) {

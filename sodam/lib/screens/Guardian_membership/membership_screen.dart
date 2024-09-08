@@ -39,6 +39,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Pallete.sodamIvory,
       appBar: AppBar(
@@ -49,7 +50,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w800,
-            fontFamily: "Gugi",
+            fontFamily: "IBMPlexSansKRBold",
           ),
         ),
       ),
@@ -74,7 +75,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
                         "elderly"); // Set role to "elderly" and navigate
                   },
                   child: Container(
-                    width: 300,
+                    width: screenWidth * 0.8,
                     height: 70,
                     decoration: BoxDecoration(
                       color: const Color(0xFFFF8F74),
@@ -93,11 +94,13 @@ class _MembershipScreenState extends State<MembershipScreen> {
                         vertical: 11,
                         horizontal: 100,
                       ),
-                      child: Text(
-                        "사용자",
-                        style: TextStyle(
-                          fontSize: 35,
-                          fontFamily: "PoorStory",
+                      child: Center(
+                        child: Text(
+                          "사용자",
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontFamily: "IBMPlexSansKRBold",
+                          ),
                         ),
                       ),
                     ),
@@ -110,7 +113,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
                         "guardian"); // Set role to "guardian" and navigate
                   },
                   child: Container(
-                    width: 300,
+                    width: screenWidth * 0.8,
                     height: 70,
                     decoration: BoxDecoration(
                       color: Pallete.sodamNewGreen,
@@ -129,11 +132,13 @@ class _MembershipScreenState extends State<MembershipScreen> {
                         vertical: 11,
                         horizontal: 100,
                       ),
-                      child: Text(
-                        "보호자",
-                        style: TextStyle(
-                          fontSize: 35,
-                          fontFamily: "PoorStory",
+                      child: Center(
+                        child: Text(
+                          "보호자",
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontFamily: "IBMPlexSansKRBold",
+                          ),
                         ),
                       ),
                     ),

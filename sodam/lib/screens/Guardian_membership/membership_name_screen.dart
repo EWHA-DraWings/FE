@@ -72,9 +72,8 @@ class _MembershipNameScreenState extends State<MembershipNameScreen> {
                   ),
                   const SizedBox(height: 60),
                   MembershipInputContainer(
-                    width: 300,
                     height: 70,
-                    hintText: "사용자님의 이름을 입력하세요.",
+                    
                     controller: _nameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
