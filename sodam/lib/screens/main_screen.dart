@@ -17,102 +17,114 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.sodamIvory,
-      body: Column(
-        children: [
-          Flexible(
-            flex: 2,
-            child: Center(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.27,
-                  ),
-                  const Text(
-                    "소담",
-                    style: TextStyle(
-                        fontSize: 90,
-                        color: Pallete.sodamLightBrown,
-                        fontFamily: "Gugi",
-                        height: 1),
-                  ),
-                  const Text(
-                    "나만의 작은 이야기",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Pallete.sodamNewDarkPink,
-                      fontFamily: "Gugi",
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Pallete.mainBlue, // 시작 색상 (블루)
+              Pallete.mainWhite, // 끝 색상 (화이트)
+            ],
+            stops: [0.2, 0.8],
+          ),
+        ),
+        child: Column(
+          children: [
+            Flexible(
+              flex: 2,
+              child: Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width * 0.27,
                     ),
-                  ),
-                ],
+                    const Text(
+                      "소담",
+                      style: TextStyle(
+                          fontSize: 90,
+                          color: Pallete.mainWhite,
+                          fontFamily: "Gugi",
+                          height: 1),
+                    ),
+                    const Text(
+                      "나만의 작은 이야기",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Pallete.sodamNewDarkPink,
+                        fontFamily: "Gugi",
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Flexible(
-            flex: 4,
-            child: Center(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.width * 0.05,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      MainPageButton(
-                        destination: const DiaryChatScreen(),
-                        text: "대화하기",
-                        backColor: Pallete.sodamOrange,
-                        iconPath: "lib/assets/images/chat.png",
-                        isGuardian: isGuardian,
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      MainPageButton(
-                        destination: const DiaryCalendarScreen(),
-                        text: "일기장",
-                        backColor: Pallete.sodamNewGreen,
-                        iconPath: "lib/assets/images/diary.png",
-                        isGuardian: isGuardian,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 35),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      MainPageButton(
-                        destination: const ReportCalendarScreen(),
-                        text: "리포트",
-                        backColor: Pallete.sodamNewDarkPink,
-                        iconPath: "lib/assets/images/report.png",
-                        isGuardian: isGuardian,
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      MainPageButton(
-                        destination: isGuardian
-                            ? const GuardianDiagnosisScreen()
-                            : const UserDiagnosisScreen(),
-                        text: "자가진단",
-                        backColor: Pallete.sodamYellow,
-                        iconPath: "lib/assets/images/self_diagnosis.png",
-                        isGuardian: isGuardian,
-                      ),
-                    ],
-                  ),
-                  const Spacer(), // 남은 공간을 채워서 버튼을 아래로 밀어냄
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 18),
-                    child: LogoutButtonWidget(), //로그아웃 버튼
-                  ),
-                ],
+            Flexible(
+              flex: 4,
+              child: Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width * 0.05,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        MainPageButton(
+                          destination: const DiaryChatScreen(),
+                          text: "대화하기",
+                          backColor: Pallete.mainBlue,
+                          iconPath: "lib/assets/images/chat.png",
+                          isGuardian: isGuardian,
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        MainPageButton(
+                          destination: const DiaryCalendarScreen(),
+                          text: "일기장",
+                          backColor: Pallete.sodamButtonDarkGreen,
+                          iconPath: "lib/assets/images/diary.png",
+                          isGuardian: isGuardian,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 35),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        MainPageButton(
+                          destination: const ReportCalendarScreen(),
+                          text: "리포트",
+                          backColor: Pallete.sodamButtonPurple,
+                          iconPath: "lib/assets/images/report.png",
+                          isGuardian: isGuardian,
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        MainPageButton(
+                          destination: isGuardian
+                              ? const GuardianDiagnosisScreen()
+                              : const UserDiagnosisScreen(),
+                          text: "자가진단",
+                          backColor: Pallete.sodamButtonSkyBlue,
+                          iconPath: "lib/assets/images/self_diagnosis.png",
+                          isGuardian: isGuardian,
+                        ),
+                      ],
+                    ),
+                    const Spacer(), // 남은 공간을 채워서 버튼을 아래로 밀어냄
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 18),
+                      child: LogoutButtonWidget(), //로그아웃 버튼
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

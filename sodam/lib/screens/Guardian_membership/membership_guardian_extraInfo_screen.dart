@@ -229,9 +229,9 @@ class _MemebershipExtrainfoScreenState
                     birthdayText(),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
-                      width: 300,
+                      
                       height: 50,
-                      hintText: "전화번호",
+                      
                       controller: _phoneController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -248,9 +248,9 @@ class _MemebershipExtrainfoScreenState
                     ),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
-                      width: 300,
+                     
                       height: 50,
-                      hintText: "이메일",
+                      
                       controller: _emailController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -266,9 +266,9 @@ class _MemebershipExtrainfoScreenState
                     ),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
-                      width: 300,
+                      
                       height: 50,
-                      hintText: "직업",
+                     
                       controller: _jobController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -279,9 +279,9 @@ class _MemebershipExtrainfoScreenState
                     ),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
-                      width: 300,
+                      
                       height: 50,
-                      hintText: "거주 지역",
+                      
                       controller: _addressController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
