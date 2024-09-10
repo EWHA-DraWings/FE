@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/start_screen.dart';

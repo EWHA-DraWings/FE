@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sodam/pallete.dart';
 
 class TitleWidget extends StatelessWidget {
   final Color backgroundColor;

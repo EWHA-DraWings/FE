@@ -126,9 +126,7 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:sodam/models/elderly_data.dart';
-import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/Guardian_membership/membership_guardian_extraInfo_screen.dart';
 import 'package:sodam/screens/register_user/register_phone_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
 import 'package:sodam/widgets/membership_next_button.dart';

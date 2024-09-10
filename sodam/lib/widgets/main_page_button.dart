@@ -95,14 +95,17 @@ class _MainPageButtonState extends State<MainPageButton>
                 height: screenWidth * 0.38,
                 decoration: BoxDecoration(
                   color: isDisabled
-                      ? Colors.grey.withOpacity(0.5)
+                      ? const Color.fromARGB(255, 135, 137, 155)
+                          .withOpacity(0.5)
                       : _colorAnimation.value,
                   borderRadius: BorderRadius.circular(30),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.8), // 그림자 색상 및 투명도 설정
-                      spreadRadius: 2, // 그림자 확산 정도
-                      blurRadius: 5, // 그림자 흐림 정도
+                      color: isDisabled
+                          ? Colors.transparent
+                          : Colors.white.withOpacity(0.5), // 그림자 색상 및 투명도 설정
+                      spreadRadius: 1, // 그림자 확산 정도
+                      blurRadius: 10, // 그림자 흐림 정도
                     ),
                   ],
                 ),
@@ -110,7 +113,9 @@ class _MainPageButtonState extends State<MainPageButton>
                   child: Image.asset(
                     widget.iconPath,
                     width: 70,
-                    color: isDisabled ? Colors.grey : null, // 비활성화 시 아이콘 색상 변경
+                    color: isDisabled
+                        ? const Color.fromARGB(255, 181, 181, 201)
+                        : null, // 비활성화 시 아이콘 색상 변경
                   ),
                 ),
               );
@@ -121,7 +126,9 @@ class _MainPageButtonState extends State<MainPageButton>
         Text(
           widget.text,
           style: TextStyle(
-            color: isDisabled ? Colors.grey : Colors.black, // 비활성화 시 텍스트 색상 변경
+            color: isDisabled
+                ? const Color.fromARGB(255, 162, 164, 186)
+                : Pallete.mainBlack, // 비활성화 시 텍스트 색상 변경
             fontSize: 20,
             fontFamily: "IBMPlexSansKRBold",
           ),

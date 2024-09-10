@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/self_diagnosis/guardian_totalscore_screen.dart';
 import 'package:sodam/screens/self_diagnosis/user_totalscore_screen.dart';
 
 class UserDiagnosisScreen extends StatefulWidget {

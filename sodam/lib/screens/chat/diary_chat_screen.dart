@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/chat/bubble.dart';
 
@@ -32,9 +29,9 @@ class _DiaryChatScreenState extends State<DiaryChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.sodamIvory,
+      backgroundColor: Pallete.mainWhite,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamIvory,
+        backgroundColor: Pallete.mainWhite,
         scrolledUnderElevation: 0,
         title: Column(
           children: [
@@ -45,7 +42,7 @@ class _DiaryChatScreenState extends State<DiaryChatScreen> {
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    color: Pallete.sodamLightYellow,
+                    color: const Color(0xFFCDDEF8),
                   ),
                   child: ClipOval(
                     child: Image.asset(
@@ -98,7 +95,7 @@ class _DiaryChatScreenState extends State<DiaryChatScreen> {
                               width: MediaQuery.of(context).size.width * 0.7,
                               height: 55,
                               decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 255, 255, 255),
+                                color: Pallete.mainGray,
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: const Align(
@@ -126,7 +123,7 @@ class _DiaryChatScreenState extends State<DiaryChatScreen> {
                                 });
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Pallete.sodamNewDarkPink,
+                                backgroundColor: Pallete.mainBlue,
                                 shape: const CircleBorder(), // 원형 버튼
                                 padding: const EdgeInsets.all(1),
                               ),
@@ -155,7 +152,7 @@ class _DiaryChatScreenState extends State<DiaryChatScreen> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 height: 55,
                 decoration: BoxDecoration(
-                  color: Pallete.sodamNewDarkPink,
+                  color: Pallete.mainBlue,
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Row(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/Guardian_membership/membership_guardian_extraInfo_screen.dart';
+import 'package:sodam/screens/Guardian_membership/membership_addinfo_first_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
 import 'package:sodam/widgets/membership_next_button.dart';
 
@@ -35,7 +35,7 @@ class _MembershipIdpwScreenState extends State<MembershipIdpwScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => MemebershipExtrainfoScreen(
+          builder: (context) => MembershipAddinfoFirstScreen(
             data: updatedGuardianData2, // 업데이트된 GuardianData 객체
           ),
         ),
@@ -45,86 +45,110 @@ class _MembershipIdpwScreenState extends State<MembershipIdpwScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Pallete.sodamIvory,
+      backgroundColor: Pallete.mainWhite,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamIvory,
-        foregroundColor: Pallete.sodamDarkPink, //글씨 색
-        title: const Text(
-          "회원가입",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w800,
-            fontFamily: "Gugi",
-          ),
-        ),
+        backgroundColor: Pallete.mainWhite,
       ),
-      body: Center(
-        child: Form(
-          key: _formKey, // FormKey 설정
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "${widget.data.name}님,\n사용할 아이디와\n비밀번호를\n입력해주세요.", // 빼도 됨
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 40,
-                  fontFamily: 'IBMPlexSansKRRegular',
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Center(
+              child: Form(
+                key: _formKey, // FormKey 설정
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${widget.data.name}님,\n사용할 아이디와\n비밀번호를\n입력해주세요.", // 빼도 됨
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 40,
+                        fontFamily: 'IBMPlexSansKRRegular',
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: screenWidth * 0.11),
+                          child: const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "아이디",
+                              style: TextStyle(
+                                color: Pallete.mainBlack,
+                                fontSize: 20,
+                                fontFamily: "IBMPlexSansKRRegular",
+                              ),
+                            ),
+                          ),
+                        ),
+                        MembershipInputContainer(
+                          height: 60,
+                          controller: _idController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '아이디는 필수 입력 사항입니다.';
+                            }
+                            if (value.length < 6 || value.length > 20) {
+                              return '아이디는 6자 이상 20자 이하이어야 합니다.';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        Padding(
+                          padding: EdgeInsets.only(left: screenWidth * 0.11),
+                          child: const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "비밀번호",
+                              style: TextStyle(
+                                color: Pallete.mainBlack,
+                                fontSize: 20,
+                                fontFamily: "IBMPlexSansKRRegular",
+                              ),
+                            ),
+                          ),
+                        ),
+                        MembershipInputContainer(
+                          height: 60,
+                          controller: _passwordController,
+                          obscureText: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '비밀번호는 필수 입력 사항입니다.';
+                            }
+                            if (value.length < 8 ||
+                                !RegExp(r'[A-Z]').hasMatch(value) ||
+                                !RegExp(r'[a-z]').hasMatch(value) ||
+                                !RegExp(r'[0-9]').hasMatch(value) ||
+                                !RegExp(r'[!@#$%^&*(),.?":{}|<>]')
+                                    .hasMatch(value)) {
+                              return '비밀번호는 8자 이상이어야 하며 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 60),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  MembershipInputContainer(
-                    
-                    height: 60,
-                    
-                    controller: _idController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return '아이디는 필수 입력 사항입니다.';
-                      }
-                      if (value.length < 6 || value.length > 20) {
-                        return '아이디는 6자 이상 20자 이하이어야 합니다.';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  MembershipInputContainer(
-                    
-                    height: 60,
-                    
-                    controller: _passwordController,
-                    obscureText: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return '비밀번호는 필수 입력 사항입니다.';
-                      }
-                      if (value.length < 8 ||
-                          !RegExp(r'[A-Z]').hasMatch(value) ||
-                          !RegExp(r'[a-z]').hasMatch(value) ||
-                          !RegExp(r'[0-9]').hasMatch(value) ||
-                          !RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-                        return '비밀번호는 8자 이상이어야 하며 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 40),
-                  MembershipNextButton(
-                    onPressed: _onNextButtonPressed,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 100,
-              ),
-            ],
+            ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: MembershipNextButton(
+              onPressed:
+                  _onNextButtonPressed, // destination을 onPressed에서 처리하기 때문에 제거
+            ),
+          ),
+        ],
       ),
     );
   }

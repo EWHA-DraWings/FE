@@ -10,9 +10,9 @@ class DiaryScreen extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Pallete.sodamIvory,
+      backgroundColor: Pallete.mainWhite,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamIvory,
+        backgroundColor: Pallete.mainWhite,
         scrolledUnderElevation: 0, //스크롤 시 appbar 색상이 바뀌는 점 해결.
       ),
       body: Stack(
@@ -61,7 +61,7 @@ class DiaryScreen extends StatelessWidget {
                   vertical: 30,
                 ),
                 decoration: BoxDecoration(
-                  color: Pallete.sodamLightYellow,
+                  color: Pallete.mainGray,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Center(
@@ -93,7 +93,7 @@ class DiaryScreen extends StatelessWidget {
                   // 버튼 클릭 시 동작. 나중에 수정필요
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Pallete.sodamBlueGreen,
+                  backgroundColor: Pallete.mainBlue,
                   shape: const CircleBorder(), // 원형 버튼
                   padding: EdgeInsets.zero,
                 ),

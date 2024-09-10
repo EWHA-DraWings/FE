@@ -41,18 +41,9 @@ class _MembershipScreenState extends State<MembershipScreen> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Pallete.sodamIvory,
+      backgroundColor: Pallete.mainWhite,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamIvory,
-        foregroundColor: Pallete.sodamDarkPink, //글씨 색
-        title: const Text(
-          "회원가입",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w800,
-            fontFamily: "IBMPlexSansKRBold",
-          ),
-        ),
+        backgroundColor: Pallete.mainWhite,
       ),
       body: Center(
         child: Column(
@@ -78,7 +69,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
                     width: screenWidth * 0.8,
                     height: 70,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFF8F74),
+                      color: Pallete.mainBlue,
                       borderRadius: BorderRadius.circular(40),
                       boxShadow: const [
                         BoxShadow(
@@ -98,8 +89,9 @@ class _MembershipScreenState extends State<MembershipScreen> {
                         child: Text(
                           "사용자",
                           style: TextStyle(
+                            color: Pallete.mainWhite,
                             fontSize: 28,
-                            fontFamily: "IBMPlexSansKRBold",
+                            fontFamily: "IBMPlexSansKRRegular",
                           ),
                         ),
                       ),
@@ -116,7 +108,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
                     width: screenWidth * 0.8,
                     height: 70,
                     decoration: BoxDecoration(
-                      color: Pallete.sodamNewGreen,
+                      color: Pallete.mainBlue,
                       borderRadius: BorderRadius.circular(40),
                       boxShadow: const [
                         BoxShadow(
@@ -136,8 +128,9 @@ class _MembershipScreenState extends State<MembershipScreen> {
                         child: Text(
                           "보호자",
                           style: TextStyle(
+                            color: Pallete.mainWhite,
                             fontSize: 28,
-                            fontFamily: "IBMPlexSansKRBold",
+                            fontFamily: "IBMPlexSansKRRegular",
                           ),
                         ),
                       ),
@@ -146,7 +139,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 80),
+            const SizedBox(height: 150),
           ],
         ),
       ),
