@@ -19,7 +19,7 @@ class Bubble extends StatelessWidget {
               constraints: BoxConstraints(
                   maxWidth: MediaQuery.of(context).size.width * 0.66),
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 10, 62, 104),
+                color: Pallete.mainBlue,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(0),
@@ -28,17 +28,17 @@ class Bubble extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.8), // 그림자의 색상
-                    offset: const Offset(2, 2), // 그림자의 위치 (x, y)
-                    blurRadius: 4, // 그림자의 흐림 정도
+                    color: Colors.black.withOpacity(0.6), // 그림자의 색상
+                    offset: const Offset(1, 1), // 그림자의 위치 (x, y)
+                    blurRadius: 5, // 그림자의 흐림 정도
                     spreadRadius: 1, // 그림자의 확산 정도
                   )
                 ],
               ),
               child: Text(
                 chat['text'],
-                style: TextStyle(
-                    color: isUser ? Colors.white : Colors.black,
+                style: const TextStyle(
+                    color: Pallete.mainWhite,
                     fontSize: 23,
                     fontFamily: "IBMPlexSansKRRegular"),
               ),
@@ -54,7 +54,7 @@ class Bubble extends StatelessWidget {
                   height: 45,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    color: Pallete.sodamLightYellow,
+                    color: const Color(0xFFCDDEF8),
                   ),
                   child: ClipOval(
                     child: Image.asset(
@@ -71,7 +71,7 @@ class Bubble extends StatelessWidget {
                   constraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width * 0.66),
                   decoration: BoxDecoration(
-                    color: Colors.grey[300],
+                    color: Pallete.mainGray,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(0),
                       topRight: Radius.circular(20),
@@ -81,16 +81,16 @@ class Bubble extends StatelessWidget {
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.4), // 그림자의 색상
-                        offset: const Offset(2, 2), // 그림자의 위치 (x, y)
-                        blurRadius: 4, // 그림자의 흐림 정도
-                        spreadRadius: 2, // 그림자의 확산 정도
+                        offset: const Offset(1, 1), // 그림자의 위치 (x, y)
+                        blurRadius: 10, // 그림자의 흐림 정도
+                        spreadRadius: 1, // 그림자의 확산 정도
                       ),
                     ],
                   ),
                   child: Text(
                     chat['text'],
-                    style: TextStyle(
-                        color: isUser ? Colors.white : Colors.black,
+                    style: const TextStyle(
+                        color: Pallete.mainBlack,
                         fontSize: 23,
                         fontFamily: "IBMPlexSansKRRegular"),
                   ),

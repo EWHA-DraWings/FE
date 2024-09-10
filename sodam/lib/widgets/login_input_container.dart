@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sodam/pallete.dart';
 
 class LoginInputContainer extends StatelessWidget {
   //이 위젯은 너비, 높이와 hintText를 지정할 수 있는 입력 컨테이너.

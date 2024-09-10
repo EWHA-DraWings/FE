@@ -1,16 +1,10 @@
-import 'dart:ui';
 
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sodam/models/memory_score_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/start_screen.dart';
 import 'package:sodam/widgets/round_next_button.dart';
-import 'package:sodam/widgets/shadow_white_container.dart';
 import 'package:sodam/widgets/title_widget.dart';
 
 class ReportMemoryScoreScreen extends StatelessWidget {
