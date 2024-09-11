@@ -29,7 +29,7 @@ class TitleWidget extends StatelessWidget {
             text,
             style: TextStyle(
               color: textColor,
-              fontSize: 25,
+              fontSize: 30,
               fontFamily: "IBMPlexSansKRBold",
             ),
           ),
