@@ -117,7 +117,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  MoveToMembershipButton(),
+                  //MoveToMembershipButton(), ->에러나서 임시 주석처리
                 ],
               ),
             ),

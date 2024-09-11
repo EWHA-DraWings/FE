@@ -2,12 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
 
 class DiaryScreen extends StatelessWidget {
-  const DiaryScreen({super.key});
+  final DateTime date;
+
+  const DiaryScreen({super.key, required this.date});
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
+    //달력 날짜 처리용
+    int month = date.month;
+    int day = date.day;
+
+    int weekdayIndex = date.weekday;
+    List<String> weekdays = [
+      '월요일',
+      '화요일',
+      '수요일',
+      '목요일',
+      '금요일',
+      '토요일',
+      '일요일',
+    ];
+    //날짜 요일 처리
+    String weekday = weekdays[weekdayIndex - 1];
 
     return Scaffold(
       backgroundColor: Pallete.mainWhite,
@@ -24,9 +43,9 @@ class DiaryScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: screenWidth * 0.08),
-                    child: const Text(
-                      "5월 27일 화요일",
-                      style: TextStyle(
+                    child: Text(
+                      "$month월 $day일 $weekday",
+                      style: const TextStyle(
                         fontFamily: "IBMPlexSansKRRegular",
                         fontSize: 22,
                       ),
