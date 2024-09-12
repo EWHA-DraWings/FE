@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/models/elderly_data.dart';
-import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/Guardian_membership/membership_idpw_screen.dart';
 import 'package:sodam/screens/register_user/register_id_pw_screen.dart';
-import 'package:sodam/screens/register_user/register_phone_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
 import 'package:sodam/widgets/membership_next_button.dart';
 
@@ -76,10 +73,23 @@ class _MembershipNameElderlyScreenState
                     ),
                   ),
                   const SizedBox(height: 60),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 60),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '이름',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                          color: Pallete.sodamBrown,
+                        ),
+                      ),
+                    ),
+                  ),
                   MembershipInputContainer(
-                    width: 300,
                     height: 70,
-                    hintText: "사용자님의 이름을 입력하세요.",
                     controller: _nameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {

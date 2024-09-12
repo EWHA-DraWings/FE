@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/diary_screen.dart';
+import 'package:sodam/widgets/title_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class DiaryCalendarScreen extends StatefulWidget {
@@ -49,8 +50,9 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  const DiaryScreen(), // 나중에 수정 필요 date: selectedDay
+              builder: (context) => DiaryScreen(
+                date: selectedDay,
+              ),
             ),
           );
         });
@@ -62,41 +64,18 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.sodamIvory,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamIvory,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
       ),
       body: Center(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.85,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 57, 146, 97),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      offset: const Offset(0, 0),
-                      blurRadius: 4,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-                child: const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "일기 확인하기",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontFamily: "IBMPlexSansKRBold"),
-                  ),
-                ),
-              ),
+            const TitleWidget(
+              backgroundColor: Pallete.mainBlue,
+              text: '일기 확인하기',
+              textColor: Colors.white,
             ),
             const SizedBox(
               height: 10,
@@ -159,7 +138,7 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
                     calendarStyle: CalendarStyle(
                       // 선택 날짜 스타일
                       selectedDecoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 31, 90, 207), // 선택된 날짜의 배경색
+                        color: Pallete.mainBlue, // 선택된 날짜의 배경색
                         shape: BoxShape.circle, // 선택된 날짜를 감싸는 원 모양
                       ),
                       selectedTextStyle: TextStyle(
@@ -213,11 +192,11 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
               height: 30,
             ),
             const Text(
-              "보고싶은 날짜를",
+              "확인하고자 하는 날짜를",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 25,
-                color: Pallete.sodamBrown,
+                color: Color(0xFF434958),
                 fontFamily: "IBMPlexSansKRRegular",
               ),
             ),
@@ -225,20 +204,20 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "달력에서 클릭",
+                  "달력에서 선택",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
-                    color: Pallete.sodamBrown,
+                    color: Color(0xFF434958),
                     fontFamily: "IBMPlexSansKRBold",
                   ),
                 ),
                 Text(
-                  "해주세요",
+                  "해주세요!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 25,
-                    color: Pallete.sodamBrown,
+                    color: Color(0xFF434958),
                     fontFamily: "IBMPlexSansKRRegular",
                   ),
                 ),

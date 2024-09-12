@@ -4,23 +4,22 @@ import 'package:flutter/services.dart';
 import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/Guardian_membership/membership_elderly_extraInfo_screen.dart';
-import 'package:sodam/screens/login_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
 import 'package:sodam/widgets/membership_next_button.dart';
-import 'dart:convert'; //JSON 변환을 위해 필요
+//JSON 변환을 위해 필요
 import 'package:intl/intl.dart'; // Date Format 사용시 사용하는 패키지
 
-class MemebershipExtrainfoScreen extends StatefulWidget {
+class MembershipGuardianAddinfoSecondScreen extends StatefulWidget {
   final GuardianData data;
-  const MemebershipExtrainfoScreen({super.key, required this.data});
+  const MembershipGuardianAddinfoSecondScreen({super.key, required this.data});
 
   @override
-  State<MemebershipExtrainfoScreen> createState() =>
-      _MemebershipExtrainfoScreenState();
+  State<MembershipGuardianAddinfoSecondScreen> createState() =>
+      _MembershipGuardianAddinfoSecondScreenState();
 }
 
-class _MemebershipExtrainfoScreenState
-    extends State<MemebershipExtrainfoScreen> {
+class _MembershipGuardianAddinfoSecondScreenState
+    extends State<MembershipGuardianAddinfoSecondScreen> {
   //textField controller
   final _birthdayController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -229,9 +228,9 @@ class _MemebershipExtrainfoScreenState
                     birthdayText(),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
-                      width: 300,
+                      
                       height: 50,
-                      hintText: "전화번호",
+                      
                       controller: _phoneController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -248,9 +247,9 @@ class _MemebershipExtrainfoScreenState
                     ),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
-                      width: 300,
+                     
                       height: 50,
-                      hintText: "이메일",
+                      
                       controller: _emailController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -266,9 +265,9 @@ class _MemebershipExtrainfoScreenState
                     ),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
-                      width: 300,
+                      
                       height: 50,
-                      hintText: "직업",
+                     
                       controller: _jobController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -279,9 +278,9 @@ class _MemebershipExtrainfoScreenState
                     ),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
-                      width: 300,
+                      
                       height: 50,
-                      hintText: "거주 지역",
+                      
                       controller: _addressController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {

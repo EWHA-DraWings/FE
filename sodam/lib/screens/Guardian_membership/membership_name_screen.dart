@@ -40,60 +40,74 @@ class _MembershipNameScreenState extends State<MembershipNameScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Pallete.sodamIvory,
+      backgroundColor: Pallete.mainWhite,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamIvory,
-        foregroundColor: Pallete.sodamDarkPink, // 글씨 색
-        title: const Text(
-          "회원가입",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w800,
-            fontFamily: "Gugi",
-          ),
-        ),
+        backgroundColor: Pallete.mainWhite,
       ),
-      body: Center(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  const Text(
-                    "성함이 어떻게\n되시나요?",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontFamily: "IBMPlexSansKRRegular",
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Center(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        SizedBox(height: screenHeight * 0.1),
+                        const Text(
+                          "성함이 어떻게\n되시나요?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontFamily: "IBMPlexSansKRRegular",
+                          ),
+                        ),
+                        const SizedBox(height: 60),
+                        Padding(
+                          padding: EdgeInsets.only(left: screenWidth * 0.11),
+                          child: const Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "이름",
+                              style: TextStyle(
+                                color: Pallete.mainBlack,
+                                fontSize: 20,
+                                fontFamily: "IBMPlexSansKRRegular",
+                              ),
+                            ),
+                          ),
+                        ),
+                        MembershipInputContainer(
+                          height: 60,
+                          controller: _nameController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '이름은 필수 입력 사항입니다.';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 60),
-                  MembershipInputContainer(
-                    width: 300,
-                    height: 70,
-                    hintText: "사용자님의 이름을 입력하세요.",
-                    controller: _nameController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return '이름은 필수 입력 사항입니다.';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 40),
-                  MembershipNextButton(
-                    onPressed:
-                        _onNextButtonPressed, // destination을 onPressed에서 처리하기 때문에 제거
-                  ),
-                  const SizedBox(height: 80),
-                ],
+                  ],
+                ),
               ),
-            ],
+            ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: MembershipNextButton(
+              onPressed:
+                  _onNextButtonPressed, // destination을 onPressed에서 처리하기 때문에 제거
+            ),
+          ),
+        ],
       ),
     );
   }

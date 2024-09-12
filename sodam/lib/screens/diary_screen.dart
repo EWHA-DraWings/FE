@@ -2,17 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
 
 class DiaryScreen extends StatelessWidget {
-  const DiaryScreen({super.key});
+  final DateTime date;
+
+  const DiaryScreen({super.key, required this.date});
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
+    //달력 날짜 처리용
+    int month = date.month;
+    int day = date.day;
+
+    int weekdayIndex = date.weekday;
+    List<String> weekdays = [
+      '월요일',
+      '화요일',
+      '수요일',
+      '목요일',
+      '금요일',
+      '토요일',
+      '일요일',
+    ];
+    //날짜 요일 처리
+    String weekday = weekdays[weekdayIndex - 1];
+
     return Scaffold(
-      backgroundColor: Pallete.sodamIvory,
+      backgroundColor: Pallete.mainWhite,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamIvory,
+        backgroundColor: Pallete.mainWhite,
         scrolledUnderElevation: 0, //스크롤 시 appbar 색상이 바뀌는 점 해결.
       ),
       body: Stack(
@@ -24,9 +43,9 @@ class DiaryScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: screenWidth * 0.08),
-                    child: const Text(
-                      "5월 27일 화요일",
-                      style: TextStyle(
+                    child: Text(
+                      "$month월 $day일 $weekday",
+                      style: const TextStyle(
                         fontFamily: "IBMPlexSansKRRegular",
                         fontSize: 22,
                       ),
@@ -61,7 +80,7 @@ class DiaryScreen extends StatelessWidget {
                   vertical: 30,
                 ),
                 decoration: BoxDecoration(
-                  color: Pallete.sodamLightYellow,
+                  color: Pallete.mainGray,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Center(
@@ -93,7 +112,7 @@ class DiaryScreen extends StatelessWidget {
                   // 버튼 클릭 시 동작. 나중에 수정필요
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Pallete.sodamBlueGreen,
+                  backgroundColor: Pallete.mainBlue,
                   shape: const CircleBorder(), // 원형 버튼
                   padding: EdgeInsets.zero,
                 ),

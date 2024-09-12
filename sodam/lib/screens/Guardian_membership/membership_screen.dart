@@ -39,19 +39,11 @@ class _MembershipScreenState extends State<MembershipScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Pallete.sodamIvory,
+      backgroundColor: Pallete.mainWhite,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamIvory,
-        foregroundColor: Pallete.sodamDarkPink, //글씨 색
-        title: const Text(
-          "회원가입",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w800,
-            fontFamily: "Gugi",
-          ),
-        ),
+        backgroundColor: Pallete.mainWhite,
       ),
       body: Center(
         child: Column(
@@ -74,10 +66,10 @@ class _MembershipScreenState extends State<MembershipScreen> {
                         "elderly"); // Set role to "elderly" and navigate
                   },
                   child: Container(
-                    width: 300,
+                    width: screenWidth * 0.8,
                     height: 70,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFFF8F74),
+                      color: Pallete.mainBlue,
                       borderRadius: BorderRadius.circular(40),
                       boxShadow: const [
                         BoxShadow(
@@ -93,11 +85,14 @@ class _MembershipScreenState extends State<MembershipScreen> {
                         vertical: 11,
                         horizontal: 100,
                       ),
-                      child: Text(
-                        "사용자",
-                        style: TextStyle(
-                          fontSize: 35,
-                          fontFamily: "PoorStory",
+                      child: Center(
+                        child: Text(
+                          "사용자",
+                          style: TextStyle(
+                            color: Pallete.mainWhite,
+                            fontSize: 28,
+                            fontFamily: "IBMPlexSansKRRegular",
+                          ),
                         ),
                       ),
                     ),
@@ -110,10 +105,10 @@ class _MembershipScreenState extends State<MembershipScreen> {
                         "guardian"); // Set role to "guardian" and navigate
                   },
                   child: Container(
-                    width: 300,
+                    width: screenWidth * 0.8,
                     height: 70,
                     decoration: BoxDecoration(
-                      color: Pallete.sodamNewGreen,
+                      color: Pallete.mainBlue,
                       borderRadius: BorderRadius.circular(40),
                       boxShadow: const [
                         BoxShadow(
@@ -129,11 +124,14 @@ class _MembershipScreenState extends State<MembershipScreen> {
                         vertical: 11,
                         horizontal: 100,
                       ),
-                      child: Text(
-                        "보호자",
-                        style: TextStyle(
-                          fontSize: 35,
-                          fontFamily: "PoorStory",
+                      child: Center(
+                        child: Text(
+                          "보호자",
+                          style: TextStyle(
+                            color: Pallete.mainWhite,
+                            fontSize: 28,
+                            fontFamily: "IBMPlexSansKRRegular",
+                          ),
                         ),
                       ),
                     ),
@@ -141,7 +139,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 80),
+            const SizedBox(height: 150),
           ],
         ),
       ),

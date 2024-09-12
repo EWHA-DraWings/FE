@@ -7,7 +7,7 @@ import 'package:sodam/screens/login_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
 import 'dart:convert'; //JSON 변환을 위해 필요
 import 'package:intl/intl.dart'; // Date Format 사용시 사용하는 패키지
-import 'package:http/http.dart' as http; // http 패키지 추가
+// http 패키지 추가
 
 class MemebershipElderlyExtraInfoScreen extends StatefulWidget {
   final GuardianData data;
@@ -287,9 +287,7 @@ class _MemebershipElderlyExtraInfoScreenstate
                       height: 10,
                     ),
                     MembershipInputContainer(
-                      width: 300,
                       height: 50,
-                      hintText: "이름",
                       controller: _nameController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -300,9 +298,7 @@ class _MemebershipElderlyExtraInfoScreenstate
                     ),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
-                      width: 300,
                       height: 50,
-                      hintText: "전화번호",
                       controller: _phoneController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -322,9 +318,7 @@ class _MemebershipElderlyExtraInfoScreenstate
                     birthdayText(),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
-                      width: 300,
                       height: 50,
-                      hintText: "거주 지역",
                       controller: _addressController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -335,9 +329,7 @@ class _MemebershipElderlyExtraInfoScreenstate
                     ),
                     const SizedBox(height: 20),
                     MembershipInputContainer(
-                      width: 300,
                       height: 50,
-                      hintText: "현재 가지고 있는 질환/질병, 건강상태",
                       controller: _conditionController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {

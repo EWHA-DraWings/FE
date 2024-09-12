@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
+import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/Guardian_membership/membership_screen.dart';
 
 class MoveToMembershipButton extends StatelessWidget {
@@ -32,11 +33,11 @@ class MoveToMembershipButton extends StatelessWidget {
       child: const Text(
         "회원가입",
         style: TextStyle(
-          color: Color.fromARGB(255, 102, 54, 143),
-          fontSize: 20,
-          fontWeight: FontWeight.w700,
+          color: Pallete.mainBlue,
+          fontSize: 25,
+          fontFamily: "IBMPlexSansKRBold",
         ),
       ),
     );
   }
-}
+}*/

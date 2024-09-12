@@ -126,9 +126,7 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:sodam/models/elderly_data.dart';
-import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/Guardian_membership/membership_guardian_extraInfo_screen.dart';
 import 'package:sodam/screens/register_user/register_phone_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
 import 'package:sodam/widgets/membership_next_button.dart';
@@ -208,9 +206,9 @@ class _MembershipIdpwElderlyScreenState
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   MembershipInputContainer(
-                    width: 300,
+                 
                     height: 60,
-                    hintText: "아이디",
+                 
                     controller: _idController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -224,9 +222,9 @@ class _MembershipIdpwElderlyScreenState
                   ),
                   const SizedBox(height: 10),
                   MembershipInputContainer(
-                    width: 300,
+              
                     height: 60,
-                    hintText: "비밀번호",
+             
                     controller: _passwordController,
                     obscureText: true,
                     validator: (value) {
