@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sodam/pallete.dart';
 
 class LogoutButtonWidget extends StatefulWidget {
   const LogoutButtonWidget({
@@ -18,14 +18,21 @@ class _LogoutButtonWidgetState extends State<LogoutButtonWidget> {
         // 버튼 클릭 시 동작. (로그아웃)
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 240, 234, 222),
+        backgroundColor: Colors.transparent,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        fixedSize: const Size(120, 30),
+        elevation: 0,
       ),
-      child: const Text(
-        "로그아웃",
-        style: TextStyle(
-          color: Color.fromARGB(255, 134, 134, 134),
-          fontSize: 18,
+      child: const Center(
+        child: Text(
+          "로그아웃",
+          style: TextStyle(
+            color: Color.fromARGB(255, 129, 129, 134),
+            fontSize: 18,
+            fontFamily: "IBMPlexSansKRRegular",
+            decoration: TextDecoration.underline, // 밑줄 추가
+            decorationColor: Color.fromARGB(255, 129, 129, 134), // 밑줄 색상
+          ),
         ),
       ),
     );

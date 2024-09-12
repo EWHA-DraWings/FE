@@ -132,9 +132,9 @@ class _UserRegisterPhoneScreenstate extends State<UserRegisterPhoneScreen> {
                   vertical: 20,
                 ),
                 child: MembershipInputContainer(
-                  width: 300,
+            
                   height: 50,
-                  hintText: "전화번호",
+           
                   controller: _phoneController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {

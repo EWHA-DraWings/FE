@@ -13,28 +13,19 @@ class GuardianTotalscoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.sodamIvory,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamIvory,
+        backgroundColor: Colors.white,
         foregroundColor: Colors.black, //글씨 색
-        title: const Center(
-          child: Text(
-            "KDSQ 진단 결과",
-            style: TextStyle(
-              fontSize: 25,
-              fontFamily: "IBMPlexSansKRRegular",
-            ),
-          ),
-        ),
       ),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
               const TitleWidget(
-                backgroundColor: Pallete.sodamYellow,
-                textColor: Pallete.sodamBrown,
-                text: '자가진단 결과',
+                backgroundColor: Pallete.mainBlue,
+                textColor: Colors.white,
+                text: '보호자 자가진단 결과',
               ),
               const SizedBox(height: 10),
               SelfDiagnosisResultWidget(
@@ -46,25 +37,25 @@ class GuardianTotalscoreScreen extends StatelessWidget {
               ),
               const RoundNextButton(
                 btnText: '결과 공유하기',
-                btnColor: Pallete.sodamOrange,
+                btnColor: Pallete.mainGray,
                 emoji: '🔗',
                 screen: StartScreen(), //임시
               ),
               const SizedBox(
-                height: 10,
+                height: 15,
               ),
               const RoundNextButton(
                 btnText: '가까운 병원 찾아보기',
-                btnColor: Pallete.sodamNewGreen,
+                btnColor: Pallete.mainGray,
                 emoji: '🏥',
                 screen: StartScreen(), //임시
               ),
               const SizedBox(
-                height: 10,
+                height: 15,
               ),
               const RoundNextButton(
                 btnText: '자가진단 기록 살펴보기',
-                btnColor: Pallete.sodamYellow,
+                btnColor: Pallete.mainGray,
                 emoji: '📊',
                 screen: StartScreen(), //임시
               ),

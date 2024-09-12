@@ -1,8 +1,6 @@
 //시작화면
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/Guardian_membership/membership_screen.dart';
 import 'package:sodam/screens/login_screen.dart';

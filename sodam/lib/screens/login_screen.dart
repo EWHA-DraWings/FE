@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sodam/pallete.dart';
 
 import 'package:sodam/widgets/login_button.dart';
@@ -15,9 +14,9 @@ class LoginScreen extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Pallete.sodamIvory,
+      backgroundColor: Pallete.mainWhite,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamIvory,
+        backgroundColor: Pallete.mainWhite,
       ),
       body: Center(
         child: Column(
@@ -33,9 +32,9 @@ class LoginScreen extends StatelessWidget {
                 child: Text(
                   "안녕하세요, 소담이에요!",
                   style: TextStyle(
-                    color: Pallete.sodamBrown,
+                    color: Pallete.mainBlack,
                     fontFamily: "IBMPlexSansKRBold",
-                    fontSize: 20,
+                    fontSize: 22,
                   ),
                 ),
               ),
@@ -47,9 +46,9 @@ class LoginScreen extends StatelessWidget {
                 child: Text(
                   "다시 만나 반가워요 :)",
                   style: TextStyle(
-                    color: Pallete.sodamBrown,
+                    color: Pallete.mainBlack,
                     fontFamily: "IBMPlexSansKRBold",
-                    fontSize: 20,
+                    fontSize: 22,
                   ),
                 ),
               ),
@@ -65,9 +64,9 @@ class LoginScreen extends StatelessWidget {
                   '아이디',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                    color: Pallete.sodamBrown,
+                    fontSize: 22,
+                    fontFamily: "IBMPlexSansKRRegular",
+                    color: Pallete.mainBlack,
                   ),
                 ),
               ),
@@ -87,9 +86,9 @@ class LoginScreen extends StatelessWidget {
                   '비밀번호',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                    color: Pallete.sodamBrown,
+                    fontSize: 22,
+                    fontFamily: "IBMPlexSansKRRegular",
+                    color: Pallete.mainBlack,
                   ),
                 ),
               ),
@@ -118,7 +117,7 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  MoveToMembershipButton(),
+                  //MoveToMembershipButton(), ->에러나서 임시 주석처리
                 ],
               ),
             ),

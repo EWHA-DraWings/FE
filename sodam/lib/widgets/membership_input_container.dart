@@ -1,52 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sodam/pallete.dart';
 
 class MembershipInputContainer extends StatelessWidget {
-  //이 위젯은 너비, 높이와 hintText를 지정할 수 있는 입력 컨테이너.
-  final double width;
   final double height;
-  final String hintText;
   final TextEditingController controller;
   final bool obscureText;
   final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
 
   const MembershipInputContainer({
     super.key,
-    required this.width,
     required this.height,
-    required this.hintText,
     required this.controller,
-    this.obscureText = false, //false로 초기화
+    this.obscureText = false,
     this.validator,
+    this.keyboardType,
+    this.inputFormatters,
   });
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      width: width, // 고정된 너비
-      height: height, // 고정된 높이
+      width: screenWidth * 0.85,
+      height: height,
       decoration: BoxDecoration(
-        color: Pallete.sodamYellow.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(10),
+        color: Pallete.signinInputGray,
+        borderRadius: BorderRadius.circular(20),
       ),
+      alignment: Alignment.center, // Center the child inside the container
       child: TextFormField(
-        //TextField => TextFormField 로 유효성 검사가 용이하게 바꿈.
         controller: controller,
         obscureText: obscureText,
         validator: validator,
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
+        inputFormatters: inputFormatters,
+        keyboardType: keyboardType,
+        textAlign: TextAlign.center, // Center the text inside the TextField
+        decoration: const InputDecoration(
           border: InputBorder.none,
-          hintText: hintText,
-          hintStyle: TextStyle(
-            fontSize: 25,
-            fontFamily: 'IBMPlexSansKRRegular',
-            color: Colors.grey[600],
-          ),
-          contentPadding: EdgeInsets.only(top: height / 5),
+          contentPadding: EdgeInsets.zero, // Remove extra padding
         ),
-        style: const TextStyle(
-          fontSize: 20,
+        style: TextStyle(
+          fontSize: height <= 60 ? 15 : 20,
           fontFamily: 'IBMPlexSansKRRegular',
         ),
       ),
