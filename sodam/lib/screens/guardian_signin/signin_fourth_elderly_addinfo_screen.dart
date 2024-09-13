@@ -1,0 +1,306 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:sodam/models/guardian_data.dart';
+import 'package:sodam/pallete.dart';
+import 'package:sodam/screens/guardian_signin/signin_final_elderly_screen.dart';
+import 'package:sodam/widgets/birthday_input_widget.dart';
+import 'package:sodam/widgets/membership_input_container.dart';
+import 'package:sodam/widgets/membership_next_button.dart';
+
+class SigninFourthElderlyAddinfoScreen extends StatefulWidget {
+  final GuardianData data;
+  const SigninFourthElderlyAddinfoScreen({super.key, required this.data});
+
+  @override
+  State<SigninFourthElderlyAddinfoScreen> createState() =>
+      _SigninFourthElderlyAddinfoScreenState();
+}
+
+class _SigninFourthElderlyAddinfoScreenState
+    extends State<SigninFourthElderlyAddinfoScreen> {
+  // TextField controllers
+  final _nameController = TextEditingController();
+  final _yearController = TextEditingController();
+  final _monthController = TextEditingController();
+  final _dayController = TextEditingController();
+  final _phoneController1 = TextEditingController();
+  final _phoneController2 = TextEditingController();
+  final _phoneController3 = TextEditingController();
+
+  // Form
+  final _formKey = GlobalKey<FormState>();
+
+  void _onNextButtonPressed() async {
+    if (_formKey.currentState!.validate()) {
+      final elderlyName = _nameController.text;
+      final year = _yearController.text;
+      final month = _monthController.text;
+      final day = _dayController.text;
+
+      // 생년월일 문자열 조합
+      final birthday = '$year-${month.padLeft(2, '0')}-${day.padLeft(2, '0')}';
+      // 전화번호 문자열 조합
+      final phoneNumber =
+          '${_phoneController1.text}-${_phoneController2.text}-${_phoneController3.text}';
+
+      final extraGuardianData = widget.data.copyWith(
+        elderlyName: elderlyName,
+        elderlyBirthday: birthday,
+        elderlyPhone: phoneNumber,
+      );
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SigninFinalElderlyScreen(
+            data: extraGuardianData, //
+          ),
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Scaffold(
+      backgroundColor: Pallete.mainWhite,
+      appBar: AppBar(
+        backgroundColor: Pallete.mainWhite,
+        scrolledUnderElevation: 0,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RichText(
+                            textAlign: TextAlign.center,
+                            text: const TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "마지막으로,\n ",
+                                  style: TextStyle(
+                                    fontSize: 40,
+                                    fontFamily: "IBMPlexSansKRRegular",
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "사용자",
+                                  style: TextStyle(
+                                    fontSize: 40,
+                                    fontFamily: "IBMPlexSansKRRegular",
+                                    color: Pallete.mainBlue, // 다른 색상 적용
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "님의 정보를\n 입력해주세요.",
+                                  style: TextStyle(
+                                    fontSize: 40,
+                                    fontFamily: "IBMPlexSansKRRegular",
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: screenWidth * 0.11, bottom: 10),
+                            child: const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "이름",
+                                style: TextStyle(
+                                  color: Pallete.mainBlack,
+                                  fontSize: 20,
+                                  fontFamily: "IBMPlexSansKRRegular",
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: screenWidth * 0.8,
+                            child: MembershipInputContainer(
+                              height: 42,
+                              controller: _nameController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return '이름은 필수 입력 사항입니다.';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Padding(
+                            padding: EdgeInsets.only(left: screenWidth * 0.11),
+                            child: const Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "생년월일",
+                                style: TextStyle(
+                                  color: Pallete.mainBlack,
+                                  fontSize: 20,
+                                  fontFamily: "IBMPlexSansKRRegular",
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 0.0), // 위쪽 여백 제거
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const SizedBox(height: 10),
+                                BirthdayInputWidget(
+                                    yearController: _yearController,
+                                    monthController: _monthController,
+                                    dayController: _dayController),
+                                const SizedBox(height: 20),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: screenWidth * 0.11,
+                                    bottom: 10,
+                                  ),
+                                  child: const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "전화번호",
+                                      style: TextStyle(
+                                        color: Pallete.mainBlack,
+                                        fontSize: 20,
+                                        fontFamily: "IBMPlexSansKRRegular",
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(left: screenWidth * 0.1),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 80,
+                                        child: MembershipInputContainer(
+                                          height: 40,
+                                          controller: _phoneController1,
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                            LengthLimitingTextInputFormatter(3),
+                                          ],
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty ||
+                                                value.length != 3) {
+                                              return '3자리 번호를 입력해주세요.';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                      ),
+                                      const Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 7),
+                                        child: Text(
+                                          "-",
+                                          style: TextStyle(
+                                            color: Pallete.mainBlack,
+                                            fontSize: 20,
+                                            fontFamily: "IBMPlexSansKRRegular",
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 90,
+                                        child: MembershipInputContainer(
+                                          height: 40,
+                                          controller: _phoneController2,
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                            LengthLimitingTextInputFormatter(4),
+                                          ],
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty ||
+                                                value.length != 4) {
+                                              return '4자리 번호를 입력해주세요.';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                      ),
+                                      const Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 7),
+                                        child: Text(
+                                          "-",
+                                          style: TextStyle(
+                                            color: Pallete.mainBlack,
+                                            fontSize: 20,
+                                            fontFamily: "IBMPlexSansKRRegular",
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 90,
+                                        child: MembershipInputContainer(
+                                          height: 40,
+                                          controller: _phoneController3,
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter
+                                                .digitsOnly,
+                                            LengthLimitingTextInputFormatter(4),
+                                          ],
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty ||
+                                                value.length != 4) {
+                                              return '4자리 번호를 입력해주세요.';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 20, top: 10),
+            child: MembershipNextButton(
+              onPressed: _onNextButtonPressed,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

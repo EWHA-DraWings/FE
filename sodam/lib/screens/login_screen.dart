@@ -18,110 +18,114 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Pallete.mainWhite,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 15),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "안녕하세요, 소담이에요!",
-                  style: TextStyle(
-                    color: Pallete.mainBlack,
-                    fontFamily: "IBMPlexSansKRBold",
-                    fontSize: 22,
-                  ),
-                ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 20,
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 15),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "다시 만나 반가워요 :)",
-                  style: TextStyle(
-                    color: Pallete.mainBlack,
-                    fontFamily: "IBMPlexSansKRBold",
-                    fontSize: 22,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: screenHeight * 0.1,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '아이디',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontFamily: "IBMPlexSansKRRegular",
-                    color: Pallete.mainBlack,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            const LoginInputContainer(width: 220, height: 60, hintText: ""),
-            const SizedBox(
-              height: 10,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '비밀번호',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontFamily: "IBMPlexSansKRRegular",
-                    color: Pallete.mainBlack,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            const LoginInputContainer(width: 220, height: 60, hintText: ""),
-            const SizedBox(
-              height: 50,
-            ),
-            const LoginButton(),
-            const Spacer(),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "아직 계정이 없으신가요?",
+              const Padding(
+                padding: EdgeInsets.only(left: 15),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "안녕하세요, 소담이에요!",
                     style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 17,
+                      color: Pallete.mainBlack,
+                      fontFamily: "IBMPlexSansKRBold",
+                      fontSize: 22,
                     ),
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  MoveToMembershipButton(),
-                ],
+                ),
               ),
-            ),
-          ],
+              const Padding(
+                padding: EdgeInsets.only(left: 15),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "다시 만나 반가워요 :)",
+                    style: TextStyle(
+                      color: Pallete.mainBlack,
+                      fontFamily: "IBMPlexSansKRBold",
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: screenHeight * 0.1,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '아이디',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontFamily: "IBMPlexSansKRRegular",
+                      color: Pallete.mainBlack,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              const LoginInputContainer(width: 220, height: 60),
+              const SizedBox(
+                height: 10,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '비밀번호',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontFamily: "IBMPlexSansKRRegular",
+                      color: Pallete.mainBlack,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              const LoginInputContainer(width: 220, height: 60),
+              const SizedBox(
+                height: 50,
+              ),
+              const LoginButton(),
+              const SizedBox(
+                height: 20,
+              ), // Spacer 대신 SizedBox 추가
+              const Padding(
+                padding: EdgeInsets.only(bottom: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "아직 계정이 없으신가요?",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 17,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    MoveToMembershipButton(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
