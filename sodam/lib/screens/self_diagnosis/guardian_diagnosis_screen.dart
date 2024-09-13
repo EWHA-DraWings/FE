@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_totalscore_screen.dart';
+import 'package:sodam/widgets/choice_button.dart';
+import 'package:sodam/widgets/title_widget.dart';
 
 class GuardianDiagnosisScreen extends StatefulWidget {
   const GuardianDiagnosisScreen({super.key});
@@ -11,6 +14,8 @@ class GuardianDiagnosisScreen extends StatefulWidget {
 }
 
 class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
+  int index = 0;
+
   final List<String> _questions = [
     "오늘이 몇 월이고, 무슨 요일인지를 잘 모른다.",
     "자신이 놔둔 물건을 찾지 못한다.",
@@ -31,16 +36,29 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
   final List<String?> _selectedOptions = List<String?>.filled(15, null);
   final List<int> _scores = List<int>.filled(15, 0);
 
-  void _onButtonPressed(int index, String value) {
+  void _onButtonPressed(int idx, int value) {
     setState(() {
-      _selectedOptions[index] = value;
-      _scores[index] = (value == '예') ? 1 : 0;
+      _selectedOptions[idx] = value.toString();
+      _scores[index] = value;
     });
   }
 
-  //모든 버튼이 눌려야만 총점이 계산되게 함
-  bool _allOptionsSelected() {
-    return !_selectedOptions.contains(null);
+  //다음 버튼
+  void _nextButtonPressed() {
+    setState(() {
+      if (index < 14) {
+        index++;
+      } else {
+        //결과 화면으로 전환
+        final totalScore = _calculateTotalScore();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GuardianTotalscoreScreen(score: totalScore),
+          ),
+        );
+      }
+    });
   }
 
   //총점 계산
@@ -48,177 +66,101 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
     return _scores.reduce((a, b) => a + b);
   }
 
+  //kdsq
   @override
   Widget build(BuildContext context) {
+    const btnInterval = 28.0;
     return Scaffold(
-      backgroundColor: Pallete.sodamIvory,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Pallete.sodamIvory,
+        backgroundColor: Colors.white,
         foregroundColor: Colors.black, //글씨 색
-        title: const Text(
-          "KDSQ 자가진단",
-          style: TextStyle(
-            fontSize: 24,
-            fontFamily: "Gugi",
-          ),
-        ),
       ),
       body: Column(
         children: [
-          Expanded(
-            child: Center(
-              child: ListView.builder(
-                itemCount: 15,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 30),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Q${index + 1}",
-                              style: const TextStyle(
-                                fontFamily: "IBMPlexSansKRBold",
-                                fontSize: 30,
-                                color: Pallete.sodamNewGreen,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 25,
-                        ),
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Pallete.sodamNewGreen.withOpacity(0.6),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 25,
-                              horizontal: 20,
-                            ),
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              _questions[index],
-                              style: const TextStyle(
-                                fontFamily: "IBMPlexSansKRBold",
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          AnimatedContainer(
-                            duration: const Duration(milliseconds: 100),
-                            width: _selectedOptions[index] == '예' ? 120 : 110,
-                            height: 45,
-                            child: ElevatedButton(
-                              onPressed: () => _onButtonPressed(index, '예'),
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: const Size(90, 45),
-                                backgroundColor: _selectedOptions[index] == '예'
-                                    ? Pallete.sodamYellow
-                                    : Pallete.sodamGray,
-                                foregroundColor: Colors.black,
-                              ),
-                              child: const Text(
-                                '예',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: "IBMPlexSansKRRegular",
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          AnimatedContainer(
-                            duration: const Duration(milliseconds: 100),
-                            width: _selectedOptions[index] == '아니오' ? 120 : 110,
-                            height: 45,
-                            child: ElevatedButton(
-                              onPressed: () => _onButtonPressed(index, '아니오'),
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: const Size(100, 45),
-                                backgroundColor:
-                                    _selectedOptions[index] == '아니오'
-                                        ? Pallete.sodamYellow
-                                        : Pallete.sodamGray,
-                                foregroundColor: Colors.black,
-                              ),
-                              child: const Text(
-                                '아니오',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: "IBMPlexSansKRRegular",
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 40),
-                    ],
-                  );
-                },
+          const TitleWidget(
+            backgroundColor: Pallete.mainBlue,
+            textColor: Colors.white,
+            text: '자가진단',
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 50,
+              horizontal: 30,
+            ),
+            child: Text(
+              _questions[index],
+              textAlign: TextAlign.start,
+              style: const TextStyle(
+                fontFamily: "IBMPlexSansKRRegular",
+                fontWeight: FontWeight.w600,
+                fontSize: 22,
+                color: Color(0xFF191D63),
               ),
             ),
           ),
+          ChoiceButton(
+            text: '예',
+            val: 1,
+            onPressed: () => _onButtonPressed(index, 1),
+            selectedOptions: _selectedOptions,
+            index: index,
+          ),
+          const SizedBox(
+            height: btnInterval,
+          ),
+          ChoiceButton(
+            text: '아니오',
+            val: 0,
+            onPressed: () => _onButtonPressed(index, 0),
+            selectedOptions: _selectedOptions,
+            index: index,
+          ),
+          Expanded(child: Container()), // 상단의 공간을 채우기 위해 Expanded를 사용
+          LinearPercentIndicator(
+            width: MediaQuery.of(context).size.width * 0.83,
+            animation: true,
+            animationDuration: 100,
+            lineHeight: 20.0,
+            trailing: Text(
+              "${index + 1}/15",
+              style: const TextStyle(
+                fontFamily: 'IBMPlexSansKRRegular',
+                fontSize: 15,
+              ),
+            ),
+            percent: (index + 1) / 15,
+            backgroundColor: Pallete.mainGray,
+            progressColor: const Color(0xFFD768C5),
+            barRadius: const Radius.circular(10),
+          ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: _allOptionsSelected()
-                ? ElevatedButton(
-                    onPressed: () {
-                      final totalScore = _calculateTotalScore();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              GuardianTotalscoreScreen(score: totalScore),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: Pallete.sodamOrange,
-                    ),
-                    child: const Text(
-                      '제출하기',
-                      style: TextStyle(
-                        fontFamily: 'IBMPlexSansKRRegular',
-                        fontSize: 25,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )
-                : ElevatedButton(
-                    onPressed: null,
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: Colors.grey,
-                    ),
-                    child: const Text(
-                      "모든 질문에 답변해 주세요",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color.fromARGB(255, 220, 220, 220),
-                      ),
-                    ),
-                  ),
+            padding: const EdgeInsets.symmetric(
+              vertical: 15,
+            ),
+            child: ElevatedButton(
+              onPressed:
+                  _selectedOptions[index] != null ? _nextButtonPressed : null,
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(
+                  MediaQuery.of(context).size.width * 0.9,
+                  60,
+                ),
+                backgroundColor: Pallete.mainBlue,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text(
+                '다음',
+                style: TextStyle(
+                  fontFamily: 'IBMPlexSansKRRegular',
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
           ),
         ],
       ),
