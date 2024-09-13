@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
+import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
 
 import 'package:sodam/screens/self_diagnosis/user_totalscore_screen.dart';
 
@@ -25,9 +27,7 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: //MainScreen(isGuardian: false),
           //MembershipNameScreen(data: GuardianData(role:"guardian"),),
-          UserTotalscoreScreen(
-        score: 80,
-      ),
+          UserDiagnosisScreen(),
     );
   }
 }
