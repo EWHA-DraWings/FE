@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+
+import 'package:sodam/screens/self_diagnosis/user_totalscore_screen.dart';
 import 'package:sodam/screens/guardian_signin/signin_start_screen.dart';
 import 'package:sodam/screens/login_screen.dart';
 

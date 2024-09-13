@@ -16,7 +16,7 @@ class TitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
         width: double.infinity,
         height: 60,
@@ -30,7 +30,7 @@ class TitleWidget extends StatelessWidget {
             style: TextStyle(
               color: textColor,
               fontSize: 30,
-              fontFamily: "IBMPlexSansKRRegular",
+              fontFamily: "IBMPlexSansKRBold",
             ),
           ),
         ),

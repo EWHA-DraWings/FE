@@ -17,7 +17,7 @@ class RoundNextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 25),
       child: ElevatedButton(
         onPressed: () {
           Navigator.push(
@@ -46,8 +46,8 @@ class RoundNextButton extends StatelessWidget {
             Text(
               btnText,
               style: const TextStyle(
-                fontSize: 22,
-                color: Colors.white,
+                fontSize: 25,
+                color: Color(0xFF3E3E3E),
                 fontFamily: 'IBMPlexSansKRRegular',
               ),
             ),
