@@ -1,4 +1,4 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/guardian_signin/signin_start_screen.dart';
 
@@ -40,4 +40,4 @@ class MoveToMembershipButton extends StatelessWidget {
       ),
     );
   }
-}*/
+}
