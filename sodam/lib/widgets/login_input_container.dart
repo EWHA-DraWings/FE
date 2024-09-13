@@ -1,17 +1,39 @@
 import 'package:flutter/material.dart';
 
-class LoginInputContainer extends StatelessWidget {
+class LoginInputContainer extends StatefulWidget {
   //이 위젯은 너비, 높이와 hintText를 지정할 수 있는 입력 컨테이너.
   final double width;
   final double height;
-  final String hintText;
 
   const LoginInputContainer({
     super.key,
     required this.width,
     required this.height,
-    required this.hintText,
   });
+
+  @override
+  State<LoginInputContainer> createState() => _LoginInputContainerState();
+}
+
+class _LoginInputContainerState extends State<LoginInputContainer> {
+  bool _isFocused = false;
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      setState(() {
+        _isFocused = _focusNode.hasFocus;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,25 +46,22 @@ class LoginInputContainer extends StatelessWidget {
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Colors.grey,
+          color: _isFocused ? Colors.black : Colors.grey,
           width: 2.0, // 테두리 두께 설정
         ),
       ),
-      child: TextField(
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: hintText,
-          hintStyle: TextStyle(
-            fontSize: 25,
-            fontFamily: 'IBMPlexSansKRRegular',
-            color: Colors.grey[600],
+      child: Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: TextField(
+          focusNode: _focusNode,
+          textAlign: TextAlign.center,
+          decoration: const InputDecoration(
+            border: InputBorder.none,
           ),
-          contentPadding: EdgeInsets.only(top: height / 5),
-        ),
-        style: const TextStyle(
-          fontSize: 20,
-          fontFamily: 'IBMPlexSansKRRegular',
+          style: const TextStyle(
+            fontSize: 20,
+            fontFamily: 'IBMPlexSansKRRegular',
+          ),
         ),
       ),
     );
