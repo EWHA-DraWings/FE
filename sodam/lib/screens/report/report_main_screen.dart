@@ -166,10 +166,10 @@ class ReportMainScreen extends StatelessWidget {
                 color: const Color.fromARGB(255, 255, 116, 116),
                 height:
                     screenHeight - greenContainerFromTop + greenContainerHeight,
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
+                    const Padding(
                       padding:
                           EdgeInsets.symmetric(vertical: 13, horizontal: 22),
                       child: Text(
@@ -177,9 +177,23 @@ class ReportMainScreen extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.w500),
                       ),
                     ),
-                    Row(
-                      children: [],
-                    )
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(
+                          3,
+                          (index) => Container(
+                            width: 220,
+                            height: 270,
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              color: Pallete.sodamReportBlue,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
