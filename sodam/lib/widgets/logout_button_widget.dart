@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sodam/pallete.dart';
 
 class LogoutButtonWidget extends StatefulWidget {
   const LogoutButtonWidget({

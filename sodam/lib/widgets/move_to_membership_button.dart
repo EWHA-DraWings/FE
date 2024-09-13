@@ -1,6 +1,6 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/Guardian_membership/membership_screen.dart';
+import 'package:sodam/screens/guardian_signin/signin_start_screen.dart';
 
 class MoveToMembershipButton extends StatelessWidget {
   const MoveToMembershipButton({
@@ -13,7 +13,7 @@ class MoveToMembershipButton extends StatelessWidget {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const MembershipScreen()),
+          MaterialPageRoute(builder: (context) => const SigninStartScreen()),
         );
       },
       style: ButtonStyle(
@@ -40,4 +40,4 @@ class MoveToMembershipButton extends StatelessWidget {
       ),
     );
   }
-}*/
+}
