@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:sodam/models/guardian_data.dart';
-import 'package:sodam/screens/Guardian_membership/membership_name_screen.dart';
-import 'package:sodam/screens/Guardian_membership/membership_screen.dart';
+import 'package:sodam/screens/guardian_signin/signin_start_screen.dart';
 import 'package:sodam/screens/login_screen.dart';
-import 'package:sodam/screens/main_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +25,7 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: //MainScreen(isGuardian: false),
           //MembershipNameScreen(data: GuardianData(role:"guardian"),),
-          MembershipScreen(),
+          LoginScreen(),
     );
   }
 }
