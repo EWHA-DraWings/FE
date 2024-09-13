@@ -95,14 +95,19 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
                 horizontal: 30,
               ),
               child: index != 2
-                  ? Text(
-                      _questions[index],
-                      textAlign: TextAlign.start,
-                      style: const TextStyle(
-                        fontFamily: "IBMPlexSansKRRegular",
-                        fontWeight: FontWeight.w600,
-                        fontSize: 22,
-                        color: Color(0xFF191D63),
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                      ),
+                      child: Text(
+                        _questions[index],
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(
+                          fontFamily: "IBMPlexSansKRRegular",
+                          fontWeight: FontWeight.w600,
+                          fontSize: 22,
+                          color: Color(0xFF191D63),
+                        ),
                       ),
                     )
                   : Text.rich(
