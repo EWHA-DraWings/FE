@@ -13,21 +13,15 @@ class SelfDiagnosisResultWidget extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 25,
+              ),
               width: double.infinity,
-              height: 200,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x3F000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  ),
-                ],
               ),
               child: Center(
                 child: (score < 6)
@@ -39,12 +33,12 @@ class SelfDiagnosisResultWidget extends StatelessWidget {
                           fontFamily: "IBMPlexSansKRRegular",
                         ),
                       )
-                    : const Text.rich(
+                    : Text.rich(
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: '홍길동님은 \n',
-                              style: TextStyle(
+                              text: '$name님은 \n',
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
                                 fontFamily: 'IBMPlexSansKRRegular',
@@ -53,15 +47,16 @@ class SelfDiagnosisResultWidget extends StatelessWidget {
                               ),
                             ),
                             TextSpan(
-                              text: '총점 10점',
-                              style: TextStyle(
-                                color: Pallete.sodamOrange,
+                              text: '총점 $score점',
+                              style: const TextStyle(
+                                color: Pallete.mainBlue,
                                 fontSize: 30,
-                                fontFamily: 'IBMPlexSansKRBold',
+                                fontFamily: 'IBMPlexSansKRRegular',
+                                fontWeight: FontWeight.w700,
                                 height: 0,
                               ),
                             ),
-                            TextSpan(
+                            const TextSpan(
                               text: '으로 \n현재 치매 선별 검사가 \n',
                               style: TextStyle(
                                 color: Colors.black,
@@ -71,16 +66,17 @@ class SelfDiagnosisResultWidget extends StatelessWidget {
                                 height: 0,
                               ),
                             ),
-                            TextSpan(
+                            const TextSpan(
                               text: '필요한',
                               style: TextStyle(
-                                color: Color(0xFFBF587D),
+                                color: Color(0xFFE45959),
                                 fontSize: 30,
-                                fontFamily: 'IBMPlexSansKRBold',
+                                fontFamily: 'IBMPlexSansKRRegular',
+                                fontWeight: FontWeight.w700,
                                 height: 0,
                               ),
                             ),
-                            TextSpan(
+                            const TextSpan(
                               text: ' 상태에요.',
                               style: TextStyle(
                                 color: Colors.black,
@@ -97,14 +93,15 @@ class SelfDiagnosisResultWidget extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(
-            height: 15,
-          ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
             child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 15,
+              ),
               width: double.infinity,
-              height: 220,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.white,
@@ -128,13 +125,13 @@ class SelfDiagnosisResultWidget extends StatelessWidget {
                         ),
                       )
                     : const SizedBox(
-                        width: 318,
+                        width: double.infinity,
                         child: Text.rich(
                           TextSpan(
                             children: [
                               TextSpan(
                                 text:
-                                    '신경과 전문의를 통해 \n초기에 진단된다면 \n치료를 통해 진행을 늦추거나 \n종류에 따라서는 \n완치까지도 가능하므로 \n',
+                                    '신경과 전문의를 통해\n초기에 진단된다면 \n치료를 통해 진행을 늦추거나 종류에\n 따라서는 완치까지도 가능하므로 \n',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 20,
@@ -146,7 +143,7 @@ class SelfDiagnosisResultWidget extends StatelessWidget {
                               TextSpan(
                                 text: '병원에 방문해보세요!',
                                 style: TextStyle(
-                                  color: Color(0xFF5BB287),
+                                  color: Pallete.sodamButtonDarkGreen,
                                   fontSize: 25,
                                   fontFamily: 'IBMPlexSansKRBold',
                                   height: 0,
