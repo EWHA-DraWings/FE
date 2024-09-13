@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:sodam/models/elderly_data.dart';
 import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/Guardian_membership/membership_name_screen.dart';
+import 'package:sodam/screens/guardian_signin/signin_name_screen.dart';
 import 'package:sodam/screens/register_user/register_name_screen.dart';
 
-class MembershipScreen extends StatefulWidget {
-  const MembershipScreen({super.key});
+class SigninStartScreen extends StatefulWidget {
+  const SigninStartScreen({super.key});
 
   @override
-  State<MembershipScreen> createState() => _MembershipScreenState();
+  State<SigninStartScreen> createState() => _SigninStartScreenState();
 }
 
-class _MembershipScreenState extends State<MembershipScreen> {
+class _SigninStartScreenState extends State<SigninStartScreen> {
   void _guardianNextScreen(String role) {
     // GuardianData 객체를 생성합니다.
     final guardianData = GuardianData(role: role);
@@ -20,7 +20,7 @@ class _MembershipScreenState extends State<MembershipScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MembershipNameScreen(data: guardianData),
+        builder: (context) => SigninNameScreen(data: guardianData),
       ),
     );
   }

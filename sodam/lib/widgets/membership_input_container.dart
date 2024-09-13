@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sodam/pallete.dart';
 
-class MembershipInputContainer extends StatelessWidget {
+class MembershipInputContainer extends StatefulWidget {
   final double height;
   final TextEditingController controller;
   final bool obscureText;
@@ -21,30 +21,70 @@ class MembershipInputContainer extends StatelessWidget {
   });
 
   @override
+  _MembershipInputContainerState createState() =>
+      _MembershipInputContainerState();
+}
+
+class _MembershipInputContainerState extends State<MembershipInputContainer> {
+  final FocusNode _focusNode = FocusNode();
+  bool _isFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange() {
+    setState(() {
+      _isFocused = _focusNode.hasFocus;
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_onFocusChange);
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
       width: screenWidth * 0.85,
-      height: height,
+      height: widget.height,
       decoration: BoxDecoration(
         color: Pallete.signinInputGray,
         borderRadius: BorderRadius.circular(20),
-      ),
-      alignment: Alignment.center, // Center the child inside the container
-      child: TextFormField(
-        controller: controller,
-        obscureText: obscureText,
-        validator: validator,
-        inputFormatters: inputFormatters,
-        keyboardType: keyboardType,
-        textAlign: TextAlign.center, // Center the text inside the TextField
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.zero, // Remove extra padding
+        border: Border.all(
+          color: _isFocused
+              ? Colors.black.withOpacity(0.7)
+              : Colors.transparent, // 포커스 시 파란 테두리
+          width: 2.0,
         ),
-        style: TextStyle(
-          fontSize: height <= 60 ? 15 : 20,
-          fontFamily: 'IBMPlexSansKRRegular',
+      ),
+      alignment: Alignment.center,
+      child: Center(
+        child: TextFormField(
+          controller: widget.controller,
+          obscureText: widget.obscureText,
+          validator: widget.validator,
+          inputFormatters: widget.inputFormatters,
+          keyboardType: widget.keyboardType,
+          textAlign: TextAlign.center,
+          focusNode: _focusNode, // FocusNode를 적용
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            contentPadding: widget.height < 60
+                ? const EdgeInsets.only(bottom: 8)
+                : EdgeInsets.zero,
+          ),
+          style: TextStyle(
+            fontSize: widget.height < 60 ? 15 : 20,
+            fontFamily: 'IBMPlexSansKRRegular',
+          ),
         ),
       ),
     );

@@ -19,7 +19,7 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
   final List<String> _questions = [
     "잠시 후 무엇을 해야겠다고 마음을 먹고 나서 잊어버리는 경우가 있습니까?",
     "전에 가 본적이 있는 장소인데, 기억이 안 나는 경우가 있습니까?",
-    "조금 있다가 해야 할 일이 있는데, 그 일 혹은 그와 관련된 물건을 직접 보면서도 잊어버리는 경우가 있습니까?(예를 들면, 약 봉지를 보고서도 약 먹는 일을 잊어버린다든지, 가스 불 위의 주전자를 보면서도 가스 불 끄는 것을 잊어버리는 경우)",
+    "조금 있다가 해야 할 일이 있는데, 그 일 혹은 그와 관련된 물건을 직접 보면서도 잊어버리는 경우가 있습니까?",
     "몇 분 전에 들었던 이야기를 잊어버리는 경우가 있습니까?",
     "달력이나 수첩에 적어놓지 않거나 누가 말해 주지 않으면, 약속을 잊어버리는 경우가 있습니까?",
     "TV나 라디오에서 장면이 바뀌면, 출연자를 잘 알아보지 못하는 경우가 있습니까?",
@@ -71,7 +71,7 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
   //prmq
   @override
   Widget build(BuildContext context) {
-    const btnInterval = 15.0;
+    const btnInterval = 13.0;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -91,19 +91,42 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
-                vertical: 20,
+                vertical: 15,
                 horizontal: 30,
               ),
-              child: Text(
-                _questions[index],
-                textAlign: TextAlign.start,
-                style: const TextStyle(
-                  fontFamily: "IBMPlexSansKRRegular",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                  color: Color(0xFF191D63),
-                ),
-              ),
+              child: index != 2
+                  ? Text(
+                      _questions[index],
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(
+                        fontFamily: "IBMPlexSansKRRegular",
+                        fontWeight: FontWeight.w600,
+                        fontSize: 22,
+                        color: Color(0xFF191D63),
+                      ),
+                    )
+                  : Text.rich(
+                      TextSpan(
+                        text: _questions[index],
+                        style: const TextStyle(
+                          fontFamily: "IBMPlexSansKRRegular",
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
+                          color: Color(0xFF191D63),
+                        ),
+                        children: const <TextSpan>[
+                          TextSpan(
+                            text:
+                                '\n\n예시) 약 봉지를 보고서도 약 먹는 일을 잊어버린다든지, 가스 불 위의 주전자를 보면서도 가스 불 끄는 것을 잊어버리는 경우',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                              color: Color(0XFF060710),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
             ),
             ChoiceButton(
               text: '전혀 아님',
