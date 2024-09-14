@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:sodam/screens/main_screen.dart';
+import 'package:sodam/screens/report/report_main_screen.dart';
 import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
 
 Future main() async {
@@ -24,7 +26,8 @@ class MainApp extends StatelessWidget {
     return const MaterialApp(
       home: //MainScreen(isGuardian: false),
           //MembershipNameScreen(data: GuardianData(role:"guardian"),),
-          UserDiagnosisScreen(),
+          //UserDiagnosisScreen(),
+          ReportMainScreen(),
     );
   }
 }
