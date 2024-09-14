@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
+import 'package:sodam/screens/report/todays_report_widget.dart';
 
 class ReportMainScreen extends StatelessWidget {
   const ReportMainScreen({super.key});
@@ -162,14 +163,13 @@ class ReportMainScreen extends StatelessWidget {
             left: 0,
             right: 0,
             child: SingleChildScrollView(
-              child: Container(
-                color: const Color.fromARGB(255, 255, 116, 116),
+              child: SizedBox(
                 height:
                     screenHeight - greenContainerFromTop + greenContainerHeight,
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
+                    Padding(
                       padding:
                           EdgeInsets.symmetric(vertical: 13, horizontal: 22),
                       child: Text(
@@ -179,21 +179,9 @@ class ReportMainScreen extends StatelessWidget {
                     ),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: List.generate(
-                          3,
-                          (index) => Container(
-                            width: 220,
-                            height: 270,
-                            margin: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: Pallete.sodamReportBlue,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                        ),
-                      ),
+                      child: TodaysReportWidget(),
                     ),
+                    //여기다가 리포트 추가하면 됨
                   ],
                 ),
               ),
