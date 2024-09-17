@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/guardian_signin/membership_elderly_extraInfo_screen.dart';
 import 'package:sodam/screens/guardian_signin/signin_fourth_elderly_addinfo_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
 import 'package:sodam/widgets/membership_next_button.dart';
