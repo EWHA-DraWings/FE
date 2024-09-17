@@ -4,7 +4,6 @@ import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/login_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
-import 'package:sodam/widgets/membership_next_button.dart';
 
 class SigninFinalElderlyScreen extends StatefulWidget {
   final GuardianData data; //데이터를 받기 위해 추가
