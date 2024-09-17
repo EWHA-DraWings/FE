@@ -3,8 +3,10 @@ import 'package:sodam/models/elderly_data.dart';
 import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/guardian_signin/signin_name_screen.dart';
-import 'package:sodam/screens/register_user/register_name_screen.dart';
+import 'package:sodam/screens/elderly_signin/signin_elderly_name_screen.dart';
 
+// signin_screen 순서
+// start-> name->idpw-> first->second->third->fourth->final
 class SigninStartScreen extends StatefulWidget {
   const SigninStartScreen({super.key});
 
@@ -32,7 +34,7 @@ class _SigninStartScreenState extends State<SigninStartScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => MembershipNameElderlyScreen(data: elderlyData),
+        builder: (context) => SigninElderlyNameScreen(data: elderlyData),
       ),
     );
   }
