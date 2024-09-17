@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/todays_report_widget.dart';
+import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 
 class ReportMainScreen extends StatelessWidget {
   const ReportMainScreen({super.key});
@@ -119,7 +120,12 @@ class ReportMainScreen extends StatelessWidget {
                     width: 250,
                     child: ElevatedButton(
                       onPressed: () {
-                        // 버튼 클릭 시의 동작을 정의
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const GuardianDiagnosisScreen()),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,

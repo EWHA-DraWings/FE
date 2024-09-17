@@ -27,7 +27,7 @@ class Pallete {
   static const mainGray = Color(0xFFE8E8E8);
   static const mainBlack = Color(0xFF000000);
   //Report
-  static const sodamReportBlue = Color(0xFF609DF8);
+  static const sodamReportBlue = Color.fromARGB(255, 141, 186, 255);
   static const sodamReportPurple = Color(0xFFE3CDF6);
   static const sodamReportGreen = Color(0xFFDFFBDA);
   //button
