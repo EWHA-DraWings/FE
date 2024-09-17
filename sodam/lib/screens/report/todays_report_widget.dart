@@ -150,12 +150,12 @@ class TodaysReportWidget extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "2024/09/14",
                     style: TextStyle(
                       fontSize: 13,
@@ -163,16 +163,48 @@ class TodaysReportWidget extends StatelessWidget {
                       color: dateColor,
                     ),
                   ),
-                  SizedBox(height: 3),
-                  Text(
+                  const SizedBox(height: 3),
+                  const Text(
                     "기억점수",
                     style: TextStyle(
                         fontSize: 16,
                         fontFamily: "IBMPlexSansKRBold",
                         color: titleColor),
                   ),
-                  SizedBox(height: 20),
-                  MemoryChartWidget(),
+                  const SizedBox(height: 20),
+                  const Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: MemoryChartWidget(),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: SizedBox(
+                      width: 200,
+                      //height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {}, //다음 화면으로 이동
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Pallete.mainWhite,
+                          backgroundColor: Pallete.mainBlue, // 버튼 배경 색상
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(20), // 버튼 모서리 둥글기
+                          ),
+                        ),
+                        child: const Text(
+                          '자세히 살펴보기',
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontFamily: 'IBMPlexSansKRRegular',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

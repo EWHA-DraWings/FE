@@ -72,7 +72,7 @@ class _MemoryChartWidgetState extends State<MemoryChartWidget> {
         if (touchedPosition != null && selectedIndex != -1)
           Positioned(
             left: touchedPosition!.dx - 10, // 터치된 위치에 컨테이너를 배치
-            top: -selectedSpot['score'].toDouble() + 40, //세로 위치조정
+            top: -selectedSpot['score'].toDouble() + 36, //세로 위치조정
 
             child: buildCustomTooltip(),
           ),
