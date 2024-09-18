@@ -1,43 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:sodam/models/guardian_data.dart';
+import 'package:sodam/models/elderly_data.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/guardian_signin/signin_fourth_elderly_addinfo_screen.dart';
-import 'package:sodam/widgets/membership_input_container.dart';
-import 'package:sodam/widgets/membership_next_button.dart';
+import 'package:sodam/screens/elderly_signin/signin_elderly_phone_screen.dart';
+import 'package:sodam/screens/elderly_signin/widgets/signin_elderly_input_container.dart';
+import 'package:sodam/screens/elderly_signin/widgets/signin_elderly_next_button.dart';
 
-class SigninThirdAddinfoScreen extends StatefulWidget {
-  final GuardianData data; //데이터를 받기 위해 추가
-  const SigninThirdAddinfoScreen({super.key, required this.data});
+class SigninElderlyIdpwScreen extends StatefulWidget {
+  final ElderlyData data; //데이터를 받기 위해 추가
+  const SigninElderlyIdpwScreen({super.key, required this.data});
 
   @override
-  State<SigninThirdAddinfoScreen> createState() =>
-      _SigninThirdAddinfoScreenState();
+  State<SigninElderlyIdpwScreen> createState() => _SigninIdpwScreenState();
 }
 
-class _SigninThirdAddinfoScreenState extends State<SigninThirdAddinfoScreen> {
-  final _jobcontroller = TextEditingController();
-  final _addresscontroller = TextEditingController();
+class _SigninIdpwScreenState extends State<SigninElderlyIdpwScreen> {
+  final _idController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   void _onNextButtonPressed() {
     // 현재 폼의 상태가 유효한지 검사합니다.
     if (_formKey.currentState!.validate()) {
       // 폼이 유효할 경우, 입력된 아이디와 비밀번호를 가져옵니다.
-      final job = _jobcontroller.text;
-      final address = _addresscontroller.text;
+      final id = _idController.text;
+      final password = _passwordController.text;
 
-      // 객체에 id,pw도 추가
-      final updatedGuardianData2 = widget.data.copyWith(
-        job: job,
-        address: address,
+      final updatedElderlyData = widget.data.copyWith(
+        id: id,
+        password: password,
       );
-
-      // 다음 화면으로 이동하며, 현재 화면의 데이터를 전달합니다.
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SigninFourthElderlyAddinfoScreen(
-            data: updatedGuardianData2, // 업데이트된 GuardianData 객체
+          builder: (context) => SigninElderlyPhoneScreen(
+            data: updatedElderlyData,
           ),
         ),
       );
@@ -69,28 +65,20 @@ class _SigninThirdAddinfoScreenState extends State<SigninThirdAddinfoScreen> {
                           children: [
                             RichText(
                               textAlign: TextAlign.center,
-                              text: const TextSpan(
+                              text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: "먼저,\n ",
-                                    style: TextStyle(
-                                      fontSize: 40,
-                                      fontFamily: "IBMPlexSansKRRegular",
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: "보호자",
-                                    style: TextStyle(
-                                      fontSize: 40,
+                                    text: "${widget.data.name}님, 반가워요!\n",
+                                    style: const TextStyle(
+                                      fontSize: 25,
                                       fontFamily: "IBMPlexSansKRRegular",
                                       color: Pallete.mainBlue, // 다른 색상 적용
                                     ),
                                   ),
-                                  TextSpan(
-                                    text: "님의 정보를\n 입력해주세요.",
+                                  const TextSpan(
+                                    text: "사용할 아이디와\n비밀번호를\n입력해주세요.",
                                     style: TextStyle(
-                                      fontSize: 40,
+                                      fontSize: 48,
                                       fontFamily: "IBMPlexSansKRRegular",
                                       color: Colors.black,
                                     ),
@@ -108,66 +96,60 @@ class _SigninThirdAddinfoScreenState extends State<SigninThirdAddinfoScreen> {
                                   child: const Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "직업",
+                                      "아이디",
                                       style: TextStyle(
                                         color: Pallete.mainBlack,
-                                        fontSize: 20,
+                                        fontSize: 30,
                                         fontFamily: "IBMPlexSansKRRegular",
                                       ),
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 10),
-                                MembershipInputContainer(
-                                  height: 45,
-                                  controller: _jobcontroller,
+                                SigninElderlyInputContainer(
+                                  height: 60,
+                                  controller: _idController,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return '직업을 입력해주세요.';
+                                      return '아이디는 필수 입력 사항입니다.';
                                     }
-
+                                    if (value.length < 6 || value.length > 20) {
+                                      return '아이디는 6자 이상 20자 이하이어야 합니다.';
+                                    }
                                     return null;
                                   },
                                 ),
-                                const SizedBox(height: 20),
+                                const SizedBox(height: 10),
                                 Padding(
                                   padding:
                                       EdgeInsets.only(left: screenWidth * 0.11),
                                   child: const Align(
                                     alignment: Alignment.centerLeft,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "거주 지역",
-                                          style: TextStyle(
-                                            color: Pallete.mainBlack,
-                                            fontSize: 20,
-                                            fontFamily: "IBMPlexSansKRRegular",
-                                          ),
-                                        ),
-                                        SizedBox(width: 10),
-                                        Text(
-                                          "ex.서울",
-                                          style: TextStyle(
-                                            color: Pallete.mainBlack,
-                                            fontSize: 10,
-                                            fontFamily: "IBMPlexSansKRRegular",
-                                          ),
-                                        ),
-                                      ],
+                                    child: Text(
+                                      "비밀번호",
+                                      style: TextStyle(
+                                        color: Pallete.mainBlack,
+                                        fontSize: 30,
+                                        fontFamily: "IBMPlexSansKRRegular",
+                                      ),
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 10),
-                                MembershipInputContainer(
-                                  height: 45,
-                                  controller: _addresscontroller,
+                                SigninElderlyInputContainer(
+                                  height: 60,
+                                  controller: _passwordController,
                                   obscureText: true,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return '거주지역을 입력해주세요.';
+                                      return '비밀번호는 필수 입력 사항입니다.';
                                     }
-
+                                    if (value.length < 8 ||
+                                        !RegExp(r'[A-Z]').hasMatch(value) ||
+                                        !RegExp(r'[a-z]').hasMatch(value) ||
+                                        !RegExp(r'[0-9]').hasMatch(value) ||
+                                        !RegExp(r'[!@#$%^&*(),.?":{}|<>]')
+                                            .hasMatch(value)) {
+                                      return '비밀번호는 8자 이상이어야 하며 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.';
+                                    }
                                     return null;
                                   },
                                 ),
@@ -184,7 +166,7 @@ class _SigninThirdAddinfoScreenState extends State<SigninThirdAddinfoScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 20, top: 10),
-            child: MembershipNextButton(
+            child: SigninElderlyNextButton(
               onPressed:
                   _onNextButtonPressed, // destination을 onPressed에서 처리하기 때문에 제거
             ),
