@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:sodam/screens/chat/diary_chat_screen.dart';
 import 'package:sodam/screens/guardian_signin/signin_start_screen.dart';
 import 'package:sodam/screens/main_screen.dart';
+import 'package:sodam/screens/report/report_detail_screen.dart';
 import 'package:sodam/screens/report/past_report.dart';
 import 'package:sodam/screens/report/report_main_screen.dart';
 
@@ -29,6 +31,9 @@ class MainApp extends StatelessWidget {
           //MembershipNameScreen(data: GuardianData(role:"guardian"),),
           //UserDiagnosisScreen(),
           ReportMainScreen(),
+      //SigninStartScreen(),
+      //ReportDetailScreen(),
+      //DiaryChatScreen(),
       //PastReport(),
     );
   }
