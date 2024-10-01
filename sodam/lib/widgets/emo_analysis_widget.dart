@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/pallete.dart';
 
@@ -15,7 +16,7 @@ class EmoAnalysisWidget extends StatelessWidget {
 
   //main emotion이 2개 이상일 경우 체크
   String mainEmoToString() {
-    String mainEmo = emotions[0].emotion;
+    String mainEmo = '${emotions[0].emotion} ${emotions[0].percentage}%';
     emotions[0].isMainEmo = true;
     for (int i = 0; i < emotions.length - 1; i++) {
       if (emotions[i].percentage == emotions[i + 1].percentage) {
@@ -32,7 +33,7 @@ class EmoAnalysisWidget extends StatelessWidget {
   List<PieChartSectionData> buildPieChartSections() {
     List<PieChartSectionData> sections = [];
     List<Color> colors = [
-      Colors.lightBlue,
+      const Color(0xffDADC5F),
       Colors.pink,
       Colors.green,
     ];
@@ -40,15 +41,16 @@ class EmoAnalysisWidget extends StatelessWidget {
     for (int i = 0; i < emotions.length; i++) {
       sections.add(
         PieChartSectionData(
+          titlePositionPercentageOffset: 0.5,
           value: emotions[i].percentage,
           title: '${emotions[i].emotion}\n${emotions[i].percentage}',
           color: colors[i],
-          radius: emotions[i].isMainEmo ? 80 : 70,
+          radius: emotions[i].isMainEmo ? 35 : 30,
           titleStyle: const TextStyle(
             color: Colors.white,
-            fontSize: 23,
-            fontWeight: FontWeight.w400,
+            fontSize: 20,
             fontFamily: "IBMPlexSansKRRegular",
+            backgroundColor: Colors.black,
           ),
         ),
       );
@@ -63,14 +65,15 @@ class EmoAnalysisWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
             const Text(
-              '오늘의\n대표 감정',
+              '주요 감정',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
-                fontFamily: 'IBM Plex Sans KR',
+                fontFamily: 'IBMPlexSansKRRegular',
                 fontWeight: FontWeight.w400,
                 height: 0,
               ),
@@ -79,22 +82,28 @@ class EmoAnalysisWidget extends StatelessWidget {
             Text(
               mainEmoToString(),
               style: const TextStyle(
-                fontSize: 40,
+                fontSize: 30,
                 fontFamily: "IBMPlexSansKRRegular",
                 fontWeight: FontWeight.w600,
-                color: Pallete.sodamOrange,
+                color: Color(0xFF344BFD),
               ),
             ),
-            const SizedBox(height: 10),
           ],
         ),
-        SizedBox(
-          width: 200,
-          height: 200,
-          child: PieChart(
-            PieChartData(
-              centerSpaceRadius: 20,
-              sections: buildPieChartSections(),
+        Padding(
+          padding: const EdgeInsets.only(
+            right: 20,
+            top: 10,
+          ),
+          child: SizedBox(
+            width: 120,
+            height: 120,
+            child: PieChart(
+              PieChartData(
+                centerSpaceRadius: 35,
+                sectionsSpace: 0,
+                sections: buildPieChartSections(),
+              ),
             ),
           ),
         ),

@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/widget/todays_report_widget.dart';
+import 'package:sodam/screens/report/past_report.dart';
+import 'package:sodam/screens/report/todays_report_widget.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 
 class ReportMainScreen extends StatelessWidget {
@@ -168,14 +172,15 @@ class ReportMainScreen extends StatelessWidget {
             top: greenContainerFromTop + greenContainerHeight,
             left: 0,
             right: 0,
+            bottom: 0,
             child: SingleChildScrollView(
               child: SizedBox(
                 height:
                     screenHeight - greenContainerFromTop + greenContainerHeight,
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
+                    const Padding(
                       padding:
                           EdgeInsets.symmetric(vertical: 13, horizontal: 22),
                       child: Text(
@@ -183,11 +188,64 @@ class ReportMainScreen extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.w500),
                       ),
                     ),
-                    SingleChildScrollView(
+                    const SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: TodaysReportWidget(),
                     ),
                     //여기다가 리포트 추가하면 됨
+                    const Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 13, horizontal: 22),
+                      child: Text(
+                        "과거 리포트 살펴보기",
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 22),
+                      child: Column(
+                        children: [
+                          ExpansionTile(
+                            shape: RoundedRectangleBorder(
+                              //펼쳤을 때
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            collapsedShape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            title: const Text('2024/09/08'),
+                            collapsedBackgroundColor: Pallete.sodamReportPurple,
+                            backgroundColor: Pallete.sodamReportPurple,
+                            children: <Widget>[
+                              SizedBox(
+                                  height: 300,
+                                  child: SingleChildScrollView(
+                                      child: PastReport())),
+                            ],
+                            //onExpansionChanged: (value) {},
+                          ),
+                          ExpansionTile(
+                            shape: RoundedRectangleBorder(
+                              //펼쳤을 때
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            collapsedShape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            title: const Text('2024/09/08'),
+                            collapsedBackgroundColor: Pallete.sodamReportPurple,
+                            backgroundColor: Pallete.sodamReportPurple,
+                            children: <Widget>[
+                              SizedBox(
+                                  height: 300,
+                                  child: SingleChildScrollView(
+                                      child: PastReport())),
+                            ],
+                            //onExpansionChanged: (value) {},
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),

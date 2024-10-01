@@ -4,6 +4,7 @@ import 'package:sodam/screens/chat/diary_chat_screen.dart';
 import 'package:sodam/screens/guardian_signin/signin_start_screen.dart';
 import 'package:sodam/screens/main_screen.dart';
 import 'package:sodam/screens/report/report_detail_screen.dart';
+import 'package:sodam/screens/report/past_report.dart';
 import 'package:sodam/screens/report/report_main_screen.dart';
 
 Future main() async {
@@ -33,6 +34,7 @@ class MainApp extends StatelessWidget {
       //SigninStartScreen(),
       //ReportDetailScreen(),
       //DiaryChatScreen(),
+      //PastReport(),
     );
   }
 }
