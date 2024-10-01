@@ -1,12 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:sodam/main.dart';
+import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/report/doughnut_chart_widget.dart';
-import 'package:sodam/screens/report/memory_chart_widget.dart';
+import 'package:sodam/screens/report/report_detail_screen.dart';
+import 'package:sodam/screens/report/widget/doughnut_chart_widget.dart';
+import 'package:sodam/screens/report/widget/memory_chart_widget.dart';
 
 class TodaysReportWidget extends StatelessWidget {
+  final String condition;
+  final List<EmotionData> emotions; //top3 감정 리스트
+  /*[
+    EmotionData(emotion: '당황', percentage: 40.0),
+    EmotionData(emotion: '불안', percentage: 30.0),
+    EmotionData(emotion: '행복', percentage: 30.0),
+  ];*/
+
   const TodaysReportWidget({
     super.key,
+    required this.condition,
+    required this.emotions,
   });
+
+//main emotion이 2개 이상일 경우 체크
+  String mainEmoToString() {
+    String mainEmo = '${emotions[0].emotion} ${emotions[0].percentage}%';
+    emotions[0].isMainEmo = true;
+    for (int i = 0; i < emotions.length - 1; i++) {
+      if (emotions[i].percentage == emotions[i + 1].percentage) {
+        emotions[i + 1].isMainEmo = true;
+        mainEmo += '\n${emotions[i + 1].emotion}';
+      } else {
+        break;
+      }
+    }
+    return mainEmo;
+  }
+
+  //main emotion 아닌 애들 처리
+  String getNotMainEmo() {
+    String notMainEmo = '';
+    for (int i = 1; i < emotions.length; i++) {
+      if (!emotions[i].isMainEmo) {
+        notMainEmo += emotions[i].emotion;
+        if (i != emotions.length - 1) {
+          notMainEmo += ' ';
+        }
+      }
+    }
+    return notMainEmo;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +59,13 @@ class TodaysReportWidget extends StatelessWidget {
     const dateColor = Color.fromARGB(255, 70, 72, 88);
     const titleColor = Color.fromARGB(255, 242, 248, 255);
     const textColor = Colors.black;
+
+    //오늘 날짜
+    DateTime now = DateTime.now();
+    //날짜를 "년/월/일" 형식으로 포맷
+    String today = DateFormat('yyyy/MM/dd').format(now);
+    String mainEmo = mainEmoToString();
+    String notMainEmo = getNotMainEmo();
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -38,31 +88,31 @@ class TodaysReportWidget extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "2024/09/14",
-                    style: TextStyle(
+                    today,
+                    style: const TextStyle(
                       fontSize: 13,
                       fontFamily: "IBMPlexSansKRRegular",
                       color: dateColor,
                     ),
                   ),
-                  SizedBox(height: 3),
-                  Text(
+                  const SizedBox(height: 3),
+                  const Text(
                     "감정 분석 결과",
                     style: TextStyle(
                         fontSize: 16,
                         fontFamily: "IBMPlexSansKRBold",
                         color: titleColor),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
-                    "당황 60%",
-                    style: TextStyle(
+                    mainEmo,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontFamily: "IBMPlexSansKRBold",
                       color: textColor,
@@ -70,15 +120,17 @@ class TodaysReportWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "이어서 슬픔, 행복이 차지했어요.",
-                    style: TextStyle(
+                    "이어서 $notMainEmo이 차지했어요.",
+                    style: const TextStyle(
                       fontSize: 13,
                       fontFamily: "IBMPlexSansKRRegular",
                       color: textColor,
                       height: 1.5,
                     ),
                   ),
-                  DoughnutChartWidget(),
+                  DoughnutChartWidget(
+                    emotions: emotions,
+                  ),
                 ],
               ),
             ),
@@ -99,31 +151,31 @@ class TodaysReportWidget extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "2024/09/14",
-                    style: TextStyle(
+                    today,
+                    style: const TextStyle(
                       fontSize: 13,
                       fontFamily: "IBMPlexSansKRRegular",
                       color: dateColor,
                     ),
                   ),
-                  SizedBox(height: 3),
-                  Text(
+                  const SizedBox(height: 3),
+                  const Text(
                     "컨디션",
                     style: TextStyle(
                         fontSize: 16,
                         fontFamily: "IBMPlexSansKRBold",
                         color: titleColor),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
-                    "무릎이 조금 아프시지만, 잠은 잘 주무시는 편이에요. 최근 보조제를 드시고 계신다고 해요.",
-                    style: TextStyle(
+                    condition,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontFamily: "IBMPlexSansKRRegular",
                       color: textColor,
@@ -155,9 +207,9 @@ class TodaysReportWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "2024/09/14",
-                    style: TextStyle(
+                  Text(
+                    today,
+                    style: const TextStyle(
                       fontSize: 13,
                       fontFamily: "IBMPlexSansKRRegular",
                       color: dateColor,
@@ -184,7 +236,14 @@ class TodaysReportWidget extends StatelessWidget {
                       width: 200,
                       //height: 50,
                       child: ElevatedButton(
-                        onPressed: () {}, //다음 화면으로 이동
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ReportDetailScreen()),
+                          );
+                        }, //다음 화면으로 이동
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Pallete.mainWhite,
                           backgroundColor: Pallete.mainBlue, // 버튼 배경 색상
