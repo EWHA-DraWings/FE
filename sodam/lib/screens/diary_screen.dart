@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:sodam/pallete.dart';
 
-class DiaryScreen extends StatelessWidget {
+class DiaryScreen extends StatefulWidget {
   final DateTime date;
+  final String content; //content가 null일 시 일기 없다는 메시지 전달되도록 수정 필요
 
-  const DiaryScreen({super.key, required this.date});
+  const DiaryScreen({super.key, required this.date, required this.content});
+
+  @override
+  State<DiaryScreen> createState() => _DiaryScreenState();
+}
+
+class _DiaryScreenState extends State<DiaryScreen> {
+  final FlutterTts flutterTts = FlutterTts();
+
+  //tts 기본 설정
+  Future<void> _speak(String text) async {
+    await flutterTts.setLanguage("ko-KR");
+    await flutterTts.setPitch(1.0);
+    await flutterTts.speak(text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +28,10 @@ class DiaryScreen extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     //달력 날짜 처리용
-    int month = date.month;
-    int day = date.day;
+    int month = widget.date.month;
+    int day = widget.date.day;
 
-    int weekdayIndex = date.weekday;
+    int weekdayIndex = widget.date.weekday;
     List<String> weekdays = [
       '월요일',
       '화요일',
@@ -55,9 +71,7 @@ class DiaryScreen extends StatelessWidget {
                     padding: EdgeInsets.only(right: screenWidth * 0.05),
                     child: TextButton(
                       //일기 내용 읽어주는 버튼
-                      onPressed: () {
-                        // 버튼 클릭 시 동작. 나중에 수정필요
-                      },
+                      onPressed: () => _speak(widget.content),
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.transparent,
                         padding: EdgeInsets.zero,
@@ -83,13 +97,11 @@ class DiaryScreen extends StatelessWidget {
                   color: Pallete.mainGray,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Center(
+                child: Center(
                   child: SingleChildScrollView(
                     child: Text(
-                      """ 오늘은 아침부터 비가 내렸다. 비 소리를 들으니 마음이 차분해지는 것 같았다. 아침 식사로는 따뜻한 미역국을 끓여 먹었다. 비 오는 날에는 따뜻한 국물이 최고다.
-  비가 와서 외출은 못했지만 집에서 할 일이 많았다. 오래된 사진첩을 정리하고, 손자들이 보내준 편지를 읽었다. 손자들이 쓴 편지를 읽으니 눈물이 핑 돌았다. 세월이 참 빠르다는 생각이 들었다.
-  점심 후에는 재봉틀로 낡은 옷을 수선했다. 예전에 배운 재봉 솜씨가 아직 녹슬지 않았다. 저녁에는 간단히 계란말이와 나물반찬으로 식사를 하고, 드라마를 보면서 하루를 마무리했다.""",
-                      style: TextStyle(
+                      widget.content,
+                      style: const TextStyle(
                         fontFamily: "IBMPlexSansKRRegular",
                         fontSize: 25,
                         height: 2.0,
