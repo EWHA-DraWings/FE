@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/report/doughnut_chart_widget.dart';
-import 'package:sodam/screens/report/memory_chart_widget.dart';
+import 'package:sodam/screens/report/report_detail_screen.dart';
+import 'package:sodam/screens/report/widget/doughnut_chart_widget.dart';
+import 'package:sodam/screens/report/widget/memory_chart_widget.dart';
 
 class TodaysReportWidget extends StatelessWidget {
   const TodaysReportWidget({
@@ -184,7 +185,14 @@ class TodaysReportWidget extends StatelessWidget {
                       width: 200,
                       //height: 50,
                       child: ElevatedButton(
-                        onPressed: () {}, //다음 화면으로 이동
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ReportDetailScreen()),
+                          );
+                        }, //다음 화면으로 이동
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Pallete.mainWhite,
                           backgroundColor: Pallete.mainBlue, // 버튼 배경 색상

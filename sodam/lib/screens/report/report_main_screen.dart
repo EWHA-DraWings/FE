@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/report/todays_report_widget.dart';
+import 'package:sodam/screens/report/widget/todays_report_widget.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 
 class ReportMainScreen extends StatelessWidget {
