@@ -68,7 +68,7 @@ class _SigninElderlyPhoneScreenstate extends State<SigninElderlyPhoneScreen> {
       //   Navigator.push(
       //     context,
       //     MaterialPageRoute(
-      //       builder: (context) => const LoginScreen(), // 회원가입 후 로그인 화면으로 이동
+      //       builder: (context) => const TimeSelectScreen(), // 회원가입 후 시간 설정 화면으로 이동
       //     ),
       //   );
       // } else {
