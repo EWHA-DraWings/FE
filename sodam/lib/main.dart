@@ -1,3 +1,4 @@
+import 'package:day_night_time_picker/lib/state/state_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:sodam/screens/chat/diary_chat_screen.dart';
@@ -6,6 +7,7 @@ import 'package:sodam/screens/main_screen.dart';
 import 'package:sodam/screens/report/report_detail_screen.dart';
 import 'package:sodam/screens/report/past_report.dart';
 import 'package:sodam/screens/report/report_main_screen.dart';
+import 'package:sodam/screens/time_select_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,15 +28,16 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: //MainScreen(isGuardian: false),
           //MembershipNameScreen(data: GuardianData(role:"guardian"),),
           //UserDiagnosisScreen(),
-          ReportMainScreen(),
-      //SigninStartScreen(),
-      //ReportDetailScreen(),
-      //DiaryChatScreen(),
-      //PastReport(),
+          //ReportMainScreen(),
+          //SigninStartScreen(),
+          //ReportDetailScreen(),
+          //DiaryChatScreen(),
+          //PastReport(),
+          TimeSelectScreen(),
     );
   }
 }
