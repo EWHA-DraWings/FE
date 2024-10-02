@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sodam/main.dart';
 import 'package:sodam/models/emotion_data.dart';
+import 'package:sodam/models/memory_score_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/report_detail_screen.dart';
 import 'package:sodam/screens/report/widget/doughnut_chart_widget.dart';
@@ -10,6 +11,7 @@ import 'package:sodam/screens/report/widget/memory_chart_widget.dart';
 class TodaysReportWidget extends StatelessWidget {
   final String condition;
   final List<EmotionData> emotions; //top3 감정 리스트
+  final List<MemoryScoreData> memoryScoreDatas; //지난 11일간 기억 점수 데이터(백분율, cdr)
   /*[
     EmotionData(emotion: '당황', percentage: 40.0),
     EmotionData(emotion: '불안', percentage: 30.0),
@@ -20,6 +22,7 @@ class TodaysReportWidget extends StatelessWidget {
     super.key,
     required this.condition,
     required this.emotions,
+    required this.memoryScoreDatas,
   });
 
 //main emotion이 2개 이상일 경우 체크
@@ -231,9 +234,11 @@ class TodaysReportWidget extends StatelessWidget {
                         color: titleColor),
                   ),
                   const SizedBox(height: 20),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: MemoryChartWidget(),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: MemoryChartWidget(
+                      memoryScoreDatas: memoryScoreDatas,
+                    ),
                   ),
                   const SizedBox(
                     height: 20,

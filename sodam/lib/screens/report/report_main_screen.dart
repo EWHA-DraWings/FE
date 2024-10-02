@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sodam/models/emotion_data.dart';
+import 'package:sodam/models/memory_score_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/widget/todays_report_widget.dart';
 import 'package:sodam/screens/report/past_report.dart';
@@ -225,6 +226,30 @@ class ReportMainScreen extends StatelessWidget {
                         condition:
                             '무릎이 조금 아프시지만, 잠은 잘 주무시는 편이에요. 최근 보조제를 드시고 계신다고 해요.',
                         emotions: emotions,
+                        memoryScoreDatas: [
+                          MemoryScoreData(
+                              date: '2023-08-25', score: 100, cdr: 1),
+                          MemoryScoreData(
+                              date: '2023-08-28', score: 98.1, cdr: 1),
+                          MemoryScoreData(
+                              date: '2023-09-03', score: 70, cdr: 1),
+                          MemoryScoreData(
+                              date: '2023-09-06', score: 66.6, cdr: 1),
+                          MemoryScoreData(
+                              date: '2023-09-09', score: 79, cdr: 1),
+                          MemoryScoreData(
+                              date: '2023-09-12', score: 86, cdr: 1),
+                          MemoryScoreData(
+                              date: '2023-09-15', score: 83.2, cdr: 1),
+                          MemoryScoreData(
+                              date: '2023-09-18', score: 81, cdr: 1),
+                          MemoryScoreData(
+                              date: '2023-09-21', score: 93, cdr: 1),
+                          MemoryScoreData(
+                              date: '2023-09-24', score: 91.3, cdr: 1),
+                          MemoryScoreData(
+                              date: '2023-09-27', score: 92, cdr: 1),
+                        ],
                       ),
                     ),
                     //여기다가 리포트 추가하면 됨
