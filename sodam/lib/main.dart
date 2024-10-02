@@ -11,7 +11,6 @@ import 'package:sodam/screens/report/report_main_screen.dart';
 import 'package:sodam/screens/time_select_screen.dart';
 import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
 
-
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -31,7 +30,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: //MainScreen(isGuardian: false),
           //MembershipNameScreen(data: GuardianData(role:"guardian"),),
           //UserDiagnosisScreen(),
