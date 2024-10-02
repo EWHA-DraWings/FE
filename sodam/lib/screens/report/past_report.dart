@@ -1,21 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/pallete.dart';
+import 'package:sodam/screens/report/widget/build_emotion_row_widget.dart';
+import 'package:sodam/screens/report/widget/doughnut_chart_widget.dart';
 import 'package:sodam/widgets/emo_analysis_widget.dart';
 import 'package:sodam/widgets/memory_score_chart.dart';
 
 class PastReport extends StatelessWidget {
-  PastReport({super.key});
+  final String name;
+  final String condition;
+  final double memoryScore;
+  final List<EmotionData> emotions; //top3 감정 리스트
 
-  final List<EmotionData> emotions = [
-    EmotionData(emotion: '당황', percentage: 40.0),
-    EmotionData(emotion: '불안', percentage: 30.0),
-    EmotionData(emotion: '행복', percentage: 30.0),
-  ];
+  const PastReport(
+      {super.key,
+      required this.name,
+      required this.condition,
+      required this.memoryScore,
+      required this.emotions});
+
+//main emotion이 2개 이상일 경우 체크
+  String mainEmoToString() {
+    String mainEmo = '${emotions[0].emotion} ${emotions[0].percentage}%';
+    emotions[0].isMainEmo = true;
+    for (int i = 0; i < emotions.length - 1; i++) {
+      if (emotions[i].percentage == emotions[i + 1].percentage) {
+        emotions[i + 1].isMainEmo = true;
+        mainEmo += '\n${emotions[i + 1].emotion}';
+      } else {
+        break;
+      }
+    }
+    return mainEmo;
+  }
+
+  //main emotion 아닌 애들 처리
+  String getNotMainEmo() {
+    String notMainEmo = '';
+    for (int i = 1; i < emotions.length; i++) {
+      if (!emotions[i].isMainEmo) {
+        notMainEmo += emotions[i].emotion;
+        if (i != emotions.length - 1) {
+          notMainEmo += ' ';
+        }
+      }
+    }
+    return notMainEmo;
+  }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    String mainEmo = mainEmoToString();
+    String notMainEmo = getNotMainEmo();
+    List<Color> colors = [
+      Colors.blue,
+      Colors.lightGreen,
+      Colors.pink,
+    ];
 
     return Container(
       decoration: const BoxDecoration(
@@ -55,16 +97,28 @@ class PastReport extends StatelessWidget {
                         ),
                       ),
                     ),
-                    EmoAnalysisWidget(
-                      user: '김철수',
-                      emotions: emotions,
+                    Row(
+                      children: [
+                        SizedBox(
+                          child: DoughnutChartWidget(
+                            emotions: emotions,
+                            doughnutSize: 60,
+                            doughnutWidth: 40,
+                            offsetX: 100,
+                            offsetY: 90,
+                            colors: colors,
+                            boxWidth: 220,
+                          ),
+                        ),
+                      ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 8.0),
+                    const SizedBox(height: 70),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
                       child: Text.rich(
                         TextSpan(
                           children: [
-                            TextSpan(
+                            const TextSpan(
                               text: '이어서 \n',
                               style: TextStyle(
                                 color: Color(0xFF434857),
@@ -75,8 +129,8 @@ class PastReport extends StatelessWidget {
                               ),
                             ),
                             TextSpan(
-                              text: '슬픔, 행복',
-                              style: TextStyle(
+                              text: notMainEmo,
+                              style: const TextStyle(
                                 color: Color(0xFF434857),
                                 fontSize: 20,
                                 fontFamily: 'IBMPlexSansKRRegular',
@@ -84,7 +138,7 @@ class PastReport extends StatelessWidget {
                                 height: 0,
                               ),
                             ),
-                            TextSpan(
+                            const TextSpan(
                               text: '이 차지했어요.',
                               style: TextStyle(
                                 color: Color(0xFF434857),
@@ -112,15 +166,15 @@ class PastReport extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Padding(
-                padding: EdgeInsets.only(
+              child: Padding(
+                padding: const EdgeInsets.only(
                   left: 20,
                   top: 20,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(bottom: 10),
                       child: Text(
                         '컨디션',
@@ -133,8 +187,8 @@ class PastReport extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '무릎이 조금 아프시지만, 잠은 잘 \n주무시는 편이에요. 최근 보조제를\n드시고 계신다고 해요.',
-                      style: TextStyle(
+                      condition,
+                      style: const TextStyle(
                         color: Color(0xFF434958),
                         fontSize: 20,
                         fontFamily: 'IBMPlexSansKRRegular',
@@ -156,17 +210,17 @@ class PastReport extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Padding(
-                padding: EdgeInsets.only(
+              child: Padding(
+                padding: const EdgeInsets.only(
                   left: 20,
                   top: 20,
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.only(bottom: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         '기억 점수',
                         style: TextStyle(
                           color: Color(0xFF1B1D49),
@@ -175,8 +229,8 @@ class PastReport extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      SizedBox(height: 15),
-                      Text(
+                      const SizedBox(height: 15),
+                      const Text(
                         '최근 기억 테스트 결과',
                         style: TextStyle(
                           color: Colors.black,
@@ -187,11 +241,11 @@ class PastReport extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           top: 60,
-                          left: 180,
+                          left: 160,
                         ),
-                        child: MemoryScoreChart(percentile: 58.2),
+                        child: MemoryScoreChart(percentile: memoryScore),
                       ),
                     ],
                   ),
