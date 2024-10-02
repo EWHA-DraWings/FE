@@ -9,8 +9,13 @@ import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 class ReportMainScreen extends StatelessWidget {
   final String name;
   final int daysPast; //마지막 자가진단 시점
+  final List<EmotionData> emotions;
 
-  ReportMainScreen({super.key, required this.name, required this.daysPast});
+  ReportMainScreen(
+      {super.key,
+      required this.name,
+      required this.daysPast,
+      required this.emotions});
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -219,11 +224,7 @@ class ReportMainScreen extends StatelessWidget {
                       child: TodaysReportWidget(
                         condition:
                             '무릎이 조금 아프시지만, 잠은 잘 주무시는 편이에요. 최근 보조제를 드시고 계신다고 해요.',
-                        emotions: [
-                          EmotionData(emotion: '당황', percentage: 80.0),
-                          EmotionData(emotion: '불안', percentage: 13.0),
-                          EmotionData(emotion: '행복', percentage: 7.0),
-                        ],
+                        emotions: emotions,
                       ),
                     ),
                     //여기다가 리포트 추가하면 됨
@@ -252,9 +253,24 @@ class ReportMainScreen extends StatelessWidget {
                             backgroundColor: Pallete.sodamReportPurple,
                             children: <Widget>[
                               SizedBox(
-                                  height: 300,
-                                  child: SingleChildScrollView(
-                                      child: PastReport())),
+                                height: 300,
+                                child: SingleChildScrollView(
+                                  child: PastReport(
+                                    name: name,
+                                    condition:
+                                        '무릎이 조금 아프시지만, 잠은 잘 \n주무시는 편이에요. 최근 보조제를\n드시고 계신다고 해요.',
+                                    memoryScore: 77.2,
+                                    emotions: [
+                                      EmotionData(
+                                          emotion: '당황', percentage: 80.0),
+                                      EmotionData(
+                                          emotion: '불안', percentage: 13.0),
+                                      EmotionData(
+                                          emotion: '행복', percentage: 7.0),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ],
                             onExpansionChanged: (value) {
                               if (value) {
@@ -279,7 +295,21 @@ class ReportMainScreen extends StatelessWidget {
                               SizedBox(
                                   height: 300,
                                   child: SingleChildScrollView(
-                                      child: PastReport())),
+                                    child: PastReport(
+                                      name: name,
+                                      condition:
+                                          '무릎이 조금 아프시지만, 잠은 잘 \n주무시는 편이에요. 최근 보조제를\n드시고 계신다고 해요.',
+                                      memoryScore: 80.6,
+                                      emotions: [
+                                        EmotionData(
+                                            emotion: '슬픔', percentage: 50.0),
+                                        EmotionData(
+                                            emotion: '행복', percentage: 40.0),
+                                        EmotionData(
+                                            emotion: '분노', percentage: 10.0),
+                                      ],
+                                    ),
+                                  )),
                             ],
                             onExpansionChanged: (value) {
                               if (value) {

@@ -59,6 +59,7 @@ class TodaysReportWidget extends StatelessWidget {
     const dateColor = Color.fromARGB(255, 70, 72, 88);
     const titleColor = Color.fromARGB(255, 242, 248, 255);
     const textColor = Colors.black;
+    List<Color> colors = [Colors.amber, Colors.red, const Color(0xffAD00FF)];
 
     //오늘 날짜
     DateTime now = DateTime.now();
@@ -130,6 +131,12 @@ class TodaysReportWidget extends StatelessWidget {
                   ),
                   DoughnutChartWidget(
                     emotions: emotions,
+                    doughnutSize: 37,
+                    doughnutWidth: 22,
+                    offsetX: 60,
+                    offsetY: 65,
+                    colors: colors,
+                    boxWidth: 135,
                   ),
                 ],
               ),
