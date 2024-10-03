@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sodam/global.dart';
 import 'package:sodam/models/elderly_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/elderly_signin/widgets/signin_elderly_input_container.dart';
@@ -38,7 +39,6 @@ class _SigninElderlyPhoneScreenstate extends State<SigninElderlyPhoneScreen> {
       // 잘 전달 되었는지 콘솔에 출력해봄. 잘 된다!
       print('Collected Guardian Data:');
       print('Name: ${totalElderlyData.name}');
-      print('Role: ${totalElderlyData.role}');
       print('ID: ${totalElderlyData.id}');
       print('Password: ${totalElderlyData.password}');
       print('Phone: ${totalElderlyData.guardianPhone}');
@@ -56,11 +56,9 @@ class _SigninElderlyPhoneScreenstate extends State<SigninElderlyPhoneScreen> {
       String jsonString = jsonEncode(requestBody);
       print('Request Body in JSON format: $jsonString');
 
-      //url에 들어가는 IP주소: ex) 10.0.2.2(에뮬레이터 localhost)
-      String IPAddr = '52.78.140.87';
-
       // 백엔드로 HTTP POST 요청 보내기
-      final url = Uri.parse('http://$IPAddr:3000/api/users/elderly/register');
+      final url =
+          Uri.parse('http://${Global.ipAddr}:3000/api/users/elderly/register');
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
@@ -94,13 +92,12 @@ class _SigninElderlyPhoneScreenstate extends State<SigninElderlyPhoneScreen> {
           const SnackBar(content: Text('회원가입에 실패했습니다. 다시 시도해주세요.')),
         );
       }
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LoginScreen(), // 회원가입 후 로그인 화면으로 이동
-        ),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => const LoginScreen(), // 회원가입 후 로그인 화면으로 이동
+      //   ),
+      // );
     }
   }
 

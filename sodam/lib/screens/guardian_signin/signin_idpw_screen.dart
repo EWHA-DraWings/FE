@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sodam/global.dart';
 import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/guardian_signin/signin_first_addinfo_screen.dart';
@@ -32,12 +33,10 @@ class _SigninIdpwScreenState extends State<SigninIdpwScreen> {
         password: password,
       );
 
-      //url에 들어가는 IP주소: ex) 10.0.2.2(에뮬레이터 localhost)
-      String IPAddr = '52.78.140.87';
-
       // 백엔드로 HTTP POST 요청 보내기
       //사용자 id 함께 보내서 id 중복 검사
-      final url = Uri.parse('http://$IPAddr:3000/api/users/check-id/$id');
+      final url =
+          Uri.parse('http://${Global.ipAddr}:3000/api/users/check-id/$id');
 
       final response = await http.get(
         url,
@@ -64,7 +63,6 @@ class _SigninIdpwScreenState extends State<SigninIdpwScreen> {
           const SnackBar(content: Text('사용 중인 아이디입니다. 다른 아이디를 사용해주세요.')),
         );
       } else {
-        //500(서버 오류)
         // 서버로부터의 실패 응답 처리
         print('아이디 중복 검사 실패(server error): ${response.body}');
         ScaffoldMessenger.of(context).showSnackBar(
