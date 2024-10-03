@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/calendar/diary_calendar_screen.dart';
 import 'package:sodam/screens/chat/diary_chat_screen.dart';
 import 'package:sodam/screens/calendar/report_calendar_screen.dart';
+import 'package:sodam/screens/report/report_main_screen.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
 import 'package:sodam/widgets/logout_button_widget.dart';
@@ -86,7 +88,15 @@ class MainScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MainPageButton(
-                      destination: const ReportCalendarScreen(),
+                      destination: ReportMainScreen(
+                        name: '홍길동',
+                        daysPast: 5,
+                        emotions: [
+                          EmotionData(emotion: '슬픔', percentage: 50.0),
+                          EmotionData(emotion: '행복', percentage: 40.0),
+                          EmotionData(emotion: '분노', percentage: 10.0),
+                        ],
+                      ),
                       text: "리포트",
                       backColor: Pallete.sodamButtonPurple,
                       iconPath: "lib/assets/images/report.png",
