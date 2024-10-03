@@ -4,7 +4,11 @@ class LoginInputContainer extends StatefulWidget {
   //이 위젯은 너비, 높이와 hintText를 지정할 수 있는 입력 컨테이너.
   final double width;
   final double height;
+<<<<<<< HEAD
+  final TextEditingController controller; // TextEditingController 추가
+=======
   final TextEditingController controller;
+>>>>>>> origin
 
   const LoginInputContainer({
     super.key,
