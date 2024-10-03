@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:sodam/global.dart';
 import 'package:sodam/models/guardian_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/login_screen.dart';
@@ -72,11 +73,9 @@ class _SigninFinalElderlyScreenState extends State<SigninFinalElderlyScreen> {
       String jsonString = jsonEncode(requestBody);
       print('Request Body in JSON format: $jsonString');
 
-      //url에 들어가는 IP주소: ex) 10.0.2.2(에뮬레이터 localhost)
-      String IPAddr = '52.78.140.87';
-
       // 백엔드로 HTTP POST 요청 보내기
-      final url = Uri.parse('http://$IPAddr:3000/api/users/guardian/register');
+      final url =
+          Uri.parse('http://${Global.ipAddr}:3000/api/users/guardian/register');
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
