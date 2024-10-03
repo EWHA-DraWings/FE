@@ -4,11 +4,13 @@ class LoginInputContainer extends StatefulWidget {
   //이 위젯은 너비, 높이와 hintText를 지정할 수 있는 입력 컨테이너.
   final double width;
   final double height;
+  final TextEditingController controller; // TextEditingController 추가
 
   const LoginInputContainer({
     super.key,
     required this.width,
     required this.height,
+    required this.controller,
   });
 
   @override
@@ -53,6 +55,7 @@ class _LoginInputContainerState extends State<LoginInputContainer> {
       child: Padding(
         padding: const EdgeInsets.all(2.0),
         child: TextField(
+          controller: widget.controller,
           focusNode: _focusNode,
           textAlign: TextAlign.center,
           decoration: const InputDecoration(

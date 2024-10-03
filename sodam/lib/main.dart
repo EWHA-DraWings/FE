@@ -11,7 +11,6 @@ import 'package:sodam/screens/report/report_main_screen.dart';
 import 'package:sodam/screens/time_select_screen.dart';
 import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
 
-
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -40,16 +39,8 @@ class MainApp extends StatelessWidget {
           //ReportDetailScreen(),
           //DiaryChatScreen(),
           //PastReport(),
-          //TimeSelectScreen(),
-          ReportMainScreen(
-        name: '홍길동',
-        daysPast: 3,
-        emotions: [
-          EmotionData(emotion: '슬픔', percentage: 50.0),
-          EmotionData(emotion: '행복', percentage: 40.0),
-          EmotionData(emotion: '분노', percentage: 10.0),
-        ],
-      ),
+          TimeSelectScreen(),
+
       //SigninStartScreen(),
       //ReportDetailScreen(),
       //DiaryChatScreen(),
