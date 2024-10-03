@@ -2,11 +2,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sodam/models/login_data.dart';
+import 'package:sodam/global.dart';
 import 'package:sodam/pallete.dart';
+import 'package:sodam/screens/main_screen.dart';
 import 'package:sodam/screens/main_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:sodam/widgets/login_input_container.dart';
 import 'package:sodam/widgets/move_to_membership_button.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
