@@ -73,7 +73,7 @@ class _SigninFinalElderlyScreenState extends State<SigninFinalElderlyScreen> {
       print('Request Body in JSON format: $jsonString');
 
       //url에 들어가는 IP주소: ex) 10.0.2.2(에뮬레이터 localhost)
-      String IPAddr = '3.38.179.142';
+      String IPAddr = '52.78.140.87';
 
       // 백엔드로 HTTP POST 요청 보내기
       final url = Uri.parse('http://$IPAddr:3000/api/users/guardian/register');

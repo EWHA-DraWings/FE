@@ -4,6 +4,7 @@ import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/guardian_signin/signin_first_addinfo_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
 import 'package:sodam/widgets/membership_next_button.dart';
+import 'package:http/http.dart' as http;
 
 class SigninIdpwScreen extends StatefulWidget {
   final GuardianData data; //데이터를 받기 위해 추가
@@ -18,7 +19,7 @@ class _SigninIdpwScreenState extends State<SigninIdpwScreen> {
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  void _onNextButtonPressed() {
+  Future<void> _onNextButtonPressed() async {
     // 현재 폼의 상태가 유효한지 검사합니다.
     if (_formKey.currentState!.validate()) {
       // 폼이 유효할 경우, 입력된 아이디와 비밀번호를 가져옵니다.
@@ -31,15 +32,46 @@ class _SigninIdpwScreenState extends State<SigninIdpwScreen> {
         password: password,
       );
 
-      // 다음 화면으로 이동하며, 현재 화면의 데이터를 전달합니다.
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SigninFirstAddinfoScreen(
-            data: updatedGuardianData2, // 업데이트된 GuardianData 객체
-          ),
-        ),
+      //url에 들어가는 IP주소: ex) 10.0.2.2(에뮬레이터 localhost)
+      String IPAddr = '52.78.140.87';
+
+      // 백엔드로 HTTP POST 요청 보내기
+      //사용자 id 함께 보내서 id 중복 검사
+      final url = Uri.parse('http://$IPAddr:3000/api/users/check-id/$id');
+
+      final response = await http.get(
+        url,
+        headers: {'Content-Type': 'application/json'},
       );
+
+      print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        //사용 가능 id
+        // 다음 화면으로 이동하며, 현재 화면의 데이터를 전달합니다.
+        print('사용 가능한 아이디');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SigninFirstAddinfoScreen(
+              data: updatedGuardianData2, // 업데이트된 GuardianData 객체
+            ),
+          ),
+        );
+      } else if (response.statusCode == 400) {
+        print('아이디 중복: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('사용 중인 아이디입니다. 다른 아이디를 사용해주세요.')),
+        );
+      } else {
+        //500(서버 오류)
+        // 서버로부터의 실패 응답 처리
+        print('아이디 중복 검사 실패(server error): ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('500: 서버 오류로 아이디 중복 검사에 실패했습니다. 다시 시도해주세요.')),
+        );
+      }
     }
   }
 
