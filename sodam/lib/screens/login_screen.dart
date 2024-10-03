@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   // 로그인 버튼 누르면 실행
-  loginAction(id, password) async {
+  Future<Map<String, dynamic>> loginAction(id, password) async {
     try {
       var param = {
         'id': id,
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // 로그인 API 요청
       final response = await http.post(
-        Uri.parse('로그인 API URL'), // 실제 로그인 API URL로 바꿔주세요
+        Uri.parse('http://${Global.ipAddr}:3000/api/auth/login'),
         headers: {
           "Content-Type": "application/json", // JSON 형식으로 요청
         },
@@ -69,7 +69,11 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (response.statusCode == 200) {
+        //JSON 응답 파싱
         final jsonBody = json.decode(response.body);
+
+        //isElderly 값 가져오기
+        bool isElderly = jsonBody['isElderly'];
 
         // 응답 json에서 사용자 ID를 추출해 userId에 저장
         //var userId = jsonBody['user_id'].toString(); // 실제 JSON 구조에 맞게 조정
@@ -89,14 +93,32 @@ class _LoginScreenState extends State<LoginScreen> {
         );
 
         print('접속 성공! userID: ${loginData.user_id}');
-        return true;
+        return {
+          'success': true,
+          'isElderly': isElderly,
+        };
+      } else if (response.statusCode == 401) {
+        print('로그인 실패: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('401: 로그인에 실패했습니다. 다시 시도해주세요.')),
+        );
+        return {
+          'success': false,
+        };
       } else {
         print('로그인 실패: ${response.statusCode}');
-        return false;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('500: 서버 오류로 로그인에 실패했습니다. 다시 시도해주세요.')),
+        );
+        return {
+          'success': false,
+        };
       }
     } catch (e) {
       print('예외 발생: $e');
-      return false;
+      return {
+        'success': false,
+      };
     }
   }
 
@@ -206,15 +228,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 59,
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (await loginAction(
-                            idController.text, passwordController.text) ==
-                        true) {
+                    final result = await loginAction(
+                        idController.text, passwordController.text);
+                    if (result['success'] == true) {
                       print('로그인 성공');
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              const MainScreen(isGuardian: false), //이 정보도 수정 필요
+                          builder: (context) => MainScreen(
+                              isGuardian: !result['isElderly']), //이 정보도 수정 필요
                         ),
                       );
                     } else {
