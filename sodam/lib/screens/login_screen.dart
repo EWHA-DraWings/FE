@@ -25,10 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   Future<void> _onLoginButtonPressed() async {
-    print('Login Button Pressed'); // 로그인 버튼이 눌렸는지 확인
-    print('ID: ${_idController.text}');
-    print('Password: ${_passwordController.text}');
-
     if (_formKey.currentState!.validate()) {
       // 폼이 유효할 경우, 입력된 아이디와 비밀번호를 가져옵니다.
       final id = _idController.text;
@@ -49,11 +45,11 @@ class _LoginScreenState extends State<LoginScreen> {
       print('Request Body in JSON format: $jsonString');
 
       //url에 들어가는 IP주소: ex) 10.0.2.2(에뮬레이터 localhost)
-      String IPAddr = '3.38.179.142';
+      String IPAddr = '52.78.140.87';
 
       // 백엔드로 HTTP POST 요청 보내기
       final url = Uri.parse('http://$IPAddr:3000/api/auth/login');
-      print(url);
+
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
