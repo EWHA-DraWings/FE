@@ -6,7 +6,9 @@ import 'package:sodam/models/elderly_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/elderly_signin/widgets/signin_elderly_input_container.dart';
 import 'package:sodam/screens/login_screen.dart';
+import 'package:sodam/screens/time_select_screen.dart';
 import 'package:sodam/widgets/membership_input_container.dart';
+import 'package:http/http.dart' as http; //http 가져오기
 
 class SigninElderlyPhoneScreen extends StatefulWidget {
   final ElderlyData data;
@@ -47,37 +49,51 @@ class _SigninElderlyPhoneScreenstate extends State<SigninElderlyPhoneScreen> {
         "name": totalElderlyData.name,
         "password": totalElderlyData.password,
         "guardianPhone": totalElderlyData.guardianPhone,
-        "role": totalElderlyData.role,
+        //"role": totalElderlyData.role,
       };
 
       // 서버 연동 전, json 형태로 잘 전달되는지 출력
       String jsonString = jsonEncode(requestBody);
       print('Request Body in JSON format: $jsonString');
 
-      // 백엔드로 HTTP POST 요청 보내기
-      // final url = Uri.parse('https://your-backend-url.com/api/register'); // 실제 API 엔드포인트로 변경 필요
-      // final response = await http.post(
-      //   url,
-      //   headers: {'Content-Type': 'application/json'},
-      //   body: jsonEncode(requestBody),
-      // );
+      //url에 들어가는 IP주소: ex) 10.0.2.2(에뮬레이터 localhost)
+      String IPAddr = '3.38.179.142';
 
+      // 백엔드로 HTTP POST 요청 보내기
+      final url = Uri.parse('http://$IPAddr:3000/api/users/elderly/register');
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(requestBody),
+      );
+
+      print(response.statusCode);
       // // 서버 응답 결과에 따라서 처리
-      // if (response.statusCode == 200) {
-      //   // 서버로부터의 성공 응답 처리
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => const TimeSelectScreen(), // 회원가입 후 시간 설정 화면으로 이동
-      //     ),
-      //   );
-      // } else {
-      //   // 서버로부터의 실패 응답 처리
-      //   print('Failed to register: ${response.body}');
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     const SnackBar(content: Text('회원가입에 실패했습니다. 다시 시도해주세요.')),
-      //   );
-      // }
+      if (response.statusCode == 201) {
+        // 서버로부터의 성공 응답 처리
+        //임시 메시지
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('회원가입 성공!')),
+        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) =>
+        //         const TimeSelectScreen(), // 회원가입 후 시간 설정 화면으로 이동
+        //   ),
+        // );
+      } else if (response.statusCode == 400) {
+        //보호자 정보 연동 실패
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('보호자 정보를 찾지 못했어요.')),
+        );
+      } else {
+        // 서버로부터의 실패 응답 처리(서버 오류)
+        print('Failed to register due to server error: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('회원가입에 실패했습니다. 다시 시도해주세요.')),
+        );
+      }
 
       Navigator.push(
         context,
