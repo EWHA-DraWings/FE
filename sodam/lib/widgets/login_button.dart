@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
+import 'package:http/http.dart' as http;
 
 class LoginButton extends StatelessWidget {
+  final VoidCallback loginButtonPressed;
+
   const LoginButton({
     super.key,
+    required this.loginButtonPressed,
   });
 
   @override
@@ -16,6 +20,7 @@ class LoginButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           //api 호출하기
+          loginButtonPressed();
         },
         style: ElevatedButton.styleFrom(
           foregroundColor: Pallete.mainBlack,
