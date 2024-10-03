@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:sodam/global.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/diary_screen.dart';
 import 'package:sodam/widgets/title_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:http/http.dart' as http; //http 가져오기
 
 class DiaryCalendarScreen extends StatefulWidget {
   const DiaryCalendarScreen({super.key});
@@ -19,6 +23,7 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
   final double calendarFontSize = 20.0;
   late AnimationController _animationController; //애니메이션 컨트롤러. 애니메이션 지속시간 설정
   late Animation<double> _animation; //날짜 선택시 글씨 커지게 하는 애니메이션
+  final jwtToken = ''; //jwtToken 저장
 
   @override
   void initState() {
@@ -46,19 +51,51 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
       });
       _animationController.forward().then((_) {
         //약간의 딜레이 후 이동
-        Future.delayed(const Duration(milliseconds: 100), () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DiaryScreen(
-                date: selectedDay,
-                content:
-                    """ 오늘은 아침부터 비가 내렸다. 비 소리를 들으니 마음이 차분해지는 것 같았다. 아침 식사로는 따뜻한 미역국을 끓여 먹었다. 비 오는 날에는 따뜻한 국물이 최고다.
-  비가 와서 외출은 못했지만 집에서 할 일이 많았다. 오래된 사진첩을 정리하고, 손자들이 보내준 편지를 읽었다. 손자들이 쓴 편지를 읽으니 눈물이 핑 돌았다. 세월이 참 빠르다는 생각이 들었다.
-  점심 후에는 재봉틀로 낡은 옷을 수선했다. 예전에 배운 재봉 솜씨가 아직 녹슬지 않았다. 저녁에는 간단히 계란말이와 나물반찬으로 식사를 하고, 드라마를 보면서 하루를 마무리했다.""",
-              ),
-            ),
+        Future.delayed(const Duration(milliseconds: 100), () async {
+          ///api/diary/date/:date (20240901형식)
+          final url =
+              Uri.parse('http://${Global.ipAddr}:3000/api/diary/date/20240901');
+
+          final response = await http.post(
+            url,
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $jwtToken'
+            },
           );
+          String content = '일기 내용이 없습니다.';
+
+          if (response.statusCode == 200) {
+            //JSON 응답 파싱
+            final Map<String, dynamic> data = jsonDecode(response.body);
+            content = data['content'];
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DiaryScreen(
+                  date: selectedDay,
+                  //전달받은 content로 일기 보여주기
+                  content: content,
+                ),
+              ),
+            );
+          } else if (response.statusCode == 400) {
+            //유효하지 않은 일기 id 또는 날짜 형식 틀림
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('유효하지 않은 일기 ID 또는 날짜입니다.')),
+            );
+          } else if (response.statusCode == 404) {
+            //404:해당 날짜의 일기 존재하지 않음
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('해당 날짜의 일기가 없습니다.')),
+            );
+          } else {
+            //500: 일기 조회 실패
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('500: 일기 조회에 실패했습니다.')),
+            );
+          }
         });
         _animationController.reverse(); //원래상태로 되돌아감.
       });
