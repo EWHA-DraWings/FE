@@ -133,11 +133,11 @@ class _SigninThirdAddinfoScreenState extends State<SigninThirdAddinfoScreen> {
                                 Padding(
                                   padding:
                                       EdgeInsets.only(left: screenWidth * 0.11),
-                                  child: const Align(
+                                  child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Row(
                                       children: [
-                                        Text(
+                                        const Text(
                                           "거주 지역",
                                           style: TextStyle(
                                             color: Pallete.mainBlack,
@@ -145,12 +145,13 @@ class _SigninThirdAddinfoScreenState extends State<SigninThirdAddinfoScreen> {
                                             fontFamily: "IBMPlexSansKRRegular",
                                           ),
                                         ),
-                                        SizedBox(width: 10),
+                                        const SizedBox(width: 10),
                                         Text(
                                           "ex.서울",
                                           style: TextStyle(
-                                            color: Pallete.mainBlack,
-                                            fontSize: 10,
+                                            color: Pallete.mainBlack
+                                                .withOpacity(0.7),
+                                            fontSize: 15,
                                             fontFamily: "IBMPlexSansKRRegular",
                                           ),
                                         ),
@@ -162,7 +163,7 @@ class _SigninThirdAddinfoScreenState extends State<SigninThirdAddinfoScreen> {
                                 MembershipInputContainer(
                                   height: 45,
                                   controller: _addresscontroller,
-                                  obscureText: true,
+                                  obscureText: false,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return '거주지역을 입력해주세요.';
