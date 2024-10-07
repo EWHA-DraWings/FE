@@ -1,207 +1,17 @@
-// import 'package:flutter/material.dart';
-// import 'package:sodam/pallete.dart';
-// import 'package:sodam/screens/chat/bubble.dart';
-
-// class DiaryChatScreen extends StatefulWidget {
-//   const DiaryChatScreen({super.key});
-
-//   @override
-//   State<DiaryChatScreen> createState() => _DiaryChatScreenState();
-// }
-
-// class _DiaryChatScreenState extends State<DiaryChatScreen> {
-//   final scrollController = ScrollController();
-//   bool isInputVisible = true;
-
-//   List<Map<String, dynamic>> chatList = [
-//     {"text": "안녕하세요!\n소담이에요. 오늘 하루는 어떻게 보냈는지 이야기 해주세요.", "isUser": false},
-//     {"text": "오랜만에 친구랑 바다에 다녀왔어.", "isUser": true},
-//     {
-//       "text": "정말 멋진 하루를 보냈겠네요! 어떤 친구들이랑 갔는지, 바닷가는 어땠는지 좀 더 이야기해 줄 수 있을까요?",
-//       "isUser": false
-//     },
-//     {"text": "오늘 날씨가 어떤가요?", "isUser": true},
-//     {
-//       "text": "오늘은 맑고 화창해요. 놀러가기 딱 좋은 날씨죠. 000님은 오늘 하루 어떻게 보내셨나요?",
-//       "isUser": false
-//     },
-//   ];
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Pallete.mainWhite,
-//       appBar: AppBar(
-//         backgroundColor: Pallete.mainWhite,
-//         scrolledUnderElevation: 0,
-//         title: Column(
-//           children: [
-//             Row(
-//               children: [
-//                 Container(
-//                   width: 50,
-//                   height: 50,
-//                   decoration: BoxDecoration(
-//                     borderRadius: BorderRadius.circular(25),
-//                     color: const Color(0xFFCDDEF8),
-//                   ),
-//                   child: ClipOval(
-//                     child: Image.asset(
-//                       'lib/assets/images/sodam.png', // 이미지 경로
-//                       fit: BoxFit.cover,
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(width: 15),
-//                 const Text(
-//                   "소담이",
-//                   style: TextStyle(
-//                     fontSize: 20,
-//                     fontFamily: "IBMPlexSansKRBold",
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             const SizedBox(height: 5),
-//           ],
-//         ),
-//       ),
-//       body: Column(
-//         children: [
-//           // 채팅
-//           Expanded(
-//             child: ListView.builder(
-//               //reverse: true, // 아래-> 위로 채팅이 배치됨.
-//               controller: scrollController,
-//               itemCount: chatList.length,
-//               itemBuilder: (context, index) {
-//                 return Bubble(chat: chatList[index]);
-//               },
-//             ),
-//           ),
-//           //고정 높이의 입력 필드 (예시)
-//           if (isInputVisible)
-//             Container(
-//               color: Colors.transparent,
-//               padding: const EdgeInsets.all(5.0),
-//               child: Row(
-//                 children: [
-//                   Expanded(
-//                     child: Column(
-//                       children: [
-//                         Row(
-//                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                           children: [
-//                             Container(
-//                               width: MediaQuery.of(context).size.width * 0.7,
-//                               height: 55,
-//                               decoration: BoxDecoration(
-//                                 color: Pallete.mainGray,
-//                                 borderRadius: BorderRadius.circular(20),
-//                               ),
-//                               child: const Align(
-//                                 alignment: Alignment.centerLeft,
-//                                 child: Padding(
-//                                   padding: EdgeInsets.only(
-//                                     left: 25,
-//                                   ),
-//                                   child: Text(
-//                                     "무엇이든 말씀해주세요",
-//                                     style: TextStyle(
-//                                       fontSize: 17,
-//                                       fontFamily: "IBMPlexSansKRBold",
-//                                       color: Colors.grey,
-//                                     ),
-//                                   ),
-//                                 ),
-//                               ),
-//                             ),
-//                             ElevatedButton(
-//                               onPressed: () {
-//                                 // 버튼 클릭 시 동작. 나중에 음성 인식 추가해야 됨.
-//                                 setState(() {
-//                                   isInputVisible = false;
-//                                 });
-//                               },
-//                               style: ElevatedButton.styleFrom(
-//                                 backgroundColor: Pallete.mainBlue,
-//                                 shape: const CircleBorder(), // 원형 버튼
-//                                 padding: const EdgeInsets.all(1),
-//                               ),
-//                               child: Image.asset(
-//                                 "lib/assets/images/voice.png",
-//                                 width: 70,
-//                                 height: 70,
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                         const SizedBox(
-//                           height: 3,
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             )
-//           else
-//             Container(
-//               color: Colors.transparent,
-//               padding: const EdgeInsets.all(15),
-//               child: Container(
-//                 width: MediaQuery.of(context).size.width * 0.9,
-//                 height: 55,
-//                 decoration: BoxDecoration(
-//                   color: Pallete.mainBlue,
-//                   borderRadius: BorderRadius.circular(25),
-//                 ),
-//                 child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     IconButton(
-//                       onPressed: () {
-//                         // 버튼 클릭 시 상태 변경
-//                       },
-//                       icon: Image.asset(
-//                         "lib/assets/images/trash.png",
-//                         width: 70,
-//                         height: 70,
-//                       ),
-//                       iconSize: 70, // 아이콘 크기
-//                     ),
-//                     const SizedBox(width: 10),
-//                     //시간.
-//                     IconButton(
-//                       onPressed: () {
-//                         // 버튼 클릭 시 상태 변경
-//                         setState(() {
-//                           isInputVisible = true;
-//                         });
-//                       },
-//                       icon: Image.asset(
-//                         "lib/assets/images/arrow.png",
-//                         width: 70,
-//                         height: 70,
-//                       ),
-//                       iconSize: 70, // 아이콘 크기
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//         ],
-//       ),
-//     );
-//   }
-// }
 import 'dart:convert'; // For JSON encoding/decoding
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:sodam/models/websocket_provider.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/chat/bubble.dart';
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DiaryChatScreen extends StatefulWidget {
-  const DiaryChatScreen({super.key});
+  final String gptText; //시작 메세지 받아옴
+  const DiaryChatScreen({super.key, required this.gptText});
 
   @override
   State<DiaryChatScreen> createState() => _DiaryChatScreenState();
@@ -209,45 +19,134 @@ class DiaryChatScreen extends StatefulWidget {
 
 class _DiaryChatScreenState extends State<DiaryChatScreen> {
   final scrollController = ScrollController();
+  final FlutterSoundRecorder _recorder = FlutterSoundRecorder(); // 음성 녹음
+  late final RecorderController _recorderController; // 음성 파형 보여주기 위한 컨트롤러
+
   bool isInputVisible = true;
-  List<Map<String, dynamic>> chatList = [
-    {"text": "안녕하세요!\n소담이에요. 오늘 하루는 어떻게 보냈는지 이야기 해주세요.", "isUser": false},
-  ];
+  bool isRecording = false; // 녹음 상태
+  List<Map<String, dynamic>> chatList = []; //채팅 메세지 저장
+  List<double> waveData = []; //음성 파형 데이터 저장
+  late final List<int> audioBuffer; // 음성 데이터를 저장할 버퍼
 
-  TextEditingController inputController =
-      TextEditingController(); // For user input
+  @override
+  //gpt에게 온 시작메세지 호출 및 녹음기 초기화
+  void initState() {
+    super.initState();
 
-  Future<void> sendMessage(String message) async {
+    _requestPermissions(); //녹음 사용 권한 요청
+    chatList.add({"text": widget.gptText, "isUser": false}); //gpt 초기 메세지 추가
+    _initRecorder(); //녹음기 초기화
+    _recorderController = RecorderController(); // Initialize RecorderController
+    audioBuffer = []; // Initialize audio buffer
+
+    // Listen for WebSocket messages
+    final webSocketProvider =
+        Provider.of<WebSocketProvider>(context, listen: false);
+
+    webSocketProvider.addListener(() {
+      // Check for incoming messages and update chat
+      // This function will be called whenever notifyListeners() is called
+      final incomingMessage = webSocketProvider.lastReceivedMessage;
+
+      if (incomingMessage != null) {
+        // Parse the incoming message
+        final responseData = jsonDecode(incomingMessage);
+
+        // Check the type of message
+        if (responseData['type'] == 'response') {
+          setState(() {
+            // Add user text and chatbot's response to the chat list
+            chatList.add({"text": responseData['userText'], "isUser": true});
+            chatList.add({"text": responseData['gptText'], "isUser": false});
+          });
+        } else {
+          print("error:response 처리 실패");
+        }
+      }
+    });
+  }
+
+  //녹음기 사용 권한 요청
+  Future<void> _requestPermissions() async {
+    // Check the current status of microphone permission
+    final status = await Permission.microphone.status; // 마이크 권한 상태 확인
+    if (!status.isGranted) {
+      // Request permission if not granted
+      final result = await Permission.microphone.request(); // 권한 요청
+
+      if (result.isDenied) {
+        // Handle the case when permission is denied
+        // You can show a dialog or a Snackbar here
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content:
+                  Text("Microphone permission is required to record audio.")),
+        );
+      }
+    }
+  }
+
+  // 녹음기 초기화
+  Future<void> _initRecorder() async {
+    await _recorder.openRecorder();
+  }
+
+  //녹음 시작
+  Future<void> startRecording() async {
+    final status = await Permission.microphone.status;
+    waveData.clear(); // Clear previous wave data
+    if (status.isGranted) {
+      try {
+        await _recorder.startRecorder(codec: Codec.aacADTS); //녹음 시작
+        setState(() {
+          isRecording = true;
+        });
+
+        // Update wave data periodically while recording
+        _recorder.onProgress!.listen((event) {
+          setState(() {
+            waveData.add(event.decibels!);
+          });
+        });
+      } catch (e) {
+        // Handle error (e.g., log or show an error message)
+        print("Failed to start recording.: $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Failed to start recording:")),
+        );
+      }
+    } else {
+      // If the microphone permission is not granted, you may want to prompt the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content:
+                Text("Microphone permission is required to start recording.")),
+      );
+    }
+  }
+
+  // 녹음 중지후 녹음 데이터를 바이너리로 읽어 서버에 전송
+  Future<void> stopRecording() async {
+    final recordingResult = await _recorder.stopRecorder();
     setState(() {
-      chatList.add({"text": message, "isUser": true}); //사용자의 메세지
+      isRecording = false;
     });
 
-    // GPT-4o api 요청
-    final response = await http.post(
-      Uri.parse('http://your-backend-url.com/chat'), //url
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({"message": message}),
-    );
+    // 바이너리 데이터를 직접 메모리에서 서버로 전송
+    final audioBytes =
+        await File(recordingResult!).readAsBytes(); // 파일에서 바이너리 데이터 읽기
+    final webSocketProvider =
+        Provider.of<WebSocketProvider>(context, listen: false);
+    // 웹소켓을 통해 바이너리 데이터 전송
+    webSocketProvider.sendMessage(audioBytes); // audioBytes를 직접 전송
+  }
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      setState(() {
-        chatList.add(
-            {"text": data['response'], "isUser": false}); // Add GPT-4o response
-      });
-
-      // Scroll to the bottom of the chat
-      scrollController.animateTo(
-        scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    } else {
-      // Handle error
-      setState(() {
-        chatList.add({"text": "Error : 응답 실패", "isUser": false});
-      });
-    }
+  @override
+  void dispose() {
+    //녹음기, 녹음기 컨트롤러 정리
+    _recorder.closeRecorder();
+    _recorderController.dispose();
+    super.dispose();
   }
 
   @override
@@ -307,41 +206,42 @@ class _DiaryChatScreenState extends State<DiaryChatScreen> {
               child: Row(
                 children: [
                   Expanded(
-                    child: TextField(
-                      controller: inputController,
-                      decoration: InputDecoration(
-                        hintText: '무엇이든 말씀해주세요',
-                        hintStyle: const TextStyle(
-                          fontSize: 17,
-                          fontFamily: "IBMPlexSansKRBold",
-                          color: Colors.grey,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Pallete.mainGray,
-                        contentPadding: const EdgeInsets.only(left: 25),
+                    child: GestureDetector(
+                      onTap: () {
+                        if (isRecording) {
+                          stopRecording(); // 녹음 중이면 중지
+                        } else {
+                          startRecording(); // 녹음 시작
+                        }
+                      },
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 35,
+                            backgroundColor:
+                                isRecording ? Colors.red : Colors.blue,
+                          ),
+                          Image.asset(
+                            "lib/assets/images/voice.png",
+                            width: 40,
+                            height: 40,
+                          ),
+                          if (isRecording)
+                            AudioWaveforms(
+                              size:
+                                  const Size(double.infinity, 100), // 파형 크기 설정
+                              recorderController:
+                                  _recorderController, // Use RecorderController
+                              enableGesture: false,
+                              waveStyle: const WaveStyle(
+                                showMiddleLine: false,
+                                extendWaveform: true,
+                                waveColor: Colors.white,
+                              ),
+                            ),
+                        ],
                       ),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (inputController.text.isNotEmpty) {
-                        sendMessage(inputController.text); // Send message
-                        inputController.clear(); // Clear input
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Pallete.mainBlue,
-                      shape: const CircleBorder(),
-                      padding: const EdgeInsets.all(1),
-                    ),
-                    child: Image.asset(
-                      "lib/assets/images/voice.png",
-                      width: 70,
-                      height: 70,
                     ),
                   ),
                 ],
