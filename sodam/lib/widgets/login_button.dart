@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
-import 'package:http/http.dart' as http;
 
 class LoginButton extends StatelessWidget {
   final VoidCallback loginButtonPressed;

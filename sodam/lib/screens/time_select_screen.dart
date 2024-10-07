@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 import 'package:sodam/pallete.dart';
 
