@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:sodam/global.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/models/login_data.dart';
+import 'package:sodam/models/report_data.dart';
 import 'package:sodam/models/websocket_provider.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/calendar/diary_calendar_screen.dart';
@@ -109,6 +111,44 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  //리포트 가져오기
+  Future<void> getReports(BuildContext context) async {
+    //오늘 날짜
+    //String today = DateTime.now().toString();
+    //2024-10-02
+    //today = today.split(' ').first;
+    String today = '2024-10-01';
+
+    final loginDataProvider =
+        Provider.of<LoginDataProvider>(context, listen: false);
+    final token = loginDataProvider.loginData?.token;
+
+    final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports/$today');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // 팩토리 생성자를 통해 객체 생성
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      print(data);
+    } else if (response.statusCode == 404) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('해당 날짜의 일기가 없습니다.')),
+      );
+    } else {
+      //500
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('500: 리포트 조회에 실패했습니다.')),
+      );
+    }
+  }
+
   @override
   void dispose() {
     // Cancel the message subscription if it's active
@@ -123,6 +163,7 @@ class _MainScreenState extends State<MainScreen> {
     final loginDataProvider =
         Provider.of<LoginDataProvider>(context, listen: false);
     final token = loginDataProvider.loginData?.token; // 토큰 값 가져오기
+    final name = loginDataProvider.loginData?.name; // 사용자 이름
 
     print("Token at MainScreen: $token"); // MainScreen에서 토큰 출력
     return Scaffold(
@@ -203,7 +244,7 @@ class _MainScreenState extends State<MainScreen> {
                   children: [
                     MainPageButton(
                       destination: ReportMainScreen(
-                        name: '홍길동',
+                        name: name ?? '사용자',
                         daysPast: 5,
                         emotions: [
                           EmotionData(emotion: '슬픔', percentage: 50.0),
