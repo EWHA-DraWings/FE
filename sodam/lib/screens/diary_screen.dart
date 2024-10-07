@@ -23,6 +23,13 @@ class _DiaryScreenState extends State<DiaryScreen> {
   }
 
   @override
+  void dispose() {
+    //화면 닫으면 tts 중지
+    flutterTts.stop(); //tts 중지
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
