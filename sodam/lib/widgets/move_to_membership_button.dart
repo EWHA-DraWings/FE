@@ -18,18 +18,18 @@ class MoveToMembershipButton extends StatelessWidget {
       },
       style: ButtonStyle(
         backgroundColor:
-            MaterialStateProperty.all<Color>(Colors.transparent), // 배경색 투명
+            WidgetStateProperty.all<Color>(Colors.transparent), // 배경색 투명
         shadowColor:
-            MaterialStateProperty.all<Color>(Colors.transparent), // 그림자 제거
-        elevation: MaterialStateProperty.all<double>(0), // 그림자 높이 제거
+            WidgetStateProperty.all<Color>(Colors.transparent), // 그림자 제거
+        elevation: WidgetStateProperty.all<double>(0), // 그림자 높이 제거
         padding:
-            MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero), // 패딩 제거
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            WidgetStateProperty.all<EdgeInsets>(EdgeInsets.zero), // 패딩 제거
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           const RoundedRectangleBorder(
             borderRadius: BorderRadius.zero, // 모서리 반경 초기화
           ),
         ),
-        side: MaterialStateProperty.all<BorderSide>(BorderSide.none),
+        side: WidgetStateProperty.all<BorderSide>(BorderSide.none),
       ), // 테두리 제거
       child: const Text(
         "회원가입",

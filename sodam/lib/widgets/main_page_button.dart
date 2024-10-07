@@ -7,14 +7,16 @@ class MainPageButton extends StatefulWidget {
   final Color backColor; // 버튼 배경색
   final String iconPath; // 아이콘 이미지의 경로
   final bool isGuardian; // 버튼 활성화 상태를 제어하는 매개변수
+  final Function()? onTap; // Tap 핸들러. => 대화하기 버튼
 
   const MainPageButton({
     super.key,
     required this.destination,
     required this.text,
     required this.backColor,
-    required this.iconPath, // 아이콘 이미지 경로를 받는 추가적인 매개변수
+    required this.iconPath,
     required this.isGuardian,
+    this.onTap,
   });
 
   @override
@@ -59,15 +61,19 @@ class _MainPageButtonState extends State<MainPageButton>
   }
 
   void _onTap() {
-    if (!widget.isGuardian || (widget.text != "대화하기" && widget.text != "일기장")) {
+    if (!widget.isGuardian || widget.text != "대화하기") {
       _controller.forward().then((_) {
         _controller.reverse().then((_) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => widget.destination, // 다음 화면
-            ),
-          );
+          if (widget.onTap != null) {
+            widget.onTap!(); // onTap을 호출
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => widget.destination, // 다음 화면
+              ),
+            );
+          }
         });
       });
     }

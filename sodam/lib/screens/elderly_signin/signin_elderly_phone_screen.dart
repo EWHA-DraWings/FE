@@ -6,9 +6,6 @@ import 'package:sodam/global.dart';
 import 'package:sodam/models/elderly_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/elderly_signin/widgets/signin_elderly_input_container.dart';
-import 'package:sodam/screens/login_screen.dart';
-import 'package:sodam/screens/time_select_screen.dart';
-import 'package:sodam/widgets/membership_input_container.dart';
 import 'package:http/http.dart' as http; //http 가져오기
 
 class SigninElderlyPhoneScreen extends StatefulWidget {
