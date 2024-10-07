@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sodam/main.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/models/memory_score_data.dart';
 import 'package:sodam/pallete.dart';

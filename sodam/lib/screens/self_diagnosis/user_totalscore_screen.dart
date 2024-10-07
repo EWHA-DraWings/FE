@@ -38,7 +38,7 @@ class UserTotalscoreScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const RoundNextButton(
+              RoundNextButton(
                 btnText: '결과 공유하기',
                 btnColor: Pallete.mainGray,
                 emoji: '🔗',
@@ -49,7 +49,7 @@ class UserTotalscoreScreen extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              const RoundNextButton(
+              RoundNextButton(
                 btnText: '가까운 병원 찾아보기',
                 btnColor: Pallete.mainGray,
                 emoji: '🏥',
@@ -60,7 +60,7 @@ class UserTotalscoreScreen extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              const RoundNextButton(
+              RoundNextButton(
                 btnText: '자가진단 기록 살펴보기',
                 btnColor: Pallete.mainGray,
                 emoji: '📊',

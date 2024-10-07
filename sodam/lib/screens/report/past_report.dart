@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/report/widget/build_emotion_row_widget.dart';
 import 'package:sodam/screens/report/widget/doughnut_chart_widget.dart';
-import 'package:sodam/widgets/emo_analysis_widget.dart';
 import 'package:sodam/widgets/memory_score_chart.dart';
 
 class PastReport extends StatelessWidget {
