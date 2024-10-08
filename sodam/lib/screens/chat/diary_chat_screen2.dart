@@ -9,6 +9,7 @@ import 'package:sodam/models/login_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/chat/bubble.dart';
 import 'package:sodam/screens/chat/websocket_provider2.dart';
+import 'package:permission_handler/permission_handler.dart'; //마이크 권한 허용
 
 class DiaryChatScreen2 extends StatefulWidget {
   const DiaryChatScreen2({super.key});
@@ -34,10 +35,19 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
   }
 
   Future<void> _initializeRecorder() async {
-    try {
-      await _recorder.openRecorder();
-    } catch (e) {
-      print("Error opening recorder: $e");
+    var status = await Permission.microphone.status; //마이크 권한 췍
+    if (!status.isGranted) {
+      status = await Permission.microphone.request();
+    }
+
+    if (status.isGranted) {
+      try {
+        await _recorder.openRecorder();
+      } catch (e) {
+        print("Error opening recorder: $e");
+      }
+    } else {
+      print("Microphone permission denied.");
     }
   }
 
@@ -70,6 +80,7 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
               chatList.add({"text": responseData['gptText'], "isUser": false});
             }
             print("Updated chatList: $chatList");
+            _scrollToBottom(); // Scroll to the latest message
           });
         } else {
           print("error: response 처리 실패");
@@ -82,7 +93,7 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
       "sessionId": null,
     });
 
-    webSocketProvider.sendMessage(requestMessage);
+    webSocketProvider.sendStartMessage(requestMessage);
     print("요청 메시지 전송됨 $requestMessage");
   }
 
@@ -96,31 +107,31 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
     print("audiobyte 보내기:");
 
     final audioBytes = await File(audioFilePath).readAsBytes();
-    final base64Audio = base64Encode(audioBytes);
 
-    // Add user message to the chat list
-    // setState(() {
-    //   chatList.add({"text": "Audio message sent", "isUser": true}); // 사용자 메세지
-    // });
     print("message 사용자가 전송 :");
 
-    // Create the message data in the desired format
-    final messageData = jsonEncode({
-      base64Audio, // Base64 encoded audio
-    });
-    webSocketProvider.sendMessage(messageData);
+    webSocketProvider.sendMessageAsBinary(audioBytes);
   }
 
   Future<void> startRecording() async {
-    try {
-      _recordingPath =
-          await getTemporaryDirectory().then((dir) => '${dir.path}/audio.wav');
-      await _recorder.startRecorder(toFile: _recordingPath);
-      setState(() {
-        _isRecording = true;
-      });
-    } catch (e) {
-      print("Error starting recorder: $e");
+    var status = await Permission.microphone.status;
+    if (!status.isGranted) {
+      status = await Permission.microphone.request();
+    }
+
+    if (status.isGranted) {
+      try {
+        _recordingPath = await getTemporaryDirectory()
+            .then((dir) => '${dir.path}/audio.wav');
+        await _recorder.startRecorder(toFile: _recordingPath);
+        setState(() {
+          _isRecording = true;
+        });
+      } catch (e) {
+        print("Error starting recorder: $e");
+      }
+    } else {
+      print("Microphone permission denied.");
     }
   }
 
@@ -135,6 +146,19 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
       print("Error stopping recorder: $e");
       return null;
     }
+  }
+
+  //가장 최근 보내진 채팅으로 스크롤되게
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
   }
 
   @override
@@ -202,6 +226,8 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
                             sendMessage(path); // Send the recorded audio
                           }
                         });
+                      } else {
+                        startRecording();
                       }
                     },
                     style: ElevatedButton.styleFrom(
