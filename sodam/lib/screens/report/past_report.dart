@@ -7,14 +7,14 @@ import 'package:sodam/widgets/memory_score_chart.dart';
 class PastReport extends StatelessWidget {
   final String name;
   final String condition;
-  final double memoryScore;
+  final double? memoryScore;
   final List<EmotionData> emotions; //top3 감정 리스트
 
   const PastReport(
       {super.key,
       required this.name,
       required this.condition,
-      required this.memoryScore,
+      this.memoryScore,
       required this.emotions});
 
 //main emotion이 2개 이상일 경우 체크
