@@ -1,5 +1,8 @@
-import 'dart:convert'; // For JSON encoding/decoding
+import 'dart:convert';
+import 'dart:io'; // Add this import for file handling
 import 'package:flutter/material.dart';
+import 'package:flutter_sound/flutter_sound.dart'; // Import the package
+import 'package:path_provider/path_provider.dart'; // For getting the temporary directory
 import 'package:provider/provider.dart';
 import 'package:sodam/global.dart';
 import 'package:sodam/models/login_data.dart';
@@ -19,18 +22,27 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
   bool isInputVisible = true;
   List<Map<String, dynamic>> chatList = [];
 
-  TextEditingController inputController =
-      TextEditingController(); // For user input
+  final FlutterSoundRecorder _recorder = FlutterSoundRecorder();
+  bool _isRecording = false;
+  String? _recordingPath; // Declare a variable to hold the recording path
 
   @override
   void initState() {
     super.initState();
     _startConversation();
+    _initializeRecorder();
+  }
+
+  Future<void> _initializeRecorder() async {
+    try {
+      await _recorder.openRecorder();
+    } catch (e) {
+      print("Error opening recorder: $e");
+    }
   }
 
   Future<void> _startConversation() async {
     print("startConversation 호출됨");
-    //토큰 값 가져오기
     final loginDataProvider =
         Provider.of<LoginDataProvider>(context, listen: false);
     final token = loginDataProvider.loginData?.token;
@@ -38,65 +50,91 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
 
     final webSocketProvider =
         Provider.of<WebSocketProvider2>(context, listen: false);
-
-    //WebSocket 연결
     webSocketProvider.connect('ws://${Global.ipAddr}:3000/ws/diary');
-    // Start listening for incoming messages
+    print("연결2");
+
     webSocketProvider.listen();
 
-    final requestMessage = jsonEncode({
-      "type": "startConversation",
-      "token": token, // Assuming you have a way to get the token
-      "sessionId": null,
-    });
-
-    // Send the request
-    webSocketProvider.sendMessage(requestMessage);
-    print("요청 메시지 전송됨");
-
-    // Listen for incoming messages
     webSocketProvider.addListener(() {
+      print("리스너연결");
       final incomingMessage = webSocketProvider.lastReceivedMessage;
       print("응답 수신됨 : $incomingMessage");
       if (incomingMessage != null) {
-        // Parse the incoming message
         final responseData = jsonDecode(incomingMessage);
-
-        // Check the type of message
         if (responseData['type'] == 'response') {
           setState(() {
             if (responseData['userText'] == "...") {
-              // userText가 "..."일 경우 gptText만 추가
               chatList.add({"text": responseData['gptText'], "isUser": false});
             } else {
-              // userText와 gptText 모두 추가
               chatList.add({"text": responseData['userText'], "isUser": true});
               chatList.add({"text": responseData['gptText'], "isUser": false});
             }
-            print("Updated chatList: $chatList"); // Check updated chatList
+            print("Updated chatList: $chatList");
           });
         } else {
           print("error: response 처리 실패");
         }
       }
     });
+    final requestMessage = jsonEncode({
+      "type": "startConversation",
+      "token": token,
+      "sessionId": null,
+    });
+
+    webSocketProvider.sendMessage(requestMessage);
+    print("요청 메시지 전송됨 $requestMessage");
   }
 
-  Future<void> sendMessage(String message) async {
+  Future<void> sendMessage(String audioFilePath) async {
     final webSocketProvider =
         Provider.of<WebSocketProvider2>(context, listen: false);
     if (!webSocketProvider.checkConnection()) {
       print("WebSocket is not connected!");
-      return; // 연결이 안 된 경우 메시지 전송을 중단합니다.
+      return;
     }
-    setState(() {
-      chatList.add({"text": message, "isUser": true}); // 사용자 메세지
-    });
+    print("audiobyte 보내기:");
 
-    // Send the user's message
-    final messageData = jsonEncode({"type": "userMessage", "text": message});
-    webSocketProvider
-        .sendMessage(messageData); // Implement this in your WebSocketProvider
+    final audioBytes = await File(audioFilePath).readAsBytes();
+    final base64Audio = base64Encode(audioBytes);
+
+    // Add user message to the chat list
+    // setState(() {
+    //   chatList.add({"text": "Audio message sent", "isUser": true}); // 사용자 메세지
+    // });
+    print("message 사용자가 전송 :");
+
+    // Create the message data in the desired format
+    final messageData = jsonEncode({
+      base64Audio, // Base64 encoded audio
+    });
+    webSocketProvider.sendMessage(messageData);
+  }
+
+  Future<void> startRecording() async {
+    try {
+      _recordingPath =
+          await getTemporaryDirectory().then((dir) => '${dir.path}/audio.wav');
+      await _recorder.startRecorder(toFile: _recordingPath);
+      setState(() {
+        _isRecording = true;
+      });
+    } catch (e) {
+      print("Error starting recorder: $e");
+    }
+  }
+
+  Future<String?> stopRecording() async {
+    try {
+      await _recorder.stopRecorder();
+      setState(() {
+        _isRecording = false;
+      });
+      return _recordingPath;
+    } catch (e) {
+      print("Error stopping recorder: $e");
+      return null;
+    }
   }
 
   @override
@@ -155,47 +193,29 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
                 Container(
                   color: Colors.transparent,
                   padding: const EdgeInsets.all(5.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: inputController,
-                          decoration: InputDecoration(
-                            hintText: '무엇이든 말씀해주세요',
-                            hintStyle: const TextStyle(
-                              fontSize: 17,
-                              fontFamily: "IBMPlexSansKRBold",
-                              color: Colors.grey,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide: BorderSide.none,
-                            ),
-                            filled: true,
-                            fillColor: Pallete.mainGray,
-                            contentPadding: const EdgeInsets.only(left: 25),
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (inputController.text.isNotEmpty) {
-                            sendMessage(inputController.text); // Send message
-                            inputController.clear(); // Clear input
+                  child: ElevatedButton(
+                    onPressed: () {
+                      print("버튼이 클릭됨");
+                      if (_isRecording) {
+                        stopRecording().then((path) {
+                          if (path != null) {
+                            sendMessage(path); // Send the recorded audio
                           }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Pallete.mainBlue,
-                          shape: const CircleBorder(),
-                          padding: const EdgeInsets.all(1),
-                        ),
-                        child: Image.asset(
-                          "lib/assets/images/voice.png",
-                          width: 70,
-                          height: 70,
-                        ),
-                      ),
-                    ],
+                        });
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _isRecording
+                          ? const Color.fromARGB(255, 40, 0, 46)
+                          : Pallete.mainBlue,
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(1),
+                    ),
+                    child: Image.asset(
+                      "lib/assets/images/voice.png",
+                      width: 80,
+                      height: 80,
+                    ),
                   ),
                 ),
             ],
@@ -203,5 +223,11 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _recorder.stopRecorder(); // Close the audio session when disposing
+    super.dispose();
   }
 }
