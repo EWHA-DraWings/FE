@@ -15,12 +15,14 @@ class WebSocketProvider2 with ChangeNotifier {
 
   // WebSocket 연결
   void connect(String url) {
+    print("연결");
     isConnected = true;
     _channel = WebSocketChannel.connect(Uri.parse(url));
   }
 
   // Listen for incoming messages
   void listen() {
+    print("listening...");
     if (_channel != null) {
       _channel!.stream.listen((message) {
         if (message is Uint8List) {
@@ -29,6 +31,7 @@ class WebSocketProvider2 with ChangeNotifier {
           _playAudio(message); // Method to play audio
         } else if (message is String) {
           // Handle string message
+          print("시작 msg 들어옴");
           lastReceivedMessage = message;
           notifyListeners(); // Notify listeners that a new message has been received
         } else {
@@ -70,6 +73,7 @@ class WebSocketProvider2 with ChangeNotifier {
 
   // 메시지 전송
   void sendMessage(String message) {
+    print("Sending message...");
     if (_channel != null) {
       _channel!.sink.add(message);
       print("메시지 전송됨: $message");
