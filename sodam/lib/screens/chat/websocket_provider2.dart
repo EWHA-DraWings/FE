@@ -17,29 +17,35 @@ class WebSocketProvider2 with ChangeNotifier {
   void connect(String url) {
     isConnected = true;
     _channel = WebSocketChannel.connect(Uri.parse(url));
+  }
 
-    //수신된 메세지 처리
-    _channel?.stream.listen((message) {
-
-      if (message is Uint8List) {//바이너리(음성)면 재생
-        print("Received Uint8List");
-        _playAudio(message);//_playAudio 메서드는 Uint8List 형식의 오디오 데이터를 받아서 임시 파일로 저장한 후, 해당 파일을 재생합니다.
-      } else if (message is String) {//문자열이면 저장
-        lastReceivedMessage = message;
-      } else {
-        print("Unexpected message type: ${message.runtimeType}");
-        lastReceivedMessage = "Unexpected message format"; // 예상치 못한 메시지 처리
-      }
-      notifyListeners(); // 상태 변경 알림
-    }, onError: (error) {
-      isConnected = false;
-      print("WebSocket error: $error");
-      // Handle any errors
-    }, onDone: () {
-      isConnected = false;
-      print("WebSocket connection closed");
-      // Handle connection closed
-    });
+  // Listen for incoming messages
+  void listen() {
+    if (_channel != null) {
+      _channel!.stream.listen((message) {
+        if (message is Uint8List) {
+          // Handle binary message (audio)
+          print("Received Uint8List");
+          _playAudio(message); // Method to play audio
+        } else if (message is String) {
+          // Handle string message
+          lastReceivedMessage = message;
+          notifyListeners(); // Notify listeners that a new message has been received
+        } else {
+          print("Unexpected message type: ${message.runtimeType}");
+          lastReceivedMessage =
+              "Unexpected message format"; // Handle unexpected message format
+        }
+      }, onError: (error) {
+        isConnected = false;
+        print("WebSocket error: $error");
+        // Handle errors
+      }, onDone: () {
+        isConnected = false;
+        print("WebSocket connection closed");
+        // Handle connection closed
+      });
+    }
   }
 
   // 음성 재생
@@ -51,7 +57,8 @@ class WebSocketProvider2 with ChangeNotifier {
       File tempFile = File('$tempPath/temp_audio.mp3');
       await tempFile.writeAsBytes(audioData);
       // Source 객체로 변환하여 재생
-      await _audioPlayer.play(DeviceFileSource(tempFile.path)); // Source로 변환 후 재생
+      await _audioPlayer
+          .play(DeviceFileSource(tempFile.path)); // Source로 변환 후 재생
     } catch (e) {
       print("Error playing audio: $e");
     }

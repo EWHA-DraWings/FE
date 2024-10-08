@@ -28,15 +28,6 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
     _startConversation();
   }
 
-  @override
-  void dispose() {
-    // Dispose of the WebSocket connection or any other resources if necessary
-    final webSocketProvider =
-        Provider.of<WebSocketProvider2>(context, listen: false);
-    webSocketProvider.removeListener(_onWebSocketMessage);
-    super.dispose();
-  }
-
   Future<void> _startConversation() async {
     print("startConversation 호출됨");
     //토큰 값 가져오기
@@ -50,6 +41,8 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
 
     //WebSocket 연결
     webSocketProvider.connect('ws://${Global.ipAddr}:3000/ws/diary');
+    // Start listening for incoming messages
+    webSocketProvider.listen();
 
     final requestMessage = jsonEncode({
       "type": "startConversation",
@@ -60,58 +53,33 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
     // Send the request
     webSocketProvider.sendMessage(requestMessage);
     print("요청 메시지 전송됨");
-    // Listen for incoming messages (add listener only once)
-    webSocketProvider.addListener(_onWebSocketMessage);
 
-    // // Listen for incoming messages
-    // webSocketProvider.addListener(() {
-    //   final incomingMessage = webSocketProvider.lastReceivedMessage;
-    //   print("응답 수신됨 : $incomingMessage");
-    //   if (incomingMessage != null) {
-    //     // Parse the incoming message
-    //     final responseData = jsonDecode(incomingMessage);
+    // Listen for incoming messages
+    webSocketProvider.addListener(() {
+      final incomingMessage = webSocketProvider.lastReceivedMessage;
+      print("응답 수신됨 : $incomingMessage");
+      if (incomingMessage != null) {
+        // Parse the incoming message
+        final responseData = jsonDecode(incomingMessage);
 
-    //     // Check the type of message
-    //     if (responseData['type'] == 'response') {
-    //       setState(() {
-    //         if (responseData['userText'] == "...") {
-    //           // userText가 "..."일 경우 gptText만 추가
-    //           chatList.add({"text": responseData['gptText'], "isUser": false});
-    //         } else {
-    //           // userText와 gptText 모두 추가
-    //           chatList.add({"text": responseData['userText'], "isUser": true});
-    //           chatList.add({"text": responseData['gptText'], "isUser": false});
-    //         }
-    //         print("Updated chatList: $chatList"); // Check updated chatList
-    //       });
-    //     } else {
-    //       print("error: response 처리 실패");
-    //     }
-    //   }
-    // });
-  }
-
-  void _onWebSocketMessage() {
-    final webSocketProvider =
-        Provider.of<WebSocketProvider2>(context, listen: false);
-    final incomingMessage = webSocketProvider.lastReceivedMessage;
-    print("응답 수신됨 : $incomingMessage");
-    if (incomingMessage != null) {
-      final responseData = jsonDecode(incomingMessage);
-      if (responseData['type'] == 'response') {
-        setState(() {
-          if (responseData['userText'] == "...") {
-            chatList.add({"text": responseData['gptText'], "isUser": false});
-          } else {
-            chatList.add({"text": responseData['userText'], "isUser": true});
-            chatList.add({"text": responseData['gptText'], "isUser": false});
-          }
-          print("Updated chatList: $chatList");
-        });
-      } else {
-        print("error: response 처리 실패");
+        // Check the type of message
+        if (responseData['type'] == 'response') {
+          setState(() {
+            if (responseData['userText'] == "...") {
+              // userText가 "..."일 경우 gptText만 추가
+              chatList.add({"text": responseData['gptText'], "isUser": false});
+            } else {
+              // userText와 gptText 모두 추가
+              chatList.add({"text": responseData['userText'], "isUser": true});
+              chatList.add({"text": responseData['gptText'], "isUser": false});
+            }
+            print("Updated chatList: $chatList"); // Check updated chatList
+          });
+        } else {
+          print("error: response 처리 실패");
+        }
       }
-    }
+    });
   }
 
   Future<void> sendMessage(String message) async {
