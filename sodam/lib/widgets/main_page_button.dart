@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sodam/pallete.dart';
 
 class MainPageButton extends StatefulWidget {
-  final Widget destination; // destination : 넘어갈 다음 화면
+  final Widget? destination; // destination : 넘어갈 다음 화면
   final String text;
   final Color backColor; // 버튼 배경색
   final String iconPath; // 아이콘 이미지의 경로
@@ -11,7 +11,7 @@ class MainPageButton extends StatefulWidget {
 
   const MainPageButton({
     super.key,
-    required this.destination,
+    this.destination,
     required this.text,
     required this.backColor,
     required this.iconPath,
@@ -70,7 +70,7 @@ class _MainPageButtonState extends State<MainPageButton>
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => widget.destination, // 다음 화면
+                builder: (context) => widget.destination!, // 다음 화면
               ),
             );
           }

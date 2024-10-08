@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/models/memory_score_data.dart';
+import 'package:sodam/models/report_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/widget/todays_report_widget.dart';
 import 'package:sodam/screens/report/past_report.dart';
@@ -9,13 +10,15 @@ import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 class ReportMainScreen extends StatelessWidget {
   final String name;
   final int daysPast; //마지막 자가진단 시점
-  final List<EmotionData> emotions;
+  final ReportData todaysReport; //오늘 리포트
+  final List<ReportData> pastReports; //과거 리포트
 
   ReportMainScreen(
       {super.key,
       required this.name,
       required this.daysPast,
-      required this.emotions});
+      required this.todaysReport,
+      required this.pastReports});
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -24,6 +27,11 @@ class ReportMainScreen extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     double greenContainerHeight = 160; // 그린 컨테이너의 높이
     double greenContainerFromTop = 170; //그린컨테이너의 top으로부터 거리
+
+    //emotion data(오늘 감정)
+    final List<EmotionData> emotions = todaysReport.emotions;
+
+    final List<ReportData> pastReports; //과거 리포트(3개) -> 가져오는 함수 작성해야함
 
     // 각 ExpansionTile에 사용할 GlobalKey를 생성합니다.
     final GlobalKey expansionTileKey1 = GlobalKey();
@@ -222,9 +230,8 @@ class ReportMainScreen extends StatelessWidget {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: TodaysReportWidget(
-                        condition:
-                            '무릎이 조금 아프시지만, 잠은 잘 주무시는 편이에요. 최근 보조제를 드시고 계신다고 해요.',
-                        emotions: emotions,
+                        condition: todaysReport.condition, //오늘 컨디션
+                        emotions: emotions, //오늘의 감정
                         memoryScoreDatas: [
                           MemoryScoreData(
                               date: '2023-08-25', score: 100, cdr: 1),

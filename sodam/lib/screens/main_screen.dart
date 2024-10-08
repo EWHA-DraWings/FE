@@ -111,8 +111,8 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  //리포트 가져오기
-  Future<void> getReports(BuildContext context) async {
+  //리포트 가져오기(리포트 1개 리턴)
+  Future<dynamic> getTodayReport(BuildContext context) async {
     //오늘 날짜
     //String today = DateTime.now().toString();
     //2024-10-02
@@ -123,6 +123,7 @@ class _MainScreenState extends State<MainScreen> {
         Provider.of<LoginDataProvider>(context, listen: false);
     final token = loginDataProvider.loginData?.token;
 
+    //일기 확인 및 리포트 생성
     final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports/$today');
 
     final response = await http.post(
@@ -134,18 +135,59 @@ class _MainScreenState extends State<MainScreen> {
     );
 
     if (response.statusCode == 200) {
-      // 팩토리 생성자를 통해 객체 생성
+      //json data를 Map으로 디코딩
       final Map<String, dynamic> data = jsonDecode(response.body);
-      print(data);
+      final report = ReportData.fromJson(data);
+      print(report);
+      //생성.조회한 리포트 가져오기
+      return report;
     } else if (response.statusCode == 404) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('해당 날짜의 일기가 없습니다.')),
+        const SnackBar(
+            content: Text('해당 날짜의 일기가 없습니다. 일기가 존재하는 날짜의 리포트만 조회 가능합니다.')),
       );
+      return;
     } else {
       //500
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('500: 리포트 조회에 실패했습니다.')),
       );
+      return;
+    }
+  }
+
+  //과거 리포트까지 가져오기
+  Future<List<ReportData>> getPastReports(BuildContext context) async {
+      final loginDataProvider =
+        Provider.of<LoginDataProvider>(context, listen: false);
+    final token = loginDataProvider.loginData?.token;
+
+    //리포트 가져오기(오늘+ 과거 3개)
+    final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+
+    if (response.statusCode == 200) {
+// json 데이터를 List<Map<String, dynamic>>로 디코딩
+final List<Map<String, dynamic>> data = List<Map<String, dynamic>>.from(jsonDecode(response.body));
+
+// List<Map<String, dynamic>>를 List<ReportData>로 변환
+final List<ReportData> reports = data.map((json) => ReportData.fromJson(json)).toList();
+      print(reports);
+      //생성.조회한 리포트 가져오기
+      return reports;
+    } else{
+      //500
+ ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('500: 리포트 조회에 실패했습니다.')),
+      );
+      return [];
     }
   }
 
@@ -243,19 +285,29 @@ class _MainScreenState extends State<MainScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MainPageButton(
-                      destination: ReportMainScreen(
-                        name: name ?? '사용자',
-                        daysPast: 5,
-                        emotions: [
-                          EmotionData(emotion: '슬픔', percentage: 50.0),
-                          EmotionData(emotion: '행복', percentage: 40.0),
-                          EmotionData(emotion: '분노', percentage: 10.0),
-                        ],
-                      ),
                       text: "리포트",
                       backColor: Pallete.sodamButtonPurple,
                       iconPath: "lib/assets/images/report.png",
                       isGuardian: widget.isGuardian,
+                      onTap: () async {
+                        // 오늘 리포트 생성 확인
+                        ReportData todaysReport = await getTodayReport(context);
+//리포트 가져오기부터 작성해야됨
+                        List<ReportData> pastReports=getPastReports(context);
+
+                        // 리포트 화면 이동
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ReportMainScreen(
+                              name: name ?? '사용자',
+                              daysPast: 5, // 일단 임의로 넣은 숫자
+                              todaysReport: todaysReport,
+                              pastReports: ,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(width: 20),
                     MainPageButton(

@@ -5,6 +5,7 @@ class ReportData {
   final String healthStatus;
   final String date;
   final double cdrScore;
+  final double correctRatio; //정답 백분위
   final List<EmotionData> emotions;
   final String condition;
 
@@ -14,6 +15,7 @@ class ReportData {
     required this.condition,
     required this.date,
     required this.cdrScore,
+    required this.correctRatio,
     required this.emotions,
   });
 
@@ -25,6 +27,7 @@ class ReportData {
       date: json['date'],
       cdrScore: json['cdrScore'].toDouble(),
       emotions: json['emotion'],
+      correctRatio: json['correctRatio'].toDouble(),
     );
   }
 }

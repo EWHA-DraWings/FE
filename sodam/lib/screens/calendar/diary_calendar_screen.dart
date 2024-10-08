@@ -75,10 +75,9 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
 
           if (response.statusCode == 200) {
             //JSON 응답 파싱
-            final List<Map<String, dynamic>> data = jsonDecode(response.body);
-            //여기부터 이어서 작성
-            //onTap
-            content = data[0]['content'];
+            final Map<String, dynamic> data = jsonDecode(response.body);
+
+            content = data['content'];
 
             Navigator.push(
               context,

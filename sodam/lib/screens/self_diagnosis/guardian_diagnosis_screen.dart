@@ -100,7 +100,17 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
             ),
           ),
           ChoiceButton(
-            text: '예',
+            text: '자주',
+            val: 2,
+            onPressed: () => _onButtonPressed(index, 2),
+            selectedOptions: _selectedOptions,
+            index: index,
+          ),
+          const SizedBox(
+            height: btnInterval,
+          ),
+          ChoiceButton(
+            text: '가끔',
             val: 1,
             onPressed: () => _onButtonPressed(index, 1),
             selectedOptions: _selectedOptions,
@@ -110,7 +120,7 @@ class _GuardianDiagnosisScreenState extends State<GuardianDiagnosisScreen> {
             height: btnInterval,
           ),
           ChoiceButton(
-            text: '아니오',
+            text: '아니다',
             val: 0,
             onPressed: () => _onButtonPressed(index, 0),
             selectedOptions: _selectedOptions,
