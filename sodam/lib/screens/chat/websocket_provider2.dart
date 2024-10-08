@@ -32,6 +32,7 @@ class WebSocketProvider2 with ChangeNotifier {
         } else if (message is String) {
           // Handle string message
           print("시작 msg 들어옴");
+          print("message $message");
           lastReceivedMessage = message;
           notifyListeners(); // Notify listeners that a new message has been received
         } else {
@@ -72,11 +73,22 @@ class WebSocketProvider2 with ChangeNotifier {
   }
 
   // 메시지 전송
-  void sendMessage(String message) {
+  void sendStartMessage(String message) {
     print("Sending message...");
     if (_channel != null) {
       _channel!.sink.add(message);
       print("메시지 전송됨: $message");
+    } else {
+      print("WebSocket이 연결되어 있지 않습니다.");
+    }
+  }
+
+  // 메시지 전송 (바이너리)
+  void sendMessageAsBinary(Uint8List messageBytes) {
+    print("Sending binary message...");
+    if (_channel != null) {
+      _channel!.sink.add(messageBytes);
+      print("Binary 메시지 전송됨");
     } else {
       print("WebSocket이 연결되어 있지 않습니다.");
     }
