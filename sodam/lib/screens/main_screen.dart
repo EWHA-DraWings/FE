@@ -112,12 +112,9 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   //리포트 가져오기(리포트 1개 리턴)
-  Future<dynamic> getTodayReport(BuildContext context) async {
+  Future<ReportData?> getTodayReport(BuildContext context) async {
     //오늘 날짜
-    //String today = DateTime.now().toString();
-    //2024-10-02
-    //today = today.split(' ').first;
-    String today = '2024-10-01';
+    String today = '2024-10-07';
 
     final loginDataProvider =
         Provider.of<LoginDataProvider>(context, listen: false);
@@ -146,48 +143,13 @@ class _MainScreenState extends State<MainScreen> {
         const SnackBar(
             content: Text('해당 날짜의 일기가 없습니다. 일기가 존재하는 날짜의 리포트만 조회 가능합니다.')),
       );
-      return;
+      return null; // 404일 때 null 반환
     } else {
       //500
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('500: 리포트 조회에 실패했습니다.')),
       );
-      return;
-    }
-  }
-
-  //과거 리포트까지 가져오기
-  Future<List<ReportData>> getPastReports(BuildContext context) async {
-      final loginDataProvider =
-        Provider.of<LoginDataProvider>(context, listen: false);
-    final token = loginDataProvider.loginData?.token;
-
-    //리포트 가져오기(오늘+ 과거 3개)
-    final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports');
-
-    final response = await http.get(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token'
-      },
-    );
-
-    if (response.statusCode == 200) {
-// json 데이터를 List<Map<String, dynamic>>로 디코딩
-final List<Map<String, dynamic>> data = List<Map<String, dynamic>>.from(jsonDecode(response.body));
-
-// List<Map<String, dynamic>>를 List<ReportData>로 변환
-final List<ReportData> reports = data.map((json) => ReportData.fromJson(json)).toList();
-      print(reports);
-      //생성.조회한 리포트 가져오기
-      return reports;
-    } else{
-      //500
- ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('500: 리포트 조회에 실패했습니다.')),
-      );
-      return [];
+      return null; // 500일 때도 null 반환
     }
   }
 
@@ -291,22 +253,27 @@ final List<ReportData> reports = data.map((json) => ReportData.fromJson(json)).t
                       isGuardian: widget.isGuardian,
                       onTap: () async {
                         // 오늘 리포트 생성 확인
-                        ReportData todaysReport = await getTodayReport(context);
-//리포트 가져오기부터 작성해야됨
-                        List<ReportData> pastReports=getPastReports(context);
-
+                        ReportData? todaysReport =
+                            await getTodayReport(context);
                         // 리포트 화면 이동
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ReportMainScreen(
-                              name: name ?? '사용자',
-                              daysPast: 5, // 일단 임의로 넣은 숫자
-                              todaysReport: todaysReport,
-                              pastReports: ,
+                        if (todaysReport != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReportMainScreen(
+                                name: name ?? '사용자',
+                                daysPast: 5, // 일단 임의로 넣은 숫자
+                                todaysReport: todaysReport,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } else {
+                          // 리포트가 없는 경우 처리
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('오늘의 리포트를 불러오지 못했습니다.')),
+                          );
+                        }
                       },
                     ),
                     const SizedBox(width: 20),
