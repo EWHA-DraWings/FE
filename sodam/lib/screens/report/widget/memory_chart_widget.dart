@@ -55,20 +55,17 @@ class _MemoryChartWidgetState extends State<MemoryChartWidget> {
       case 0:
         text = '25';
         break;
-      case 2:
+      case 1:
         text = '31';
         break;
-      case 4:
+      case 2:
         text = '6';
         break;
-      case 6:
+      case 3:
         text = '12';
         break;
-      case 8:
+      case 4:
         text = '18';
-        break;
-      case 10:
-        text = '24';
         break;
       default:
         text = '';
