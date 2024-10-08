@@ -11,6 +11,7 @@ import 'package:sodam/models/websocket_provider.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/calendar/diary_calendar_screen.dart';
 import 'package:sodam/screens/chat/diary_chat_screen.dart';
+import 'package:sodam/screens/chat/diary_chat_screen2.dart';
 import 'package:sodam/screens/report/report_main_screen.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
@@ -176,16 +177,13 @@ class _MainScreenState extends State<MainScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MainPageButton(
-                      destination: const DiaryChatScreen(
-                        gptText: " ",
+                      destination: const DiaryChatScreen2(
                       ),
                       text: "대화하기",
                       backColor: Pallete.mainBlue,
                       iconPath: "lib/assets/images/chat.png",
                       isGuardian: widget.isGuardian,
-                      onTap: () async {
-                        await startConversation(context); // API 호출
-                      },
+                      
                     ),
                     const SizedBox(width: 20),
                     MainPageButton(

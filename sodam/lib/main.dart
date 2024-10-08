@@ -3,6 +3,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:sodam/models/login_data.dart';
 import 'package:sodam/models/websocket_provider.dart';
+import 'package:sodam/screens/chat/websocket_provider2.dart';
 import 'package:sodam/screens/login_screen.dart';
 
 Future main() async {
@@ -28,7 +29,7 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LoginDataProvider()),
         ChangeNotifierProvider(
             create: (_) =>
-                WebSocketProvider()), // Provide the LoginDataProvider
+                WebSocketProvider2()), // Provide the LoginDataProvider
       ],
       child: MaterialApp(
         builder: (context, child) {

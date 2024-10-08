@@ -1,19 +1,35 @@
 import 'dart:convert';
 import 'dart:async';
+import 'dart:typed_data'; //Uint8List 처리
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:audioplayers/audioplayers.dart'; //오디오 재생 기능
+import 'package:path_provider/path_provider.dart'; //파일 시스템에서 디렉터리 경로를 찾기 위해 필요
+import 'dart:io'; // File 클래스 사용
 
 class WebSocketProvider2 with ChangeNotifier {
   WebSocketChannel? _channel;
   String? lastReceivedMessage;
-  bool isConnected = false;//웹소켓 연결 확인
-  
+  bool isConnected = false; //웹소켓 연결 확인
+  final AudioPlayer _audioPlayer = AudioPlayer(); // AudioPlayer 인스턴스 생성
+
   // WebSocket 연결
   void connect(String url) {
     isConnected = true;
     _channel = WebSocketChannel.connect(Uri.parse(url));
+
+    //수신된 메세지 처리
     _channel?.stream.listen((message) {
-      lastReceivedMessage = message;
+
+      if (message is Uint8List) {//바이너리(음성)면 재생
+        print("Received Uint8List");
+        _playAudio(message);//_playAudio 메서드는 Uint8List 형식의 오디오 데이터를 받아서 임시 파일로 저장한 후, 해당 파일을 재생합니다.
+      } else if (message is String) {//문자열이면 저장
+        lastReceivedMessage = message;
+      } else {
+        print("Unexpected message type: ${message.runtimeType}");
+        lastReceivedMessage = "Unexpected message format"; // 예상치 못한 메시지 처리
+      }
       notifyListeners(); // 상태 변경 알림
     }, onError: (error) {
       isConnected = false;
@@ -25,7 +41,21 @@ class WebSocketProvider2 with ChangeNotifier {
       // Handle connection closed
     });
   }
-   
+
+  // 음성 재생
+  Future<void> _playAudio(Uint8List audioData) async {
+    try {
+      // 임시 파일로 저장하여 재생
+      //getTemporaryDirectory를 통해 임시 파일의 경로를 얻고, File 객체를 생성하여 데이터를 씁니다.
+      String tempPath = (await getTemporaryDirectory()).path;
+      File tempFile = File('$tempPath/temp_audio.mp3');
+      await tempFile.writeAsBytes(audioData);
+      // Source 객체로 변환하여 재생
+      await _audioPlayer.play(DeviceFileSource(tempFile.path)); // Source로 변환 후 재생
+    } catch (e) {
+      print("Error playing audio: $e");
+    }
+  }
 
   bool checkConnection() {
     return isConnected;
