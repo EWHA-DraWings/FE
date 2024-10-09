@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/provider.dart';
+import 'package:sodam/global.dart';
+import 'package:sodam/models/login_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/self_diagnosis/user_totalscore_screen.dart';
 import 'package:sodam/widgets/choice_button.dart';
 import 'package:sodam/widgets/title_widget.dart';
+import 'package:http/http.dart' as http;
 
 class UserDiagnosisScreen extends StatefulWidget {
   const UserDiagnosisScreen({super.key});
@@ -20,9 +26,60 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
 
   //tts 기본 설정
   Future<void> _speak(String text) async {
+    flutterTts.stop(); //기존 tts 중지
     await flutterTts.setLanguage("ko-KR");
     await flutterTts.setPitch(1.0);
     await flutterTts.speak(text);
+  }
+
+  //db에 저장하기
+  Future<void> saveResults(int totalScore) async {
+    final loginDataProvider =
+        Provider.of<LoginDataProvider>(context, listen: false);
+    final token = loginDataProvider.loginData?.token;
+
+    final url = Uri.parse('http://${Global.ipAddr}:3000/api/assessments');
+
+    //전송할 데이터
+    final Map<String, dynamic> requestBody = {
+      "userId": loginDataProvider.loginData!.id,
+      "questionnaireType": "PRMQ",
+      "score": totalScore,
+      "date": DateTime.now().toString(),
+    };
+    //
+    String jsonRequest = jsonEncode(requestBody);
+    print(jsonRequest);
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+      body: jsonRequest,
+    );
+
+    if (response.statusCode == 201) {
+      //저장 완료 -> 결과 화면으로 이동
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => UserTotalscoreScreen(score: totalScore),
+        ),
+      );
+    } else if (response.statusCode == 400) {
+      print(response);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('잘못된 요청으로 결과가 저장되지 않았어요. 다시 시도해주세요.')),
+      );
+    } else {
+      //500
+      print(response.statusCode);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('서버 오류로 결과가 저장되지 않았어요. 다시 시도해주세요.')),
+      );
+    }
   }
 
   final List<String> _questions = [
@@ -62,12 +119,7 @@ class _UserDiagnosisScreenState extends State<UserDiagnosisScreen> {
       } else {
         //결과 화면으로 전환
         final totalScore = _calculateTotalScore();
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => UserTotalscoreScreen(score: totalScore),
-          ),
-        );
+        saveResults(totalScore);
       }
     });
   }
