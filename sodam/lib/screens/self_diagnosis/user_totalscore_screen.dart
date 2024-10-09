@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sodam/models/login_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/main_screen.dart';
 import 'package:sodam/widgets/round_next_button.dart';
@@ -13,6 +15,10 @@ class UserTotalscoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginDataProvider =
+        Provider.of<LoginDataProvider>(context, listen: false);
+    final name = loginDataProvider.loginData!.name;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -33,12 +39,13 @@ class UserTotalscoreScreen extends StatelessWidget {
               ),
               SelfDiagnosisResultWidget(
                 score: score,
-                name: '홍길동',
+                name: name,
+                isElderly: true,
               ),
               const SizedBox(
                 height: 20,
               ),
-              RoundNextButton(
+              const RoundNextButton(
                 btnText: '결과 공유하기',
                 btnColor: Pallete.mainGray,
                 emoji: '🔗',
@@ -49,7 +56,7 @@ class UserTotalscoreScreen extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              RoundNextButton(
+              const RoundNextButton(
                 btnText: '가까운 병원 찾아보기',
                 btnColor: Pallete.mainGray,
                 emoji: '🏥',
@@ -60,7 +67,7 @@ class UserTotalscoreScreen extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              RoundNextButton(
+              const RoundNextButton(
                 btnText: '자가진단 기록 살펴보기',
                 btnColor: Pallete.mainGray,
                 emoji: '📊',
