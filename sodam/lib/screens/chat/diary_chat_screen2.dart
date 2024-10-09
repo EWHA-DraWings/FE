@@ -26,10 +26,13 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
   final FlutterSoundRecorder _recorder = FlutterSoundRecorder();
   bool _isRecording = false;
   String? _recordingPath; // Declare a variable to hold the recording path
-
+  // Store the listener function
+  late void Function() _webSocketListener;
+  late WebSocketProvider2 webSocketProvider;
   @override
   void initState() {
     super.initState();
+    webSocketProvider = Provider.of<WebSocketProvider2>(context, listen: false);
     _startConversation();
     _initializeRecorder();
   }
@@ -58,35 +61,40 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
     final token = loginDataProvider.loginData?.token;
     print("token: $token");
 
-    final webSocketProvider =
-        Provider.of<WebSocketProvider2>(context, listen: false);
     webSocketProvider.connect('ws://${Global.ipAddr}:3000/ws/diary');
     print("연결2");
 
     webSocketProvider.listen();
 
-    webSocketProvider.addListener(() {
-      print("리스너연결");
+    _webSocketListener = () {
+      print("리스너 연결");
       final incomingMessage = webSocketProvider.lastReceivedMessage;
       print("응답 수신됨 : $incomingMessage");
       if (incomingMessage != null) {
         final responseData = jsonDecode(incomingMessage);
         if (responseData['type'] == 'response') {
-          setState(() {
-            if (responseData['userText'] == "...") {
-              chatList.add({"text": responseData['gptText'], "isUser": false});
-            } else {
-              chatList.add({"text": responseData['userText'], "isUser": true});
-              chatList.add({"text": responseData['gptText'], "isUser": false});
-            }
-            print("Updated chatList: $chatList");
-            _scrollToBottom(); // Scroll to the latest message
-          });
+          if (mounted) {
+            setState(() {
+              if (responseData.containsKey('gptText')) {
+                chatList
+                    .add({"text": responseData['gptText'], "isUser": false});
+              }
+              if (responseData.containsKey('userText') &&
+                  responseData['userText'] != "...") {
+                chatList
+                    .add({"text": responseData['userText'], "isUser": true});
+              }
+              print("Updated chatList: $chatList");
+              _scrollToBottom();
+            });
+          }
         } else {
           print("error: response 처리 실패");
         }
       }
-    });
+    };
+    webSocketProvider.addListener(_webSocketListener);
+
     final requestMessage = jsonEncode({
       "type": "startConversation",
       "token": token,
@@ -98,8 +106,6 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
   }
 
   Future<void> sendMessage(String audioFilePath) async {
-    final webSocketProvider =
-        Provider.of<WebSocketProvider2>(context, listen: false);
     if (!webSocketProvider.checkConnection()) {
       print("WebSocket is not connected!");
       return;
@@ -253,6 +259,7 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
 
   @override
   void dispose() {
+    webSocketProvider.removeListener(_webSocketListener); // 리스너 제거
     _recorder.stopRecorder(); // Close the audio session when disposing
     super.dispose();
   }
