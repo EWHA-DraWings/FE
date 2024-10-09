@@ -11,6 +11,7 @@ class WebSocketProvider2 with ChangeNotifier {
   WebSocketChannel? _channel;
   String? lastReceivedMessage;
   bool isConnected = false; //웹소켓 연결 확인
+  int? expectedAudioSize; //음성 데이터 크기
   final AudioPlayer _audioPlayer = AudioPlayer(); // AudioPlayer 인스턴스 생성
 
   // WebSocket 연결
@@ -19,6 +20,7 @@ class WebSocketProvider2 with ChangeNotifier {
     isConnected = true;
     _channel = WebSocketChannel.connect(Uri.parse(url));
   }
+  //리스너 설정 
 
   // Listen for incoming messages
   void listen() {
@@ -29,10 +31,10 @@ class WebSocketProvider2 with ChangeNotifier {
           // Handle binary message (audio)
           print("Received Uint8List");
           _playAudio(message); // Method to play audio
+          
         } else if (message is String) {
           // Handle string message
-          print("시작 msg 들어옴");
-          print("message $message");
+          print("message 받음 : $message");
           lastReceivedMessage = message;
           notifyListeners(); // Notify listeners that a new message has been received
         } else {
@@ -58,7 +60,7 @@ class WebSocketProvider2 with ChangeNotifier {
       // 임시 파일로 저장하여 재생
       //getTemporaryDirectory를 통해 임시 파일의 경로를 얻고, File 객체를 생성하여 데이터를 씁니다.
       String tempPath = (await getTemporaryDirectory()).path;
-      File tempFile = File('$tempPath/temp_audio.mp3');
+      File tempFile = File('$tempPath/temp_audio_${DateTime.now().millisecondsSinceEpoch}.mp3');//음성마다 파일 고유하게 생성되게
       await tempFile.writeAsBytes(audioData);
       // Source 객체로 변환하여 재생
       await _audioPlayer
