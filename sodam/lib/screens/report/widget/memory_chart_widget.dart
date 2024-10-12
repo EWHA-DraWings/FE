@@ -21,11 +21,12 @@ class _MemoryChartWidgetState extends State<MemoryChartWidget> {
     AppColors.contentColorCyan,
     AppColors.contentColorBlue,
   ];
-  int selectedIndex = 10; // 터치된 인덱스 (처음에 가장 최근의 점수를 가리키도록)
+  int selectedIndex = 4; // 터치된 인덱스 (처음에 가장 최근의 점수를 가리키도록)
   Offset? touchedPosition; // 터치한 위치 감지
 
   @override
   Widget build(BuildContext context) {
+    print(widget.memoryScoreDatas.length);
     final selectedSpot = widget.memoryScoreDatas[selectedIndex];
 
     return Stack(
@@ -38,7 +39,7 @@ class _MemoryChartWidgetState extends State<MemoryChartWidget> {
         if (touchedPosition != null && selectedIndex != -1)
           Positioned(
             left: touchedPosition!.dx - 10, // 터치된 위치에 컨테이너를 배치
-            top: -selectedSpot.score + 36, // 세로 위치조정
+            top: -selectedSpot.correctRatio + 36, // 세로 위치조정
             child: buildCustomTooltip(),
           ),
       ],
@@ -51,28 +52,12 @@ class _MemoryChartWidgetState extends State<MemoryChartWidget> {
       fontSize: 12,
     );
     String text;
-    switch (value.toInt()) {
-      case 0:
-        text = '25';
-        break;
-      case 2:
-        text = '31';
-        break;
-      case 4:
-        text = '6';
-        break;
-      case 6:
-        text = '12';
-        break;
-      case 8:
-        text = '18';
-        break;
-      case 10:
-        text = '24';
-        break;
-      default:
-        text = '';
-        break;
+    int index = value.toInt();
+
+    if (index >= 0 && index < widget.memoryScoreDatas.length) {
+      text = widget.memoryScoreDatas[index].date;
+    } else {
+      text = '';
     }
 
     return SideTitleWidget(
@@ -110,8 +95,8 @@ class _MemoryChartWidgetState extends State<MemoryChartWidget> {
   Widget buildCustomTooltip() {
     final selectedSpot = widget.memoryScoreDatas[selectedIndex];
     final date = selectedSpot.date;
-    final value = selectedSpot.score;
-    final cdr = selectedSpot.cdr;
+    final value = selectedSpot.correctRatio;
+    final cdr = selectedSpot.cdrScore;
 
     return Container(
       padding: const EdgeInsets.all(8),
@@ -216,7 +201,7 @@ class _MemoryChartWidgetState extends State<MemoryChartWidget> {
         LineChartBarData(
           spots: widget.memoryScoreDatas
               .map((e) => FlSpot(widget.memoryScoreDatas.indexOf(e).toDouble(),
-                  e.score / 100 * 6))
+                  e.correctRatio / 100 * 6))
               .toList(),
           isCurved: true,
           gradient: LinearGradient(

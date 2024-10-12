@@ -12,7 +12,6 @@ class LoginData {
 
   LoginData.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        //password = json['password'], -> 사용 못 하지 않나?
         user_id = json['_id'],
         name = json['name'],
         token = json['token'],
@@ -20,8 +19,8 @@ class LoginData {
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        //'password': password,
         'user_id': user_id,
+        'name': name,
         'token': token,
       };
 }
