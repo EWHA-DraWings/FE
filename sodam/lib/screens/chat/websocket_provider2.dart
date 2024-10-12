@@ -12,6 +12,7 @@ class WebSocketProvider2 with ChangeNotifier {
   String? lastReceivedMessage;
   bool isConnected = false; //웹소켓 연결 확인
   int? expectedAudioSize; //음성 데이터 크기
+  Uint8List? _receivedAudioData; // 누적된 음성 데이터를 저장
   final AudioPlayer _audioPlayer = AudioPlayer(); // AudioPlayer 인스턴스 생성
 
   // WebSocket 연결
@@ -20,7 +21,7 @@ class WebSocketProvider2 with ChangeNotifier {
     isConnected = true;
     _channel = WebSocketChannel.connect(Uri.parse(url));
   }
-  //리스너 설정 
+  //리스너 설정
 
   // Listen for incoming messages
   void listen() {
@@ -31,10 +32,15 @@ class WebSocketProvider2 with ChangeNotifier {
           // Handle binary message (audio)
           print("Received Uint8List");
           _playAudio(message); // Method to play audio
-          
         } else if (message is String) {
           // Handle string message
           print("message 받음 : $message");
+          final Map<String, dynamic> jsonData = jsonDecode(message);
+          //음성 데이터 크기 받아옴
+          if (jsonData.containsKey('audiosize')) {
+            expectedAudioSize = jsonData['audioSize'];
+            _receivedAudioData = Uint8List(0); // 데이터 누적을 위한 초기화
+          }
           lastReceivedMessage = message;
           notifyListeners(); // Notify listeners that a new message has been received
         } else {
@@ -54,13 +60,33 @@ class WebSocketProvider2 with ChangeNotifier {
     }
   }
 
+  // 음성 데이터 누적
+  void _accumulateAudioData(Uint8List chunk) {
+    if (expectedAudioSize != null && _receivedAudioData != null) {
+      _receivedAudioData = Uint8List.fromList(
+        _receivedAudioData! + chunk,
+      );
+
+      print("현재 누적된 데이터 크기: ${_receivedAudioData!.length}");
+
+      // 모든 데이터를 받았을 경우
+      if (_receivedAudioData!.length >= expectedAudioSize!) {
+        print("음성 데이터 모두 수신 완료. 재생 시작.");
+        _playAudio(_receivedAudioData!); // 음성 재생
+        _receivedAudioData = null; // 재생 후 초기화
+        expectedAudioSize = null; // 다음 파일을 위해 초기화
+      }
+    }
+  }
+
   // 음성 재생
   Future<void> _playAudio(Uint8List audioData) async {
     try {
       // 임시 파일로 저장하여 재생
       //getTemporaryDirectory를 통해 임시 파일의 경로를 얻고, File 객체를 생성하여 데이터를 씁니다.
       String tempPath = (await getTemporaryDirectory()).path;
-      File tempFile = File('$tempPath/temp_audio_${DateTime.now().millisecondsSinceEpoch}.mp3');//음성마다 파일 고유하게 생성되게
+      File tempFile = File(
+          '$tempPath/temp_audio_${DateTime.now().millisecondsSinceEpoch}.mp3'); //음성마다 파일 고유하게 생성되게
       await tempFile.writeAsBytes(audioData);
       // Source 객체로 변환하여 재생
       await _audioPlayer
