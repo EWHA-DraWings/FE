@@ -84,6 +84,7 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
                 chatList
                     .add({"text": responseData['userText'], "isUser": true});
               }
+
               print("Updated chatList: $chatList");
               _scrollToBottom();
             });
