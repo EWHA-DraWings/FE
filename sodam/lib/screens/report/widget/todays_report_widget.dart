@@ -10,7 +10,7 @@ import 'package:sodam/screens/report/widget/memory_chart_widget.dart';
 class TodaysReportWidget extends StatelessWidget {
   final String condition;
   final List<EmotionData> emotions; //top3 감정 리스트
-  final List<MemoryScoreData> memoryScoreDatas; //지난 11일간 기억 점수 데이터(백분율, cdr)
+  final List<MemoryScoreData> memoryScoreDatas; //지난 5일간 기억 점수 데이터
   /*[
     EmotionData(emotion: '당황', percentage: 40.0),
     EmotionData(emotion: '불안', percentage: 30.0),
@@ -26,10 +26,12 @@ class TodaysReportWidget extends StatelessWidget {
 
 //main emotion이 2개 이상일 경우 체크
   String mainEmoToString() {
-    String mainEmo = '${emotions[0].emotion} ${emotions[0].percentage}%';
+    String mainEmo =
+        '${emotions[0].emotion} ${emotions[0].percentage.toStringAsFixed(1)}%';
     emotions[0].isMainEmo = true;
     for (int i = 0; i < emotions.length - 1; i++) {
-      if (emotions[i].percentage == emotions[i + 1].percentage) {
+      if (double.parse(emotions[i].percentage.toStringAsFixed(1)) ==
+          double.parse(emotions[i + 1].percentage.toStringAsFixed(1))) {
         emotions[i + 1].isMainEmo = true;
         mainEmo += '\n${emotions[i + 1].emotion}';
       } else {

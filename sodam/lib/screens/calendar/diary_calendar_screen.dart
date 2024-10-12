@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sodam/global.dart';
+import 'package:sodam/models/login_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/diary_screen.dart';
 import 'package:sodam/widgets/title_widget.dart';
@@ -23,7 +25,6 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
   final double calendarFontSize = 20.0;
   late AnimationController _animationController; //애니메이션 컨트롤러. 애니메이션 지속시간 설정
   late Animation<double> _animation; //날짜 선택시 글씨 커지게 하는 애니메이션
-  final jwtToken = ''; //jwtToken 저장
 
   @override
   void initState() {
@@ -43,20 +44,27 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
     super.dispose();
   }
 
-  void _handleDaySelected(DateTime selectedDay, DateTime focusedDay) {
+  void _handleDaySelected(
+      DateTime selectedDay, DateTime focusedDay, String? jwtToken) {
+    String diaryDate = '';
     if (_selectedDay != selectedDay) {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
+        //2024-10-02 00:00:00.000Z -> 20241002
+        diaryDate =
+            _selectedDay.toString().split(" ").first.replaceAll('-', '').trim();
+        print(diaryDate);
       });
       _animationController.forward().then((_) {
         //약간의 딜레이 후 이동
         Future.delayed(const Duration(milliseconds: 100), () async {
           ///api/diary/date/:date (20240901형식)
-          final url =
-              Uri.parse('http://${Global.ipAddr}:3000/api/diary/date/20240901');
+          final url = Uri.parse(
+              'http://${Global.ipAddr}:3000/api/diary/date/$diaryDate');
+          print(url);
 
-          final response = await http.post(
+          final response = await http.get(
             url,
             headers: {
               'Content-Type': 'application/json',
@@ -68,6 +76,7 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
           if (response.statusCode == 200) {
             //JSON 응답 파싱
             final Map<String, dynamic> data = jsonDecode(response.body);
+
             content = data['content'];
 
             Navigator.push(
@@ -104,6 +113,11 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
 
   @override
   Widget build(BuildContext context) {
+    final loginDataProvider =
+        Provider.of<LoginDataProvider>(context, listen: false);
+    final jwtToken = loginDataProvider.loginData?.token;
+    print("token: $jwtToken"); //jwt token 저장
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -218,7 +232,7 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
                       return isSameDay(_selectedDay, day);
                     },
                     onDaySelected: (selectedDay, focusedDay) {
-                      _handleDaySelected(selectedDay, focusedDay);
+                      _handleDaySelected(selectedDay, focusedDay, jwtToken);
                     },
 
                     onPageChanged: (focusedDay) {
