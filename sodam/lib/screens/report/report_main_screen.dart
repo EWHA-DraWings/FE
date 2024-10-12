@@ -59,7 +59,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
 
       // List<Map<String, dynamic>>를 List<ReportData>로 변환
       final List<ReportData> reports =
-          data.map((json) => ReportData.fromJson(json)).toList();
+          data.map((json) => ReportData.fromJsonToday(json)).toList();
       print(reports);
       //생성.조회한 리포트 가져오기
       return reports;
@@ -386,8 +386,8 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                                       ? PastReport(
                                           name: widget.name,
                                           condition: pastReports[1].condition,
-                                          memoryScore:
-                                              pastReports[1].correctRatio,
+                                          memoryScore: 10,
+                                          //pastReports[1].correctRatio.toDouble(),
                                           emotions: pastReports[1].emotions,
                                         )
                                       : const Text('과거 리포트가 없습니다.'),
@@ -421,8 +421,8 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                                       ? PastReport(
                                           name: widget.name,
                                           condition: pastReports[2].condition,
-                                          memoryScore:
-                                              pastReports[2].correctRatio,
+                                          memoryScore: 2,
+                                          //pastReports[2].correctRatio,
                                           emotions: pastReports[2].emotions,
                                         )
                                       : const Text('과거 리포트가 없습니다.'),

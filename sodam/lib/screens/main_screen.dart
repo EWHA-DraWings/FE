@@ -112,7 +112,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   //리포트 가져오기(리포트 1개 리턴)
-  Future<ReportData?> getTodayReport(BuildContext context) async {
+  Future<dynamic> getTodayReport(BuildContext context) async {
     //오늘 날짜
     String today = '2024-10-07';
 
@@ -133,8 +133,7 @@ class _MainScreenState extends State<MainScreen> {
 
     if (response.statusCode == 200) {
       //json data를 Map으로 디코딩
-      final Map<String, dynamic> data = jsonDecode(response.body);
-      final report = ReportData.fromJson(data);
+      final report = jsonDecode(response.body);
       print(report);
       //생성.조회한 리포트 가져오기
       return report;
