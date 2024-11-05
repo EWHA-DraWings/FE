@@ -11,14 +11,14 @@ import 'package:sodam/screens/chat/bubble.dart';
 import 'package:sodam/screens/chat/websocket_provider.dart';
 import 'package:permission_handler/permission_handler.dart'; //마이크 권한 허용
 
-class DiaryChatScreen2 extends StatefulWidget {
-  const DiaryChatScreen2({super.key});
+class MemoryChatScreen extends StatefulWidget {
+  const MemoryChatScreen({super.key});
 
   @override
-  State<DiaryChatScreen2> createState() => _DiaryChatScreen2State();
+  State<MemoryChatScreen> createState() => _MemoryChatScreenState();
 }
 
-class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
+class _MemoryChatScreenState extends State<MemoryChatScreen> {
   final scrollController = ScrollController();
   bool isInputVisible = true;
   List<Map<String, dynamic>> chatList = [];
@@ -61,7 +61,7 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
     final token = loginDataProvider.loginData?.token;
     print("token: $token");
 
-    webSocketProvider.connect('ws://${Global.ipAddr}:3000/ws/diary');
+    webSocketProvider.connect('ws://${Global.ipAddr}:3000/ws/memory');
     print("연결2");
 
     webSocketProvider.listen();
@@ -96,10 +96,10 @@ class _DiaryChatScreen2State extends State<DiaryChatScreen2> {
     };
     webSocketProvider.addListener(_webSocketListener);
 
+    //시작 메세지 형식 변동
     final requestMessage = jsonEncode({
-      "type": "startConversation",
-      "token": token,
-      "sessionId": null,
+      "type": "auth",
+      "token": 'Bearer $token',
     });
 
     webSocketProvider.sendStartMessage(requestMessage);
