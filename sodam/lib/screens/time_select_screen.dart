@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
+import 'package:sodam/global.dart';
 
 import 'package:sodam/pallete.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:sodam/screens/login_screen.dart';
 class TimeSelectScreen extends StatefulWidget {
   const TimeSelectScreen({super.key});
 
@@ -21,36 +25,37 @@ class _TimeSelectScreenState extends State<TimeSelectScreen> {
     // sendTimeToBackend(_time);
   }
 //시간 , 분 , userid
-// Future<void> sendTimeToBackend(Time time) async {
-  //   final url = Uri.parse('https://example.com/api/time'); // 백엔드 URL
-  //   final body = json.encode({
-  //     'hour': time.hour,
-  //     'minute': time.minute,
-  //   });
+///api/alarms/send-push-notice
+Future<void> sendTimeToBackend(Time time) async {
+    final url = Uri.parse('http://${Global.ipAddr}:3000/api/alarms/send-push-notice'); // 백엔드 URL
+    final body = json.encode({
+      'hour': time.hour,
+      'minute': time.minute,
+    });
 
-  //   try {
-  //     final response = await http.post(
-  //       url,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: body,
-  //     );
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: body,
+      );
 
-  //     if (response.statusCode == 200) {
-  //       // 성공적으로 전송됨
-  //       print('Time successfully sent to backend');
-  //Navigator.of(context).pushReplacement(
-  //    MaterialPageRoute(builder: (context) => const LoginScreen()),//로그인 화면으로 이동
-  //  );
-  //     } else {
-  //       // 오류 발생
-  //       print('Failed to send time: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     print('Error sending time: $e');
-  //   }
-  // }
+      if (response.statusCode == 200) {
+        // 성공적으로 전송됨
+        print('Time successfully sent to backend');
+  Navigator.of(context).pushReplacement(
+     MaterialPageRoute(builder: (context) => const LoginScreen()),//로그인 화면으로 이동
+   );
+      } else {
+        // 오류 발생
+        print('Failed to send time: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error sending time: $e');
+    }
+  }
 
   void _showTimePicker() {
     showDialog(
