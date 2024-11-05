@@ -1,12 +1,13 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:sodam/global.dart';
-
+import 'package:sodam/models/login_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:http/http.dart' as http;
 import 'package:sodam/screens/login_screen.dart';
+
 class TimeSelectScreen extends StatefulWidget {
   const TimeSelectScreen({super.key});
 
@@ -21,13 +22,16 @@ class _TimeSelectScreenState extends State<TimeSelectScreen> {
     setState(() {
       _time = newTime; // 시간 업데이트
     });
-    // 선택한 시간을 백엔드로 전송하는 함수 호출
-    // sendTimeToBackend(_time);
   }
-//시간 , 분 , userid
-///api/alarms/send-push-notice
-Future<void> sendTimeToBackend(Time time) async {
-    final url = Uri.parse('http://${Global.ipAddr}:3000/api/alarms/send-push-notice'); // 백엔드 URL
+
+  Future<void> sendTimeToBackend(Time time) async {
+    //token 가져오기
+    final loginDataProvider =
+        Provider.of<LoginDataProvider>(context, listen: false);
+    final token = loginDataProvider.loginData?.token;
+
+    final url = Uri.parse(
+        'http://${Global.ipAddr}:3000/api/alarms/send-push-notice'); // 백엔드 URL
     final body = json.encode({
       'hour': time.hour,
       'minute': time.minute,
@@ -37,7 +41,8 @@ Future<void> sendTimeToBackend(Time time) async {
       final response = await http.post(
         url,
         headers: {
-          'Content-Type': 'application/json',
+          'type': 'auth',
+          "token": 'Bearer $token',
         },
         body: body,
       );
@@ -45,9 +50,10 @@ Future<void> sendTimeToBackend(Time time) async {
       if (response.statusCode == 200) {
         // 성공적으로 전송됨
         print('Time successfully sent to backend');
-  Navigator.of(context).pushReplacement(
-     MaterialPageRoute(builder: (context) => const LoginScreen()),//로그인 화면으로 이동
-   );
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+              builder: (context) => const LoginScreen()), //로그인 화면으로 이동
+        );
       } else {
         // 오류 발생
         print('Failed to send time: ${response.statusCode}');
@@ -88,13 +94,16 @@ Future<void> sendTimeToBackend(Time time) async {
                   Navigator.of(context).pop(); // 다이얼로그 닫기
                   Navigator.of(context).push(
                     showPicker(
-                      context: context,
-                      value: _time,
-                      sunrise: const TimeOfDay(hour: 5, minute: 0), // 선택 사항
-                      sunset: const TimeOfDay(hour: 18, minute: 30), // 선택 사항
-                      duskSpanInMinutes: 60, // optional
-                      onChange: onTimeChanged,
-                    ),
+                        context: context,
+                        value: _time,
+                        sunrise: const TimeOfDay(hour: 5, minute: 0), // 선택 사항
+                        sunset: const TimeOfDay(hour: 18, minute: 30), // 선택 사항
+                        duskSpanInMinutes: 60, // optional
+                        onChange: onTimeChanged,
+                        onChangeDateTime: (DateTime dateTime) {
+                          // 확인 버튼 클릭 시 API 호출
+                          sendTimeToBackend(_time);
+                        }),
                   );
                 },
                 style: TextButton.styleFrom(

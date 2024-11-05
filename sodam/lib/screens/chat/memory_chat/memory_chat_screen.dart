@@ -96,7 +96,7 @@ class _MemoryChatScreenState extends State<MemoryChatScreen> {
     };
     webSocketProvider.addListener(_webSocketListener);
 
-    //시작 메세지 형식 변동
+    //시작 메세지 형식 변동- 형식 맞는지 헤더인지 확인 필요.
     final requestMessage = jsonEncode({
       "type": "auth",
       "token": 'Bearer $token',
