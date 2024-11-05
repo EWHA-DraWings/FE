@@ -23,7 +23,7 @@ class ReportData {
 
     return ReportData(
       date: json['date'],
-      correctRatio: json['correctRatio']
+      correctRatio: json['correctRatio'] != null
           ? json['correctRatio'].toString()
           : '기억 테스트 기록이 없어요.',
       emotions: emotions,
@@ -32,40 +32,29 @@ class ReportData {
   }
 
   //과거 리포트 가져올 때
-  // factory ReportData.fromJsonPast(Map<String, dynamic> json) {
-  //   // 감정 데이터를 EmotionData 리스트로 변환
-  //   final List<EmotionData> emotionList = (json['emotions']
-  //           as Map<String, dynamic>)
-  //       .entries
-  //       .map((entry) =>
-  //           EmotionData(emotion: entry.key, percentage: entry.value.toDouble()))
-  //       .toList();
+  factory ReportData.fromJsonPast(Map<String, dynamic> json) {
+    String date = json['date'];
+    String condition = json['conditions'];
+    Map<String, dynamic> emotionMap = json['emotions'];
 
-  //   // diaryId가 객체인지 문자열인지에 따라 처리
-  //   String diaryId;
-  //   String healthStatus;
+    // EmotionData 리스트 생성
+    List<EmotionData> emotionsList = emotionMap.entries
+        .map((entry) => EmotionData(
+              emotion: entry.key,
+              percentage: entry.value.toDouble(),
+            ))
+        .toList();
 
-  //   if (json['diaryId'] is String) {
-  //     // diaryId가 문자열인 경우
-  //     diaryId = json['diaryId'];
-  //     healthStatus = "Unknown"; // healthStatus가 없으므로 기본값 설정
-  //   } else if (json['diaryId'] is Map<String, dynamic>) {
-  //     // diaryId가 객체인 경우
-  //     diaryId = json['diaryId']['_id'];
-  //     healthStatus = json['diaryId']['healthStatus'];
-  //   } else {
-  //     // 예상치 못한 형식의 diaryId
-  //     diaryId = "Unknown";
-  //     healthStatus = "Unknown";
-  //   }
-
-  //   return ReportData(
-  //     diaryId: diaryId, // diaryId를 올바르게 추출
-  //     healthStatus: healthStatus, // healthStatus를 추출
-  //     date: json['date'], // 날짜 필드
-  //     correctRatio: json['cdrScore']?.toDouble(), // cdrScore 필드 (null 처리)
-  //     condition: json['conditions'], // condition 필드
-  //     emotions: emotionList, // 감정 리스트로 변환된 emotions 필드
-  //   );
-  // }
+    return ReportData(
+      date: date,
+      condition: condition,
+      emotions: emotionsList,
+      correctRatio: json['cdrScore']?.toString(), // cdrScore를 문자열로 변환
+    );
+  }
 }
+
+// JSON 데이터를 List<ReportData>로 변환하는 함수
+//List<ReportData> parseReportDataList(List<dynamic> jsonList) {
+  //return jsonList.map((json) => ReportData.fromJsonPast(json)).toList();
+//}

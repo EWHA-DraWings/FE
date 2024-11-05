@@ -7,42 +7,42 @@ class MemoryscoreDetailScreen extends StatelessWidget {
     {
       "date": "2024/09/08",
       "cdr": 0,
-      "correctRate": 87,
-      "correctCount": 5,
+      "correctRate": 80,
+      "correctCount": 8,
       "totalCount": 10,
-      "hintCount": 1
+      "hintCount": 0
     },
     {
       "date": "2024/09/07",
-      "cdr": 1.5,
-      "correctRate": 65,
-      "correctCount": 3,
+      "cdr": 0,
+      "correctRate": 100,
+      "correctCount": 10,
       "totalCount": 10,
-      "hintCount": 2
+      "hintCount": 0
     },
     {
       "date": "2024/09/06",
-      "cdr": 1,
-      "correctRate": 65,
-      "correctCount": 3,
+      "cdr": 0,
+      "correctRate": 90,
+      "correctCount": 9,
       "totalCount": 10,
-      "hintCount": 2
+      "hintCount": 0
     },
     {
       "date": "2024/09/05",
       "cdr": 0,
-      "correctRate": 65,
-      "correctCount": 3,
+      "correctRate": 80,
+      "correctCount": 8,
       "totalCount": 10,
-      "hintCount": 2
+      "hintCount": 0
     },
     {
       "date": "2024/09/04",
-      "cdr": 1.5,
-      "correctRate": 65,
-      "correctCount": 3,
+      "cdr": 0,
+      "correctRate": 90,
+      "correctCount": 9,
       "totalCount": 10,
-      "hintCount": 2
+      "hintCount": 0
     },
     // Add more items here...
   ];

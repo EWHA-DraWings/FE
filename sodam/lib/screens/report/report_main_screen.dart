@@ -1,29 +1,29 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sodam/global.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/models/login_data.dart';
 import 'package:sodam/models/memory_score_data.dart';
-import 'package:sodam/models/report_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/widget/todays_report_widget.dart';
 import 'package:sodam/screens/report/past_report.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http; //http 가져오기
 
 class ReportMainScreen extends StatefulWidget {
   final String name;
   final int daysPast; //마지막 자가진단 시점
-  final ReportData todaysReport; //오늘 리포트
+  final List<EmotionData> emotions;
 
-  const ReportMainScreen({
-    super.key,
-    required this.name,
-    required this.daysPast,
-    required this.todaysReport,
-  });
+  const ReportMainScreen(
+      {super.key,
+      required this.name,
+      required this.daysPast,
+      required this.emotions});
 
   @override
   State<ReportMainScreen> createState() => _ReportMainScreenState();
@@ -31,114 +31,53 @@ class ReportMainScreen extends StatefulWidget {
 
 class _ReportMainScreenState extends State<ReportMainScreen> {
   final ScrollController _scrollController = ScrollController();
-  List<ReportData> pastReports =
-      []; //=getPastReports(context); //과거 리포트(3개) -> 가져오는 함수 작성해야함
-  List<MemoryScoreData> memoryScores = []; //최근 5개 기억점수
-
-  //과거 리포트까지 가져오기
-  Future<List<ReportData>> getPastReports(BuildContext context) async {
-    final loginDataProvider =
-        Provider.of<LoginDataProvider>(context, listen: false);
-    final token = loginDataProvider.loginData?.token;
-
-    //리포트 가져오기(오늘+ 과거 3개)
-    final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports');
-
-    final response = await http.get(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token'
-      },
-    );
-
-    if (response.statusCode == 200) {
-      // json 데이터를 List<Map<String, dynamic>>로 디코딩
-      final List<Map<String, dynamic>> data =
-          List<Map<String, dynamic>>.from(jsonDecode(response.body));
-
-      // List<Map<String, dynamic>>를 List<ReportData>로 변환
-      final List<ReportData> reports =
-          data.map((json) => ReportData.fromJsonToday(json)).toList();
-      print(reports);
-      //생성.조회한 리포트 가져오기
-      return reports;
-    } else {
-      //500
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('500: 리포트 조회에 실패했습니다.')),
-      );
-      return [];
-    }
-  }
-
-  //getPastReports 이용해서 pastReports에 저장
-  Future<void> fetchPastReports() async {
-    final reports = await getPastReports(context);
-    setState(() {
-      pastReports = reports;
-    });
-  }
-
-  //최근 5개 기억점수 가져오기
-  Future<List<MemoryScoreData>> getMemoryScores(BuildContext context) async {
-    final loginDataProvider =
-        Provider.of<LoginDataProvider>(context, listen: false);
-    final token = loginDataProvider.loginData?.token;
-
-    //리포트 가져오기(오늘+ 과거 3개)
-    final url =
-        Uri.parse('http://${Global.ipAddr}:3000/api/findmemoryscore/latest');
-
-    final response = await http.get(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token'
-      },
-    );
-
-    if (response.statusCode == 200) {
-      //json -> memory score data list로
-      final Map<String, dynamic> data = jsonDecode(response.body);
-      //List<dynamic> 반환
-      final List<dynamic> scoresList = data['scores'];
-      final List<MemoryScoreData> memoryScores =
-          scoresList.map((score) => MemoryScoreData.fromJson(score)).toList();
-      return memoryScores;
-    } else if (response.statusCode == 404) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('기억 점수 측정 내역이 없습니다.')),
-      );
-      return [];
-    } else if (response.statusCode == 403) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('조회 권한이 없는 기억 점수입니다.')),
-      );
-      return [];
-    } else {
-      //500
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('500: 기억 점수 조회를 실패했습니다.')),
-      );
-      return [];
-    }
-  }
-
-  //getMemoryScores 이용해서 memoryScores에 저장
-  Future<void> fetchMemoryScores() async {
-    final scores = await getMemoryScores(context);
-    setState(() {
-      memoryScores = scores;
-    });
-  }
+  Map<String, dynamic> todaysReport = {}; //오늘 리포트
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    fetchPastReports();
-    fetchMemoryScores();
+    final loginDataProvider =
+        Provider.of<LoginDataProvider>(context, listen: false);
+    final jwtToken = loginDataProvider.loginData?.token;
+    print("token: $jwtToken");
+    getTodaysReport(jwtToken); // 위젯 초기화 시 API 호출
+  }
+
+  Future<void> getTodaysReport(jwtToken) async {
+    ///api/reports/:date (2024-09-30 형식)
+    //오늘 날짜 형태 바꾸기
+    DateTime now = DateTime.now();
+    String today = DateFormat('yyyy-MM-dd').format(now);
+
+    final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports/$today');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwtToken'
+      },
+    );
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      //JSON 응답 파싱
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      setState(() {
+        todaysReport = data;
+      });
+      print(response);
+    } else if (response.statusCode == 400) {
+      //해당 날짜 일기X
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('해당 날짜에 일기가 존재하지 않습니다.')),
+      );
+    } else {
+      //500: 리포트 조회.생성 실패
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('500: 리포트 생성 또는 조회에 실패했습니다.')),
+      );
+    }
   }
 
   @override
@@ -147,9 +86,6 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     double screenHeight = MediaQuery.of(context).size.height;
     double greenContainerHeight = 160; // 그린 컨테이너의 높이
     double greenContainerFromTop = 170; //그린컨테이너의 top으로부터 거리
-
-    //emotion data(오늘 감정)
-    final List<EmotionData> emotions = widget.todaysReport.emotions;
 
     // 각 ExpansionTile에 사용할 GlobalKey를 생성합니다.
     final GlobalKey expansionTileKey1 = GlobalKey();
@@ -348,9 +284,47 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: TodaysReportWidget(
-                        condition: widget.todaysReport.condition, //오늘 컨디션
-                        emotions: emotions, //오늘의 감정
-                        memoryScoreDatas: memoryScores, //기억 점수
+                        condition:
+                            //'무릎이 조금 아프시지만, 잠은 잘 주무시는 편이에요. 최근 보조제를 드시고 계신다고 해요.',
+                            todaysReport['conditions'] ?? '상태 기록이 없어요!',
+                        emotions: widget.emotions,
+                        memoryScoreDatas: [
+                          MemoryScoreData(
+                            date: '2023-08-25',
+                            cdrScore: 1,
+                            questionCount: 16,
+                            correctCount: 8,
+                            correctRatio: 50,
+                          ),
+                          MemoryScoreData(
+                            date: '2023-08-25',
+                            cdrScore: 1,
+                            questionCount: 16,
+                            correctCount: 8,
+                            correctRatio: 50,
+                          ),
+                          MemoryScoreData(
+                            date: '2023-08-25',
+                            cdrScore: 1,
+                            questionCount: 16,
+                            correctCount: 8,
+                            correctRatio: 50,
+                          ),
+                          MemoryScoreData(
+                            date: '2023-08-25',
+                            cdrScore: 1,
+                            questionCount: 16,
+                            correctCount: 8,
+                            correctRatio: 50,
+                          ),
+                          MemoryScoreData(
+                            date: '2023-08-25',
+                            cdrScore: 1,
+                            questionCount: 16,
+                            correctCount: 8,
+                            correctRatio: 50,
+                          ),
+                        ],
                       ),
                     ),
                     //여기다가 리포트 추가하면 됨
@@ -381,16 +355,20 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                               SizedBox(
                                 height: 300,
                                 child: SingleChildScrollView(
-                                  child: pastReports.isNotEmpty &&
-                                          pastReports.length > 1
-                                      ? PastReport(
-                                          name: widget.name,
-                                          condition: pastReports[1].condition,
-                                          memoryScore: 10,
-                                          //pastReports[1].correctRatio.toDouble(),
-                                          emotions: pastReports[1].emotions,
-                                        )
-                                      : const Text('과거 리포트가 없습니다.'),
+                                  child: PastReport(
+                                    name: widget.name,
+                                    condition:
+                                        '무릎이 조금 아프시지만, 잠은 잘 \n주무시는 편이에요. 최근 보조제를\n드시고 계신다고 해요.',
+                                    memoryScore: 77.2,
+                                    emotions: [
+                                      EmotionData(
+                                          emotion: '당황', percentage: 80.0),
+                                      EmotionData(
+                                          emotion: '불안', percentage: 13.0),
+                                      EmotionData(
+                                          emotion: '행복', percentage: 7.0),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -415,19 +393,23 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                             backgroundColor: Pallete.sodamReportPurple,
                             children: <Widget>[
                               SizedBox(
-                                height: 300,
-                                child: SingleChildScrollView(
-                                  child: pastReports.length > 2
-                                      ? PastReport(
-                                          name: widget.name,
-                                          condition: pastReports[2].condition,
-                                          memoryScore: 2,
-                                          //pastReports[2].correctRatio,
-                                          emotions: pastReports[2].emotions,
-                                        )
-                                      : const Text('과거 리포트가 없습니다.'),
-                                ),
-                              ),
+                                  height: 300,
+                                  child: SingleChildScrollView(
+                                    child: PastReport(
+                                      name: widget.name,
+                                      condition:
+                                          '무릎이 조금 아프시지만, 잠은 잘 \n주무시는 편이에요. 최근 보조제를\n드시고 계신다고 해요.',
+                                      memoryScore: 80.6,
+                                      emotions: [
+                                        EmotionData(
+                                            emotion: '슬픔', percentage: 50.0),
+                                        EmotionData(
+                                            emotion: '행복', percentage: 40.0),
+                                        EmotionData(
+                                            emotion: '분노', percentage: 10.0),
+                                      ],
+                                    ),
+                                  )),
                             ],
                             onExpansionChanged: (value) {
                               if (value) {

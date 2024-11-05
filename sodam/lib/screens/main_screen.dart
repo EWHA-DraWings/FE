@@ -6,13 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:sodam/global.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/models/login_data.dart';
-import 'package:sodam/models/report_data.dart';
-import 'package:http/http.dart' as http;
-
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/calendar/diary_calendar_screen.dart';
 import 'package:sodam/screens/chat/diary_chat_screen2.dart';
-import 'package:sodam/screens/chat/websocket_provider2.dart';
 import 'package:sodam/screens/report/report_main_screen.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
@@ -32,53 +28,13 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  //리포트 가져오기(리포트 1개 리턴)
-  Future<dynamic> getTodayReport(BuildContext context) async {
-    //오늘 날짜
-    String today = '2024-10-07';
-
-    final loginDataProvider =
-        Provider.of<LoginDataProvider>(context, listen: false);
-    final token = loginDataProvider.loginData?.token;
-
-    //일기 확인 및 리포트 생성
-    final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports/$today');
-
-    final response = await http.post(
-      url,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token'
-      },
-    );
-
-    if (response.statusCode == 200) {
-      //json data를 Map으로 디코딩
-      final report = jsonDecode(response.body);
-      print(report);
-      //생성.조회한 리포트 가져오기
-      return report;
-    } else if (response.statusCode == 404) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('해당 날짜의 일기가 없습니다. 일기가 존재하는 날짜의 리포트만 조회 가능합니다.')),
-      );
-      return null; // 404일 때 null 반환
-    } else {
-      //500
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('500: 리포트 조회에 실패했습니다.')),
-      );
-      return null; // 500일 때도 null 반환
-    }
-  }
+  // 사용자 타입을 결정하는 변수(사용자 : false, 보호자: true)
 
   @override
   Widget build(BuildContext context) {
     final loginDataProvider =
         Provider.of<LoginDataProvider>(context, listen: false);
     final token = loginDataProvider.loginData?.token; // 토큰 값 가져오기
-    final name = loginDataProvider.loginData?.name; // 사용자 이름
 
     print("Token at MainScreen: $token"); // MainScreen에서 토큰 출력
     return Scaffold(
@@ -153,34 +109,19 @@ class _MainScreenState extends State<MainScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MainPageButton(
+                      destination: ReportMainScreen(
+                        name: '홍길동',
+                        daysPast: 5,
+                        emotions: [
+                          EmotionData(emotion: '슬픔', percentage: 50.0),
+                          EmotionData(emotion: '행복', percentage: 40.0),
+                          EmotionData(emotion: '분노', percentage: 10.0),
+                        ],
+                      ),
                       text: "리포트",
                       backColor: Pallete.sodamButtonPurple,
                       iconPath: "lib/assets/images/report.png",
                       isGuardian: widget.isGuardian,
-                      onTap: () async {
-                        // 오늘 리포트 생성 확인
-                        ReportData? todaysReport =
-                            await getTodayReport(context);
-                        // 리포트 화면 이동
-                        if (todaysReport != null) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ReportMainScreen(
-                                name: name ?? '사용자',
-                                daysPast: 5, // 일단 임의로 넣은 숫자
-                                todaysReport: todaysReport,
-                              ),
-                            ),
-                          );
-                        } else {
-                          // 리포트가 없는 경우 처리
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('오늘의 리포트를 불러오지 못했습니다.')),
-                          );
-                        }
-                      },
                     ),
                     const SizedBox(width: 20),
                     MainPageButton(
