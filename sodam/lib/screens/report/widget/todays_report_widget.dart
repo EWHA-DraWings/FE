@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/models/memory_score_data.dart';
 import 'package:sodam/pallete.dart';
+import 'package:sodam/screens/report/memoryscore_detail_screen.dart';
 import 'package:sodam/screens/report/report_detail_screen.dart';
 import 'package:sodam/screens/report/widget/doughnut_chart_widget.dart';
 import 'package:sodam/screens/report/widget/memory_chart_widget.dart';
@@ -10,12 +12,7 @@ import 'package:sodam/screens/report/widget/memory_chart_widget.dart';
 class TodaysReportWidget extends StatelessWidget {
   final String condition;
   final List<EmotionData> emotions; //top3 감정 리스트
-  final List<MemoryScoreData> memoryScoreDatas; //지난 5일간 기억 점수 데이터
-  /*[
-    EmotionData(emotion: '당황', percentage: 40.0),
-    EmotionData(emotion: '불안', percentage: 30.0),
-    EmotionData(emotion: '행복', percentage: 30.0),
-  ];*/
+  final List<MemoryScoreData> memoryScoreDatas; //지난 5일간
 
   const TodaysReportWidget({
     super.key,
@@ -29,15 +26,15 @@ class TodaysReportWidget extends StatelessWidget {
     String mainEmo =
         '${emotions[0].emotion} ${emotions[0].percentage.toStringAsFixed(1)}%';
     emotions[0].isMainEmo = true;
-    for (int i = 0; i < emotions.length - 1; i++) {
-      if (double.parse(emotions[i].percentage.toStringAsFixed(1)) ==
-          double.parse(emotions[i + 1].percentage.toStringAsFixed(1))) {
-        emotions[i + 1].isMainEmo = true;
-        mainEmo += '\n${emotions[i + 1].emotion}';
-      } else {
-        break;
-      }
-    }
+    // for (int i = 0; i < emotions.length - 1; i++) {
+    //   if (double.parse(emotions[i].percentage.toStringAsFixed(1)) ==
+    //       double.parse(emotions[i + 1].percentage.toStringAsFixed(1))) {
+    //     emotions[i + 1].isMainEmo = true;
+    //     mainEmo += '\n${emotions[i + 1].emotion}';
+    //   } else {
+    //     break;
+    //   }
+    // }
     return mainEmo;
   }
 
@@ -254,7 +251,7 @@ class TodaysReportWidget extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const ReportDetailScreen()),
+                                    MemoryscoreDetailScreen()),
                           );
                         }, //다음 화면으로 이동
                         style: ElevatedButton.styleFrom(

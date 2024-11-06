@@ -17,13 +17,12 @@ import 'package:http/http.dart' as http; //http 가져오기
 class ReportMainScreen extends StatefulWidget {
   final String name;
   final int daysPast; //마지막 자가진단 시점
-  final List<EmotionData> emotions;
 
-  const ReportMainScreen(
-      {super.key,
-      required this.name,
-      required this.daysPast,
-      required this.emotions});
+  const ReportMainScreen({
+    super.key,
+    required this.name,
+    required this.daysPast,
+  });
 
   @override
   State<ReportMainScreen> createState() => _ReportMainScreenState();
@@ -48,9 +47,10 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     //오늘 날짜 형태 바꾸기
     DateTime now = DateTime.now();
     String today = DateFormat('yyyy-MM-dd').format(now);
+    print(today);
 
     final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports/$today');
-
+    print(url);
     final response = await http.post(
       url,
       headers: {
@@ -90,6 +90,22 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     // 각 ExpansionTile에 사용할 GlobalKey를 생성합니다.
     final GlobalKey expansionTileKey1 = GlobalKey();
     final GlobalKey expansionTileKey2 = GlobalKey();
+
+    // emotions 객체 추출
+    var emotionsMap = todaysReport['emotions'];
+    print('emotionsMap:$emotionsMap');
+
+    List<EmotionData> emotions = [];
+    if (emotionsMap != null && emotionsMap.isNotEmpty) {
+      emotionsMap.forEach((emotion, percentage) {
+        emotions.add(
+            EmotionData(emotion: emotion, percentage: percentage.toDouble()));
+      });
+    } else {
+      emotions.add(EmotionData(emotion: "결과 없음", percentage: 100));
+      print('emotions is null or empty');
+    }
+    print('emotions: $emotions');
 
     // 스크롤 포지션을 계산하고 해당 위치로 스크롤하는 함수
     void scrollToPosition(GlobalKey key) {
@@ -284,10 +300,8 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: TodaysReportWidget(
-                        condition:
-                            //'무릎이 조금 아프시지만, 잠은 잘 주무시는 편이에요. 최근 보조제를 드시고 계신다고 해요.',
-                            todaysReport['conditions'] ?? '상태 기록이 없어요!',
-                        emotions: widget.emotions,
+                        condition: todaysReport['conditions'] ?? '컨디션 기록이 없어요!',
+                        emotions: emotions,
                         memoryScoreDatas: [
                           MemoryScoreData(
                             date: '2023-08-25',

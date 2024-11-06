@@ -109,14 +109,9 @@ class _MainScreenState extends State<MainScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MainPageButton(
-                      destination: ReportMainScreen(
+                      destination: const ReportMainScreen(
                         name: '홍길동',
                         daysPast: 5,
-                        emotions: [
-                          EmotionData(emotion: '슬픔', percentage: 50.0),
-                          EmotionData(emotion: '행복', percentage: 40.0),
-                          EmotionData(emotion: '분노', percentage: 10.0),
-                        ],
                       ),
                       text: "리포트",
                       backColor: Pallete.sodamButtonPurple,
