@@ -35,6 +35,7 @@ class _MainScreenState extends State<MainScreen> {
     final loginDataProvider =
         Provider.of<LoginDataProvider>(context, listen: false);
     final token = loginDataProvider.loginData?.token; // 토큰 값 가져오기
+    final name = loginDataProvider.loginData?.name; //사용자 이름
 
     print("Token at MainScreen: $token"); // MainScreen에서 토큰 출력
     return Scaffold(
@@ -109,8 +110,8 @@ class _MainScreenState extends State<MainScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MainPageButton(
-                      destination: const ReportMainScreen(
-                        name: '홍길동',
+                      destination: ReportMainScreen(
+                        name: name ?? '사용자',
                         daysPast: 5,
                       ),
                       text: "리포트",

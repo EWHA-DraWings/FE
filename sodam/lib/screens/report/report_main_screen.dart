@@ -31,6 +31,8 @@ class ReportMainScreen extends StatefulWidget {
 class _ReportMainScreenState extends State<ReportMainScreen> {
   final ScrollController _scrollController = ScrollController();
   Map<String, dynamic> todaysReport = {}; //오늘 리포트
+  List<MemoryScoreData> memoryScores = []; //기억점수
+  bool isLoading = true; //로딩 상태
 
   @override
   void initState() {
@@ -38,8 +40,8 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     final loginDataProvider =
         Provider.of<LoginDataProvider>(context, listen: false);
     final jwtToken = loginDataProvider.loginData?.token;
-    print("token: $jwtToken");
     getTodaysReport(jwtToken); // 위젯 초기화 시 API 호출
+    getMemoryScores(jwtToken);
   }
 
   Future<void> getTodaysReport(jwtToken) async {
@@ -47,10 +49,8 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     //오늘 날짜 형태 바꾸기
     DateTime now = DateTime.now();
     String today = DateFormat('yyyy-MM-dd').format(now);
-    print(today);
 
     final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports/$today');
-    print(url);
     final response = await http.post(
       url,
       headers: {
@@ -58,13 +58,13 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
         'Authorization': 'Bearer $jwtToken'
       },
     );
-    print(response.body);
 
     if (response.statusCode == 200) {
       //JSON 응답 파싱
       final Map<String, dynamic> data = jsonDecode(response.body);
       setState(() {
         todaysReport = data;
+        isLoading = false;
       });
       print(response);
     } else if (response.statusCode == 400) {
@@ -76,6 +76,47 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
       //500: 리포트 조회.생성 실패
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('500: 리포트 생성 또는 조회에 실패했습니다.')),
+      );
+    }
+  }
+
+  //Future<List<MemoryScoreData>> getMemoryScores(jwtToken)
+  Future<void> getMemoryScores(jwtToken) async {
+    final url =
+        Uri.parse('http://${Global.ipAddr}:3000/api/findmemoryscore/latest');
+    print(url);
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwtToken'
+      },
+    );
+
+    if (response.statusCode == 200) {
+      //JSON 응답 파싱
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      setState(() {
+        memoryScores = MemoryScoreData.fromJsonList(data['scores']);
+        isLoading = false;
+      });
+      for (var data in memoryScores) {
+        print(data); // MemoryScoreData 객체가 toString() 메서드를 통해 출력됨
+      }
+    } else if (response.statusCode == 404) {
+      //기억점수 내역X
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('기억 점수 측정 내역이 없습니다.')),
+      );
+    } else if (response.statusCode == 403) {
+      //해당 날짜 일기X
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('조회 권한이 없습니다.')),
+      );
+    } else {
+      //500: 기억점수 조회 실패
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('500: 기억점수 조회에 실패했습니다.')),
       );
     }
   }
@@ -126,322 +167,296 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     }
 
     return Scaffold(
-      body: Stack(
-        //스택으로 appbar보다 컨테이너가 위에 위치하도록 설정
-        children: [
-          Column(
-            children: [
-              AppBar(
-                flexibleSpace: Container(
-                  height: 250,
-                  width: screenWidth,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Pallete.mainBlue,
-                        Color.fromARGB(255, 186, 185, 195),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(40.0),
-                      bottomRight: Radius.circular(40.0),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: 80,
-                      left: screenWidth * 0.14,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 3),
-                          child: Text(
-                            "안녕하세요,",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: "IBMPlexSansKRBold",
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          '${widget.name}님!',
-                          style: const TextStyle(
-                            fontSize: 30,
-                            fontFamily: "IBMPlexSansKRBold",
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                scrolledUnderElevation: 0,
-              ),
-            ],
-          ),
-          Positioned(
-            top: 70,
-            right: screenWidth * 0.14,
-            child: Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                color: Colors.transparent,
-              ),
-              child: ClipOval(
-                child: Image.asset(
-                  'lib/assets/images/humanphoto.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-          // Overlay Container
-          Positioned(
-            top: greenContainerFromTop, // AppBar와 겹치도록 위치 조정
-            left: screenWidth * 0.09,
-            right: screenWidth * 0.09,
-            child: Container(
-              height: greenContainerHeight,
-              width: screenWidth * 0.6,
-              decoration: BoxDecoration(
-                color: Pallete.sodamReportGreen,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '마지막으로 자가진단을 하신지\n${widget.daysPast}일이 지났어요!', //여기도 날짜 추가해야 됨
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontFamily: "IBMPlexSansKRRegular",
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    width: 250,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const GuardianDiagnosisScreen()),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 14,
-                        ), // 버튼 안쪽 여백
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            '자가진단 하러가기',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 17,
-                              fontFamily: "IBMPlexSansKRRegular",
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Image.asset(
-                            'lib/assets/images/click.png', // 이미지 경로
-                            width: 30,
-                            height: 30,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            child: Container(),
-          ),
-          Positioned(
-            top: greenContainerFromTop + greenContainerHeight,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: SingleChildScrollView(
-              controller: _scrollController, // ScrollController 추가
-              child: SizedBox(
-                //height:screenHeight - greenContainerFromTop + greenContainerHeight,// scroll을 감싸는 sized box에 높이를 줘가지고 overflow 발생한 것.
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Stack(
+              //스택으로 appbar보다 컨테이너가 위에 위치하도록 설정
+              children: [
+                Column(
                   children: [
-                    const Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 13, horizontal: 22),
-                      child: Text(
-                        "오늘의 리포트",
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: TodaysReportWidget(
-                        condition: todaysReport['conditions'] ?? '컨디션 기록이 없어요!',
-                        emotions: emotions,
-                        memoryScoreDatas: [
-                          MemoryScoreData(
-                            date: '2023-08-25',
-                            cdrScore: 1,
-                            questionCount: 16,
-                            correctCount: 8,
-                            correctRatio: 50,
+                    AppBar(
+                      flexibleSpace: Container(
+                        height: 250,
+                        width: screenWidth,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Pallete.mainBlue,
+                              Color.fromARGB(255, 186, 185, 195),
+                            ],
                           ),
-                          MemoryScoreData(
-                            date: '2023-08-25',
-                            cdrScore: 1,
-                            questionCount: 16,
-                            correctCount: 8,
-                            correctRatio: 50,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(40.0),
+                            bottomRight: Radius.circular(40.0),
                           ),
-                          MemoryScoreData(
-                            date: '2023-08-25',
-                            cdrScore: 1,
-                            questionCount: 16,
-                            correctCount: 8,
-                            correctRatio: 50,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            top: 80,
+                            left: screenWidth * 0.14,
                           ),
-                          MemoryScoreData(
-                            date: '2023-08-25',
-                            cdrScore: 1,
-                            questionCount: 16,
-                            correctCount: 8,
-                            correctRatio: 50,
-                          ),
-                          MemoryScoreData(
-                            date: '2023-08-25',
-                            cdrScore: 1,
-                            questionCount: 16,
-                            correctCount: 8,
-                            correctRatio: 50,
-                          ),
-                        ],
-                      ),
-                    ),
-                    //여기다가 리포트 추가하면 됨
-                    const Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 13, horizontal: 22),
-                      child: Text(
-                        "과거 리포트 살펴보기",
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 22),
-                      child: Column(
-                        children: [
-                          ExpansionTile(
-                            shape: RoundedRectangleBorder(
-                              //펼쳤을 때
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            collapsedShape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            title: const Text('2024/09/08'),
-                            collapsedBackgroundColor: Pallete.sodamReportPurple,
-                            backgroundColor: Pallete.sodamReportPurple,
-                            children: <Widget>[
-                              SizedBox(
-                                height: 300,
-                                child: SingleChildScrollView(
-                                  child: PastReport(
-                                    name: widget.name,
-                                    condition:
-                                        '무릎이 조금 아프시지만, 잠은 잘 \n주무시는 편이에요. 최근 보조제를\n드시고 계신다고 해요.',
-                                    memoryScore: 77.2,
-                                    emotions: [
-                                      EmotionData(
-                                          emotion: '당황', percentage: 80.0),
-                                      EmotionData(
-                                          emotion: '불안', percentage: 13.0),
-                                      EmotionData(
-                                          emotion: '행복', percentage: 7.0),
-                                    ],
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 3),
+                                child: Text(
+                                  "안녕하세요,",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: "IBMPlexSansKRBold",
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
+                              Text(
+                                '${widget.name}님!',
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  fontFamily: "IBMPlexSansKRBold",
+                                  color: Colors.white,
+                                ),
+                              ),
                             ],
-                            onExpansionChanged: (value) {
-                              if (value) {
-                                // ExpansionTile이 열릴 때 스크롤
-                                scrollToPosition(expansionTileKey1);
-                              }
-                            },
                           ),
-                          const SizedBox(height: 10),
-                          ExpansionTile(
-                            shape: RoundedRectangleBorder(
-                              //펼쳤을 때
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            collapsedShape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            title: const Text('2024/09/07'),
-                            collapsedBackgroundColor: Pallete.sodamReportPurple,
-                            backgroundColor: Pallete.sodamReportPurple,
-                            children: <Widget>[
-                              SizedBox(
-                                  height: 300,
-                                  child: SingleChildScrollView(
-                                    child: PastReport(
-                                      name: widget.name,
-                                      condition:
-                                          '무릎이 조금 아프시지만, 잠은 잘 \n주무시는 편이에요. 최근 보조제를\n드시고 계신다고 해요.',
-                                      memoryScore: 80.6,
-                                      emotions: [
-                                        EmotionData(
-                                            emotion: '슬픔', percentage: 50.0),
-                                        EmotionData(
-                                            emotion: '행복', percentage: 40.0),
-                                        EmotionData(
-                                            emotion: '분노', percentage: 10.0),
-                                      ],
-                                    ),
-                                  )),
-                            ],
-                            onExpansionChanged: (value) {
-                              if (value) {
-                                // ExpansionTile이 열릴 때 스크롤
-                                scrollToPosition(expansionTileKey2);
-                              }
+                        ),
+                      ),
+                      scrolledUnderElevation: 0,
+                    ),
+                  ],
+                ),
+                Positioned(
+                  top: 70,
+                  right: screenWidth * 0.14,
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.transparent,
+                    ),
+                    child: ClipOval(
+                      child: Image.asset(
+                        'lib/assets/images/humanphoto.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                // Overlay Container
+                Positioned(
+                  top: greenContainerFromTop, // AppBar와 겹치도록 위치 조정
+                  left: screenWidth * 0.09,
+                  right: screenWidth * 0.09,
+                  child: Container(
+                    height: greenContainerHeight,
+                    width: screenWidth * 0.6,
+                    decoration: BoxDecoration(
+                      color: Pallete.sodamReportGreen,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '마지막으로 자가진단을 하신지\n${widget.daysPast}일이 지났어요!', //여기도 날짜 추가해야 됨
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontFamily: "IBMPlexSansKRRegular",
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          width: 250,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const GuardianDiagnosisScreen()),
+                              );
                             },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 14,
+                              ), // 버튼 안쪽 여백
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  '자가진단 하러가기',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                    fontFamily: "IBMPlexSansKRRegular",
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Image.asset(
+                                  'lib/assets/images/click.png', // 이미지 경로
+                                  width: 30,
+                                  height: 30,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  child: Container(),
+                ),
+                Positioned(
+                  top: greenContainerFromTop + greenContainerHeight,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: SingleChildScrollView(
+                    controller: _scrollController, // ScrollController 추가
+                    child: SizedBox(
+                      //height:screenHeight - greenContainerFromTop + greenContainerHeight,// scroll을 감싸는 sized box에 높이를 줘가지고 overflow 발생한 것.
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 13, horizontal: 22),
+                            child: Text(
+                              "오늘의 리포트",
+                              style: TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: TodaysReportWidget(
+                              condition:
+                                  todaysReport['conditions'] ?? '컨디션 기록이 없어요!',
+                              emotions: emotions,
+                              memoryScoreDatas: memoryScores,
+                            ),
+                          ),
+                          //여기다가 리포트 추가하면 됨
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 13, horizontal: 22),
+                            child: Text(
+                              "과거 리포트 살펴보기",
+                              style: TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 22),
+                            child: Column(
+                              children: [
+                                ExpansionTile(
+                                  shape: RoundedRectangleBorder(
+                                    //펼쳤을 때
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  collapsedShape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  title: const Text('2024/09/08'),
+                                  collapsedBackgroundColor:
+                                      Pallete.sodamReportPurple,
+                                  backgroundColor: Pallete.sodamReportPurple,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height: 300,
+                                      child: SingleChildScrollView(
+                                        child: PastReport(
+                                          name: widget.name,
+                                          condition:
+                                              '무릎이 조금 아프시지만, 잠은 잘 \n주무시는 편이에요. 최근 보조제를\n드시고 계신다고 해요.',
+                                          memoryScore: 77.2,
+                                          emotions: [
+                                            EmotionData(
+                                                emotion: '당황',
+                                                percentage: 80.0),
+                                            EmotionData(
+                                                emotion: '불안',
+                                                percentage: 13.0),
+                                            EmotionData(
+                                                emotion: '행복', percentage: 7.0),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                  onExpansionChanged: (value) {
+                                    if (value) {
+                                      // ExpansionTile이 열릴 때 스크롤
+                                      scrollToPosition(expansionTileKey1);
+                                    }
+                                  },
+                                ),
+                                const SizedBox(height: 10),
+                                ExpansionTile(
+                                  shape: RoundedRectangleBorder(
+                                    //펼쳤을 때
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  collapsedShape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  title: const Text('2024/09/07'),
+                                  collapsedBackgroundColor:
+                                      Pallete.sodamReportPurple,
+                                  backgroundColor: Pallete.sodamReportPurple,
+                                  children: <Widget>[
+                                    SizedBox(
+                                        height: 300,
+                                        child: SingleChildScrollView(
+                                          child: PastReport(
+                                            name: widget.name,
+                                            condition:
+                                                '무릎이 조금 아프시지만, 잠은 잘 \n주무시는 편이에요. 최근 보조제를\n드시고 계신다고 해요.',
+                                            memoryScore: 80.6,
+                                            emotions: [
+                                              EmotionData(
+                                                  emotion: '슬픔',
+                                                  percentage: 50.0),
+                                              EmotionData(
+                                                  emotion: '행복',
+                                                  percentage: 40.0),
+                                              EmotionData(
+                                                  emotion: '분노',
+                                                  percentage: 10.0),
+                                            ],
+                                          ),
+                                        )),
+                                  ],
+                                  onExpansionChanged: (value) {
+                                    if (value) {
+                                      // ExpansionTile이 열릴 때 스크롤
+                                      scrollToPosition(expansionTileKey2);
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }
