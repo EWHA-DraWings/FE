@@ -16,11 +16,21 @@ class MemoryScoreData {
 
   factory MemoryScoreData.fromJson(Map<String, dynamic> json) {
     return MemoryScoreData(
-      date: json['date'],
+      date: json['date'].substring(0, 10),
       cdrScore: json['cdrScore'].toDouble(),
       correctRatio: json['correctRatio'].toDouble(),
       correctCount: json['correctCount'],
       questionCount: json['questionCount'],
     );
+  }
+
+  // List<dynamic>을 받아서 List<MemoryScoreData>로 변환하는 fromJson
+  static List<MemoryScoreData> fromJsonList(List<dynamic> jsonList) {
+    return jsonList.map((json) => MemoryScoreData.fromJson(json)).toList();
+  }
+
+  @override
+  String toString() {
+    return 'MemoryScoreData(date: $date, correctRatio: $correctRatio, cdrScore: $cdrScore, correctCount: $correctCount, questionCount: $questionCount)';
   }
 }
