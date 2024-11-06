@@ -194,7 +194,7 @@ class _MemoryChartWidgetState extends State<MemoryChartWidget> {
         show: true,
       ),
       minX: 0,
-      maxX: 10,
+      maxX: 4,
       minY: 0,
       maxY: 6,
       lineBarsData: [
