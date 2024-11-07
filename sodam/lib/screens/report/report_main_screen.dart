@@ -41,6 +41,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
         Provider.of<LoginDataProvider>(context, listen: false);
     final jwtToken = loginDataProvider.loginData?.token;
     getTodaysReport(jwtToken); // 위젯 초기화 시 API 호출
+    isLoading = true;
     getMemoryScores(jwtToken);
   }
 
@@ -48,7 +49,8 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     ///api/reports/:date (2024-09-30 형식)
     //오늘 날짜 형태 바꾸기
     DateTime now = DateTime.now();
-    String today = DateFormat('yyyy-MM-dd').format(now);
+    String today = '2024-11-06';
+    //String today = DateFormat('yyyy-MM-dd').format(now);
 
     final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports/$today');
     final response = await http.post(
@@ -379,7 +381,6 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                                       height: 300,
                                       child: SingleChildScrollView(
                                         child: PastReport(
-                                          name: widget.name,
                                           condition:
                                               '무릎이 조금 아프시지만, 잠은 잘 \n주무시는 편이에요. 최근 보조제를\n드시고 계신다고 해요.',
                                           memoryScore: 77.2,
@@ -422,7 +423,6 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                                         height: 300,
                                         child: SingleChildScrollView(
                                           child: PastReport(
-                                            name: widget.name,
                                             condition:
                                                 '무릎이 조금 아프시지만, 잠은 잘 \n주무시는 편이에요. 최근 보조제를\n드시고 계신다고 해요.',
                                             memoryScore: 80.6,
