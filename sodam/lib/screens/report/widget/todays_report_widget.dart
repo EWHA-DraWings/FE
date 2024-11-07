@@ -250,8 +250,10 @@ class TodaysReportWidget extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    MemoryscoreDetailScreen()),
+                              builder: (context) => MemoryscoreDetailScreen(
+                                memoryScoreDatas: memoryScoreDatas,
+                              ),
+                            ),
                           );
                         }, //다음 화면으로 이동
                         style: ElevatedButton.styleFrom(

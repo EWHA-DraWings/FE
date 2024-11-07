@@ -1,9 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:sodam/models/login_data.dart';
+import 'package:sodam/models/memory_score_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/widgets/title_widget.dart';
+import 'package:http/http.dart' as http; //http 가져오기
 
 class MemoryscoreDetailScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> scoreData = [
+  List<Map<String, dynamic>> scoreData = [
     {
       "date": "2024/09/08",
       "cdr": 0,
@@ -47,44 +54,56 @@ class MemoryscoreDetailScreen extends StatelessWidget {
     // Add more items here...
   ];
 
-  MemoryscoreDetailScreen({super.key});
+  final List<MemoryScoreData> memoryScoreDatas;
+
+  MemoryscoreDetailScreen({super.key, required this.memoryScoreDatas});
 
   @override
   Widget build(BuildContext context) {
+    //data 불러오기
+
     return Scaffold(
       backgroundColor: Pallete.mainWhite,
       appBar: AppBar(
         backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const TitleWidget(
-              backgroundColor: Pallete.mainBlue,
-              text: '기억점수 살펴보기',
-              textColor: Colors.white,
+      body: Column(
+        children: [
+          const TitleWidget(
+            backgroundColor: Pallete.mainBlue,
+            text: '기억점수 살펴보기',
+            textColor: Colors.white,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          // ...memoryScoreDatas.map((data) {
+          //   return MemoryScoreCard(data: data);
+          // }),
+          Expanded(
+            child: ListView.builder(
+              itemCount: memoryScoreDatas.length,
+              itemBuilder: (context, index) {
+                final data = memoryScoreDatas[index];
+                return MemoryScoreCard(data: data);
+              },
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            ...scoreData.map((data) {
-              return MemoryScoreCard(data: data);
-            }),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
 class MemoryScoreCard extends StatelessWidget {
-  final Map<String, dynamic> data;
+  final MemoryScoreData data;
 
   const MemoryScoreCard({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
+    double correctPercentile = data.correctRatio * 100;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -104,7 +123,7 @@ class MemoryScoreCard extends StatelessWidget {
           children: [
             ListTile(
               title: Text(
-                data['date'],
+                data.date,
                 style: const TextStyle(
                   fontFamily: "IBMPlexSansKRRegular",
                   fontSize: 20,
@@ -129,7 +148,7 @@ class MemoryScoreCard extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: "${data['cdr']}",
+                          text: "${data.cdrScore}",
                           style: const TextStyle(
                             fontSize: 45,
                             fontFamily: "IBMPlexSansKRBold",
@@ -144,7 +163,7 @@ class MemoryScoreCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        '${data['correctRate']}%',
+                        '$correctPercentile%',
                         style: const TextStyle(
                           fontSize: 35,
                           fontFamily: "IBMPlexSansKRRegular",
@@ -152,7 +171,7 @@ class MemoryScoreCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '정답률 (${data['correctCount']}문제/${data['totalCount']}문제)',
+                        '정답률 (${data.correctCount}문제/${data.questionCount}문제)',
                         style: const TextStyle(color: Colors.grey),
                       ),
                     ],

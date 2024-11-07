@@ -5,14 +5,12 @@ import 'package:sodam/screens/report/widget/doughnut_chart_widget.dart';
 import 'package:sodam/widgets/memory_score_chart.dart';
 
 class PastReport extends StatelessWidget {
-  final String name;
   final String condition;
   final double? memoryScore;
   final List<EmotionData> emotions; //top3 감정 리스트
 
   const PastReport(
       {super.key,
-      required this.name,
       required this.condition,
       this.memoryScore,
       required this.emotions});
@@ -101,7 +99,7 @@ class PastReport extends StatelessWidget {
                           child: DoughnutChartWidget(
                             emotions: emotions,
                             doughnutSize: 60,
-                            doughnutWidth: 40,
+                            doughnutWidth: 30,
                             offsetX: 100,
                             offsetY: 90,
                             colors: colors,

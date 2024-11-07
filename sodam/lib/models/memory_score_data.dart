@@ -29,8 +29,8 @@ class MemoryScoreData {
     return jsonList.map((json) => MemoryScoreData.fromJson(json)).toList();
   }
 
-  @override
-  String toString() {
-    return 'MemoryScoreData(date: $date, correctRatio: $correctRatio, cdrScore: $cdrScore, correctCount: $correctCount, questionCount: $questionCount)';
-  }
+  // @override //확인용
+  // String toString() {
+  //   return 'MemoryScoreData(date: $date, correctRatio: $correctRatio, cdrScore: $cdrScore, correctCount: $correctCount, questionCount: $questionCount)';
+  // }
 }
