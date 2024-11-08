@@ -72,12 +72,15 @@ class _MemoryChatScreenState extends State<MemoryChatScreen> {
       print("응답 수신됨 : $incomingMessage");
       if (incomingMessage != null) {
         final responseData = jsonDecode(incomingMessage);
-        if (responseData['type'] == 'response') {
+        if (responseData['conversations'] != null) {
           if (mounted) {
             setState(() {
-              if (responseData.containsKey('gptText')) {
-                chatList
-                    .add({"text": responseData['gptText'], "isUser": false});
+              if (responseData.containsKey('messageFromChatGPT')) {
+                //gptText->messageFromChatGPT
+                chatList.add({
+                  "text": responseData['messageFromChatGPT'],
+                  "isUser": false
+                });
               }
               if (responseData.containsKey('userText') &&
                   responseData['userText'] != "...") {

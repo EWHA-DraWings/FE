@@ -29,20 +29,21 @@ class _TimeSelectScreenState extends State<TimeSelectScreen> {
     final loginDataProvider =
         Provider.of<LoginDataProvider>(context, listen: false);
     final token = loginDataProvider.loginData?.token;
-
+    print("token $token");
     final url = Uri.parse(
         'http://${Global.ipAddr}:3000/api/alarms/send-push-notice'); // 백엔드 URL
     final body = json.encode({
       'hour': time.hour,
       'minute': time.minute,
     });
+    print("encoded!!!!!!! $body");
 
     try {
       final response = await http.post(
         url,
         headers: {
-          'type': 'auth',
-          "token": 'Bearer $token',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
         },
         body: body,
       );
@@ -57,6 +58,7 @@ class _TimeSelectScreenState extends State<TimeSelectScreen> {
       } else {
         // 오류 발생
         print('Failed to send time: ${response.statusCode}');
+        print('Response body: ${response.body}');
       }
     } catch (e) {
       print('Error sending time: $e');

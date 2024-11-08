@@ -34,7 +34,6 @@ class WebSocketProvider with ChangeNotifier {
           _playAudio(message); // Method to play audio
         } else if (message is String) {
           // Handle string message
-          print("message 받음 : $message");
           final Map<String, dynamic> jsonData = jsonDecode(message);
           //음성 데이터 크기 받아옴
           if (jsonData.containsKey('audiosize')) {
