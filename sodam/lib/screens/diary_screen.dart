@@ -99,115 +99,106 @@ class _DiaryScreenState extends State<DiaryScreen> {
         backgroundColor: Pallete.mainWhite,
         scrolledUnderElevation: 0,
       ),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: screenWidth * 0.08),
-                    child: Text(
-                      "$month월 $day일 $weekday",
-                      style: const TextStyle(
-                        fontFamily: "IBMPlexSansKRRegular",
-                        fontSize: 22,
-                      ),
+      resizeToAvoidBottomInset: true, // 키보드가 올라왔을 때 화면 조정 활성화
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: screenWidth * 0.08),
+                  child: Text(
+                    "$month월 $day일 $weekday",
+                    style: const TextStyle(
+                      fontFamily: "IBMPlexSansKRRegular",
+                      fontSize: 22,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(right: screenWidth * 0.05),
-                    child: TextButton(
-                      onPressed: () => _speak(widget.content),
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        padding: EdgeInsets.zero,
-                      ),
-                      child: Image.asset("lib/assets/images/listen.png"),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Container(
-                width: screenWidth * 0.9,
-                height: screenHeight * 0.75,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
-                decoration: BoxDecoration(
-                  color: Pallete.mainGray,
-                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: Center(
-                  child: _isEditing // 수정 모드
-                      ? SingleChildScrollView(
-                          child: GestureDetector(
-                            onTap: () {
-                              // 사용자가 TextField 영역을 클릭했을 때
-                              FocusScope.of(context).requestFocus(_focusNode);
-                            },
-                            child: TextField(
-                              controller: _contentController,
-                              focusNode: _focusNode, // FocusNode 연결
-                              maxLines: null,
-                              style: const TextStyle(
-                                // 폰트 스타일 추가
-                                fontFamily: "IBMPlexSansKRRegular",
-                                fontSize: 25,
-                                height: 2.0,
-                              ),
-                              decoration: const InputDecoration(
-                                hintText: "일기 내용을 입력하세요",
-                                border: InputBorder.none, // 경계선 없애기
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 10.0), // 패딩 추가
-                              ),
-                            ),
-                          ),
-                        )
-                      : SingleChildScrollView(
-                          child: Text(
-                            widget.content,
+                Padding(
+                  padding: EdgeInsets.only(right: screenWidth * 0.05),
+                  child: TextButton(
+                    onPressed: () => _speak(widget.content),
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      padding: EdgeInsets.zero,
+                    ),
+                    child: Image.asset("lib/assets/images/listen.png"),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Container(
+              width: screenWidth * 0.9,
+              height: screenHeight * 0.75,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+              decoration: BoxDecoration(
+                color: Pallete.mainGray,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: _isEditing // 수정 모드
+                    ? SingleChildScrollView(
+                        child: GestureDetector(
+                          onTap: () {
+                            FocusScope.of(context).requestFocus(_focusNode);
+                          },
+                          child: TextField(
+                            controller: _contentController,
+                            focusNode: _focusNode,
+                            maxLines: null,
                             style: const TextStyle(
                               fontFamily: "IBMPlexSansKRRegular",
                               fontSize: 25,
                               height: 2.0,
                             ),
+                            decoration: const InputDecoration(
+                              hintText: "일기 내용을 입력하세요",
+                              border: InputBorder.none,
+                              contentPadding:
+                                  EdgeInsets.symmetric(vertical: 10.0),
+                            ),
                           ),
                         ),
-                ),
-              ),
-            ],
-          ),
-          Positioned(
-            bottom: screenHeight * 0.03,
-            right: screenWidth * 0.03,
-            child: SizedBox(
-              width: 75,
-              height: 75,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_isEditing) {
-                    _saveContentToBackend(_contentController.text);
-                  } else {
-                    setState(() {
-                      _isEditing = true; // 수정 모드 활성화
-                    });
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Pallete.mainBlue,
-                  shape: const CircleBorder(),
-                  padding: EdgeInsets.zero,
-                ),
-                child: Image.asset("lib/assets/images/edit.png"),
+                      )
+                    : SingleChildScrollView(
+                        child: Text(
+                          _contentController.text,
+                          style: const TextStyle(
+                            fontFamily: "IBMPlexSansKRRegular",
+                            fontSize: 25,
+                            height: 2.0,
+                          ),
+                        ),
+                      ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
+      ),
+      floatingActionButton: SizedBox(
+        width: 70,
+        height: 70,
+        child: FloatingActionButton(
+          onPressed: () {
+            if (_isEditing) {
+              _saveContentToBackend(_contentController.text);
+            } else {
+              setState(() {
+                _isEditing = true;
+              });
+            }
+          },
+          backgroundColor: Pallete.mainBlue,
+          shape: const CircleBorder(),
+          child: _isEditing
+              ? Image.asset("lib/assets/images/save.png", width: 45, height: 45)
+              : Image.asset("lib/assets/images/edit.png",
+                  width: 45, height: 45),
+        ),
       ),
     );
   }
 }
-
