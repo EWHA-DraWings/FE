@@ -8,6 +8,7 @@ import 'package:sodam/global.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/models/login_data.dart';
 import 'package:sodam/models/memory_score_data.dart';
+import 'package:sodam/models/self_diagnosis_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/widget/todays_report_widget.dart';
 import 'package:sodam/screens/report/past_report.dart';
@@ -16,12 +17,10 @@ import 'package:http/http.dart' as http; //http 가져오기
 
 class ReportMainScreen extends StatefulWidget {
   final String name;
-  final int daysPast; //마지막 자가진단 시점
 
   const ReportMainScreen({
     super.key,
     required this.name,
-    required this.daysPast,
   });
 
   @override
@@ -32,6 +31,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
   final ScrollController _scrollController = ScrollController();
   Map<String, dynamic> todaysReport = {}; //오늘 리포트
   List<MemoryScoreData> memoryScores = []; //기억점수
+  List<SelfDiagnosisData> selfDiagnosisDatas = []; //자가진단
   bool isLoading = true; //로딩 상태
 
   @override
@@ -40,16 +40,19 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     final loginDataProvider =
         Provider.of<LoginDataProvider>(context, listen: false);
     final jwtToken = loginDataProvider.loginData?.token;
-    getTodaysReport(jwtToken); // 위젯 초기화 시 API 호출
+    getTodaysReport(jwtToken);
     isLoading = true;
     getMemoryScores(jwtToken);
+    isLoading = true;
+    getSelfDiagnosisScores(jwtToken);
   }
 
+  //오늘 리포트 가져오기
   Future<void> getTodaysReport(jwtToken) async {
     ///api/reports/:date (2024-09-30 형식)
     //오늘 날짜 형태 바꾸기
     DateTime now = DateTime.now();
-    String today = '2024-11-06';
+    String today = '2024-11-06'; //임시 날짜(테스트용)
     //String today = DateFormat('yyyy-MM-dd').format(now);
 
     final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports/$today');
@@ -68,7 +71,6 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
         todaysReport = data;
         isLoading = false;
       });
-      print(response);
     } else if (response.statusCode == 400) {
       //해당 날짜 일기X
       ScaffoldMessenger.of(context).showSnackBar(
@@ -82,11 +84,10 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     }
   }
 
-  //Future<List<MemoryScoreData>> getMemoryScores(jwtToken)
+  //기억점수 최근 5개 가져오기
   Future<void> getMemoryScores(jwtToken) async {
     final url =
         Uri.parse('http://${Global.ipAddr}:3000/api/findmemoryscore/latest');
-    print(url);
     final response = await http.get(
       url,
       headers: {
@@ -103,7 +104,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
         isLoading = false;
       });
       for (var data in memoryScores) {
-        print(data); // MemoryScoreData 객체가 toString() 메서드를 통해 출력됨
+        print(data);
       }
     } else if (response.statusCode == 404) {
       //기억점수 내역X
@@ -118,7 +119,41 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     } else {
       //500: 기억점수 조회 실패
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('500: 기억점수 조회에 실패했습니다.')),
+        const SnackBar(content: Text('500: 기억점수 불러오기를 실패했습니다.')),
+      );
+    }
+  }
+
+  Future<void> getSelfDiagnosisScores(jwtToken) async {
+    final url = Uri.parse('http://${Global.ipAddr}:3000/api/assessments/user');
+    print(url);
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwtToken'
+      },
+    );
+
+    if (response.statusCode == 200) {
+      //JSON 응답 파싱
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      setState(() {
+        selfDiagnosisDatas = SelfDiagnosisData.fromJsonList(data['data']);
+        isLoading = false;
+      });
+      for (var data in selfDiagnosisDatas) {
+        print(data);
+      }
+    } else if (response.statusCode == 404) {
+      //자가진단 내역X
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('자가진단 결과가 없습니다.')),
+      );
+    } else {
+      //500: 자가진단 결과 조회 실패
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('500: 자가진단 데이터 불러오기를 실패했습니다.')),
       );
     }
   }
@@ -149,6 +184,16 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
       print('emotions is null or empty');
     }
     print('emotions: $emotions');
+
+    //날짜 내림차순
+    selfDiagnosisDatas.sort(
+      (a, b) => b.date.compareTo(a.date),
+    );
+
+    DateTime lastDiagnosisDate =
+        DateTime.parse(selfDiagnosisDatas[0].date); //마지막 자가진단 시점
+    DateTime todayDate = DateTime.now();
+    int daysPast = todayDate.difference(lastDiagnosisDate).inDays;
 
     // 스크롤 포지션을 계산하고 해당 위치로 스크롤하는 함수
     void scrollToPosition(GlobalKey key) {
@@ -263,7 +308,9 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '마지막으로 자가진단을 하신지\n${widget.daysPast}일이 지났어요!', //여기도 날짜 추가해야 됨
+                          daysPast > 0
+                              ? '마지막으로 자가진단을 하신지\n$daysPast일이 지났어요!'
+                              : '',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.black,
@@ -349,6 +396,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                                   todaysReport['conditions'] ?? '컨디션 기록이 없어요!',
                               emotions: emotions,
                               memoryScoreDatas: memoryScores,
+                              selfDiagnosisDatas: selfDiagnosisDatas,
                             ),
                           ),
                           //여기다가 리포트 추가하면 됨
