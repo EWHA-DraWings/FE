@@ -112,7 +112,6 @@ class _MainScreenState extends State<MainScreen> {
                     MainPageButton(
                       destination: ReportMainScreen(
                         name: name ?? '사용자',
-                        daysPast: 5,
                       ),
                       text: "리포트",
                       backColor: Pallete.sodamButtonPurple,
