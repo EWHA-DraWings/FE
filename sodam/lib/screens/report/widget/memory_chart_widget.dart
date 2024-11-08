@@ -95,7 +95,7 @@ class _MemoryChartWidgetState extends State<MemoryChartWidget> {
   Widget buildCustomTooltip() {
     final selectedSpot = widget.memoryScoreDatas[selectedIndex];
     final date = selectedSpot.date;
-    final value = selectedSpot.correctRatio;
+    final value = selectedSpot.correctRatio * 100;
     final cdr = selectedSpot.cdrScore;
 
     return Container(
@@ -194,14 +194,14 @@ class _MemoryChartWidgetState extends State<MemoryChartWidget> {
         show: true,
       ),
       minX: 0,
-      maxX: 10,
+      maxX: widget.memoryScoreDatas.length.toDouble() - 1,
       minY: 0,
       maxY: 6,
       lineBarsData: [
         LineChartBarData(
           spots: widget.memoryScoreDatas
               .map((e) => FlSpot(widget.memoryScoreDatas.indexOf(e).toDouble(),
-                  e.correctRatio / 100 * 6))
+                  e.correctRatio * 6))
               .toList(),
           isCurved: true,
           gradient: LinearGradient(
