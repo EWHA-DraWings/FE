@@ -8,10 +8,15 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class DiaryScreen extends StatefulWidget {
+  final String diaryId;
   final DateTime date;
   final String content; //content가 null일 시 일기 없다는 메시지 전달되도록 수정 필요
 
-  const DiaryScreen({super.key, required this.date, required this.content});
+  const DiaryScreen(
+      {super.key,
+      required this.date,
+      required this.content,
+      required this.diaryId});
 
   @override
   State<DiaryScreen> createState() => _DiaryScreenState();
@@ -78,7 +83,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
       setState(() {
         _isEditing = false;
       });
-      //await _saveContentToBackend(editedContent);
+      await _saveContentToBackend(editedContent);
     } else {
       setState(() {
         _isEditing = false;
@@ -86,46 +91,42 @@ class _DiaryScreenState extends State<DiaryScreen> {
     }
   }
 
-  // Future<void> _saveContentToBackend(String content) async {
-  //   // 여기서 백엔드로 데이터를 전송하는 코드를 구현하세요.
-  //   // 예시: 백엔드 API 요청을 보내는 코드 추가
-  //   print("저장된 내용: $content"); // 실제로는 백엔드에 요청을 보냄
-  //   // /api/diary/:diaryId(diaryId는 MongoDB ObjectId)
-  //   final loginDataProvider =
-  //       Provider.of<LoginDataProvider>(context, listen: false);
-  //   final token = loginDataProvider.loginData?.token;
+  Future<void> _saveContentToBackend(String content) async {
+    print("저장된 내용: $content");
+    final loginDataProvider =
+        Provider.of<LoginDataProvider>(context, listen: false);
+    final token = loginDataProvider.loginData?.token;
 
-  //   //리포트 가져오기(오늘+ 과거 3개)
-  //   final url = Uri.parse('http://${Global.ipAddr}:3000/api/diary/:diaryId');
+    final url =
+        Uri.parse('http://${Global.ipAddr}:3000/api/diary/${widget.diaryId}');
 
-  //   final response = await http.get(
-  //     url,
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer $token'
-  //     },
-  //   );
+    try {
+      final response = await http.put(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
+        body: jsonEncode({'content': content}),
+      );
 
-  //   if (response.statusCode == 200) {
-  //     // json 데이터를 List<Map<String, dynamic>>로 디코딩
-  //     final List<Map<String, dynamic>> data =
-  //         List<Map<String, dynamic>>.from(jsonDecode(response.body));
+      if (response.statusCode == 200) {
+        print("response의 body : ${response.body}");
+        final responseData = jsonDecode(response.body);
+        String updatedContent = responseData['updatedDiary']['content'];
 
-  //     // List<Map<String, dynamic>>를 List<ReportData>로 변환
-  //     final List<ReportData> reports =
-  //         data.map((json) => ReportData.fromJsonToday(json)).toList();
-  //     print(reports);
-  //     //생성.조회한 리포트 가져오기
-  //     return reports;
-  //   } else {
-  //     //500
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text('500: 리포트 조회에 실패했습니다.')),
-  //     );
-  //     return [];
-  //   }
-  
-  // }
+        setState(() {
+          _contentController.text = updatedContent;
+        });
+
+        print("업데이트된 일기 내용: $updatedContent");
+      } else {
+        print("에러 발생: ${response.statusCode}");
+      }
+    } catch (error) {
+      print("HTTP 요청 중 에러 발생: $error");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

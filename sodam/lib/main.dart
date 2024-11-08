@@ -5,6 +5,7 @@ import 'package:sodam/models/login_data.dart';
 import 'package:sodam/screens/chat/websocket_provider.dart';
 import 'package:sodam/screens/login_screen.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
+import 'package:sodam/screens/time_select_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

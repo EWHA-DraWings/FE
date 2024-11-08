@@ -71,20 +71,23 @@ class _DiaryCalendarScreenState extends State<DiaryCalendarScreen>
             },
           );
           String content = '일기 내용이 없습니다.';
+          String diaryId;
 
           if (response.statusCode == 200) {
             //JSON 응답 파싱
             final Map<String, dynamic> data = jsonDecode(response.body);
 
             content = data['content'];
+            diaryId = data['_id'].toString();//id를 문자열로 변환
 
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => DiaryScreen(
                   date: selectedDay,
-                  //전달받은 content로 일기 보여주기
+                  //전달받은 content로 일기 보여주기, id도 같이 넘김
                   content: content,
+                  diaryId: diaryId,
                 ),
               ),
             );
