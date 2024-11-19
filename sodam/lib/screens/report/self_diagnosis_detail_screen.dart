@@ -1,23 +1,17 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-import 'package:sodam/models/login_data.dart';
-import 'package:sodam/models/memory_score_data.dart';
+import 'package:sodam/models/self_diagnosis_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/widgets/title_widget.dart';
-import 'package:http/http.dart' as http; //http 가져오기
 
-class MemoryscoreDetailScreen extends StatelessWidget {
-  final List<MemoryScoreData> memoryScoreDatas;
+class SelfDiagnosisDetailScreen extends StatelessWidget {
+  final List<SelfDiagnosisData> selfDiagnosisDatas;
 
-  const MemoryscoreDetailScreen({super.key, required this.memoryScoreDatas});
+  const SelfDiagnosisDetailScreen(
+      {super.key, required this.selfDiagnosisDatas});
 
   @override
   Widget build(BuildContext context) {
-    //data 불러오기
-
     return Scaffold(
       backgroundColor: Pallete.mainWhite,
       appBar: AppBar(
@@ -28,7 +22,7 @@ class MemoryscoreDetailScreen extends StatelessWidget {
         children: [
           const TitleWidget(
             backgroundColor: Pallete.mainBlue,
-            text: '기억점수 살펴보기',
+            text: '자가진단 살펴보기',
             textColor: Colors.white,
           ),
           const SizedBox(
@@ -39,10 +33,10 @@ class MemoryscoreDetailScreen extends StatelessWidget {
           // }),
           Expanded(
             child: ListView.builder(
-              itemCount: memoryScoreDatas.length,
+              itemCount: selfDiagnosisDatas.length,
               itemBuilder: (context, index) {
-                final data = memoryScoreDatas[index];
-                return MemoryScoreCard(data: data);
+                final data = selfDiagnosisDatas[index];
+                return SelfDiagnosisScoreCard(data: data);
               },
             ),
           ),
@@ -52,14 +46,13 @@ class MemoryscoreDetailScreen extends StatelessWidget {
   }
 }
 
-class MemoryScoreCard extends StatelessWidget {
-  final MemoryScoreData data;
+class SelfDiagnosisScoreCard extends StatelessWidget {
+  final SelfDiagnosisData data;
 
-  const MemoryScoreCard({super.key, required this.data});
+  const SelfDiagnosisScoreCard({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
-    double correctPercentile = data.correctRatio * 100;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -91,46 +84,41 @@ class MemoryScoreCard extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
               child: Row(
                 children: [
+                  const Spacer(),
                   RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
                       children: [
-                        const TextSpan(
-                          text: "CDR  ",
+                        TextSpan(
+                          text: "${data.type}  ",
+                          style: const TextStyle(
+                            fontSize: 30,
+                            fontFamily: "IBMPlexSansKRBold",
+                            color: Colors.black,
+                          ),
+                        ),
+                        TextSpan(
+                          text: "${data.score}",
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 47,
+                            fontFamily: "IBMPlexSansKRBold",
+                            color:
+                                ((data.type == 'PRMQ' && data.score < 31.5) ||
+                                        (data.type == 'KDSQ' && data.score < 6))
+                                    ? Pallete.mainBlue
+                                    : const Color.fromARGB(255, 237, 86, 41),
+                          ),
+                        ),
+                        TextSpan(
+                          text: data.type == 'PRMQ' ? "/80" : "/30",
+                          style: const TextStyle(
+                            fontSize: 28,
                             fontFamily: "IBMPlexSansKRRegular",
                             color: Pallete.mainBlack,
                           ),
                         ),
-                        TextSpan(
-                          text: "${data.cdrScore}",
-                          style: const TextStyle(
-                            fontSize: 45,
-                            fontFamily: "IBMPlexSansKRBold",
-                            color: Pallete.mainBlue,
-                          ),
-                        ),
                       ],
                     ),
-                  ),
-                  const Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        '$correctPercentile%',
-                        style: const TextStyle(
-                          fontSize: 35,
-                          fontFamily: "IBMPlexSansKRRegular",
-                          color: Pallete.mainBlack,
-                        ),
-                      ),
-                      Text(
-                        '정답률 (${data.correctCount}문제/${data.questionCount}문제)',
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                    ],
                   ),
                   const SizedBox(width: 10),
                 ],
