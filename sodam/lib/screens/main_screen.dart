@@ -12,7 +12,8 @@ import 'package:http/http.dart' as http;
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/calendar/diary_calendar_screen.dart';
 import 'package:sodam/screens/chat/diary_chat_screen2.dart';
-import 'package:sodam/screens/chat/websocket_provider2.dart';
+import 'package:sodam/screens/chat/memory_chat/memory_chat_screen.dart';
+import 'package:sodam/screens/chat/websocket_provider.dart';
 import 'package:sodam/screens/report/report_main_screen.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
@@ -132,7 +133,8 @@ class _MainScreenState extends State<MainScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MainPageButton(
-                      destination: const DiaryChatScreen2(),
+                      //destination: const DiaryChatScreen2(),
+                      destination: const MemoryChatScreen(),
                       text: "대화하기",
                       backColor: Pallete.mainBlue,
                       iconPath: "lib/assets/images/chat.png",
