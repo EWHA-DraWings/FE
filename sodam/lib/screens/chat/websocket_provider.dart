@@ -7,7 +7,7 @@ import 'package:audioplayers/audioplayers.dart'; //오디오 재생 기능
 import 'package:path_provider/path_provider.dart'; //파일 시스템에서 디렉터리 경로를 찾기 위해 필요
 import 'dart:io'; // File 클래스 사용
 
-class WebSocketProvider2 with ChangeNotifier {
+class WebSocketProvider with ChangeNotifier {
   WebSocketChannel? _channel;
   String? lastReceivedMessage;
   bool isConnected = false; //웹소켓 연결 확인
@@ -34,7 +34,6 @@ class WebSocketProvider2 with ChangeNotifier {
           _playAudio(message); // Method to play audio
         } else if (message is String) {
           // Handle string message
-          print("message 받음 : $message");
           final Map<String, dynamic> jsonData = jsonDecode(message);
           //음성 데이터 크기 받아옴
           if (jsonData.containsKey('audiosize')) {
