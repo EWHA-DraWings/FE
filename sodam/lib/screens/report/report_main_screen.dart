@@ -41,9 +41,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
         Provider.of<LoginDataProvider>(context, listen: false);
     final jwtToken = loginDataProvider.loginData?.token;
     getTodaysReport(jwtToken);
-    isLoading = true;
     getMemoryScores(jwtToken);
-    isLoading = true;
     getSelfDiagnosisScores(jwtToken);
   }
 
@@ -69,7 +67,6 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
       final Map<String, dynamic> data = jsonDecode(response.body);
       setState(() {
         todaysReport = data;
-        isLoading = false;
       });
     } else if (response.statusCode == 400) {
       //해당 날짜 일기X
@@ -101,7 +98,6 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
       final Map<String, dynamic> data = jsonDecode(response.body);
       setState(() {
         memoryScores = MemoryScoreData.fromJsonList(data['scores']);
-        isLoading = false;
       });
       for (var data in memoryScores) {
         print(data);
@@ -155,6 +151,9 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('500: 자가진단 데이터 불러오기를 실패했습니다.')),
       );
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -190,10 +189,18 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
       (a, b) => b.date.compareTo(a.date),
     );
 
-    DateTime lastDiagnosisDate =
-        DateTime.parse(selfDiagnosisDatas[0].date); //마지막 자가진단 시점
-    DateTime todayDate = DateTime.now();
-    int daysPast = todayDate.difference(lastDiagnosisDate).inDays;
+    DateTime lastDiagnosisDate;
+    int daysPast = 0;
+
+    if (selfDiagnosisDatas.isNotEmpty) {
+      lastDiagnosisDate =
+          DateTime.parse(selfDiagnosisDatas[0].date); //마지막 자가진단 시점
+      DateTime todayDate = DateTime.now();
+      daysPast = todayDate.difference(lastDiagnosisDate).inDays;
+    } else {
+      lastDiagnosisDate = DateTime.now();
+      daysPast = 0; // 자가진단 데이터가 없을 경우, daysPast를 0으로 설정
+    }
 
     // 스크롤 포지션을 계산하고 해당 위치로 스크롤하는 함수
     void scrollToPosition(GlobalKey key) {
