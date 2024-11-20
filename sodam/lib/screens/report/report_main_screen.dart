@@ -8,6 +8,7 @@ import 'package:sodam/global.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/models/login_data.dart';
 import 'package:sodam/models/memory_score_data.dart';
+import 'package:sodam/models/report_data.dart';
 import 'package:sodam/models/self_diagnosis_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/widget/todays_report_widget.dart';
@@ -32,6 +33,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
   Map<String, dynamic> todaysReport = {}; //오늘 리포트
   List<MemoryScoreData> memoryScores = []; //기억점수
   List<SelfDiagnosisData> selfDiagnosisDatas = []; //자가진단
+  List<ReportData> pastReports = []; //과거 리포트
   bool isLoading = true; //로딩 상태
 
   @override
@@ -42,6 +44,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     final jwtToken = loginDataProvider.loginData?.token;
     getTodaysReport(jwtToken);
     getMemoryScores(jwtToken);
+    getPastReports(jwtToken);
     getSelfDiagnosisScores(jwtToken);
   }
 
@@ -120,6 +123,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     }
   }
 
+  //자가진단 기록 가져오기
   Future<void> getSelfDiagnosisScores(jwtToken) async {
     final url = Uri.parse('http://${Global.ipAddr}:3000/api/assessments/user');
     print(url);
@@ -154,6 +158,32 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
       setState(() {
         isLoading = false;
       });
+    }
+  }
+
+  //과거 리포트 가져오기
+  Future<void> getPastReports(jwtToken) async {
+    final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports');
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwtToken'
+      },
+    );
+
+    if (response.statusCode == 200) {
+      //JSON 응답 파싱
+      final List<dynamic> data = jsonDecode(response.body);
+      setState(() {
+        pastReports = ReportData.fromJsonList(data);
+        print('past report:$pastReports');
+      });
+    } else {
+      //response.statusCode == 500
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('500: 리포트 조회 중 오류가 발생했습니다. 다시 시도해주세요.')),
+      );
     }
   }
 
