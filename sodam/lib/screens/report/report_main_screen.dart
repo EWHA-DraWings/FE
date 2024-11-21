@@ -10,6 +10,8 @@ import 'package:sodam/models/memory_score_data.dart';
 import 'package:sodam/models/report_data.dart';
 import 'package:sodam/models/self_diagnosis_data.dart';
 import 'package:sodam/pallete.dart';
+import 'package:sodam/screens/report/widget/past_report_tile.dart';
+import 'package:sodam/screens/report/widget/past_reports_list.dart';
 import 'package:sodam/screens/report/widget/todays_report_widget.dart';
 import 'package:sodam/screens/report/past_report.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
@@ -192,10 +194,6 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     double screenHeight = MediaQuery.of(context).size.height;
     double greenContainerHeight = 160; // 그린 컨테이너의 높이
     double greenContainerFromTop = 170; //그린컨테이너의 top으로부터 거리
-
-    // 각 ExpansionTile에 사용할 GlobalKey를 생성합니다.
-    final GlobalKey expansionTileKey1 = GlobalKey();
-    final GlobalKey expansionTileKey2 = GlobalKey();
 
     // emotions 객체 추출
     var emotionsMap = todaysReport['emotions'];
@@ -406,139 +404,66 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                   child: Container(),
                 ),
                 Positioned(
-                  top: greenContainerFromTop + greenContainerHeight,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: SingleChildScrollView(
-                    controller: _scrollController, // ScrollController 추가
-                    child: SizedBox(
-                      //height:screenHeight - greenContainerFromTop + greenContainerHeight,// scroll을 감싸는 sized box에 높이를 줘가지고 overflow 발생한 것.
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 13, horizontal: 22),
-                            child: Text(
-                              "오늘의 리포트",
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
+                    top: greenContainerFromTop + greenContainerHeight,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: CustomScrollView(
+                      controller: _scrollController,
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 13, horizontal: 22),
+                                child: Text(
+                                  "오늘의 리포트",
+                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              TodaysReportWidget(
+                                condition: todaysReport['conditions'] ??
+                                    '컨디션 기록이 없어요!',
+                                emotions: emotions,
+                                memoryScoreDatas: memoryScores,
+                                selfDiagnosisDatas: selfDiagnosisDatas,
+                              ),
+                            ],
                           ),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: TodaysReportWidget(
-                              condition:
-                                  todaysReport['conditions'] ?? '컨디션 기록이 없어요!',
-                              emotions: emotions,
-                              memoryScoreDatas: memoryScores,
-                              selfDiagnosisDatas: selfDiagnosisDatas,
-                            ),
-                          ),
-                          //여기다가 리포트 추가하면 됨
-                          const Padding(
+                        ),
+                        const SliverToBoxAdapter(
+                          child: Padding(
                             padding: EdgeInsets.symmetric(
-                                vertical: 13, horizontal: 22),
+                                vertical: 10, horizontal: 22),
                             child: Text(
                               "과거 리포트 살펴보기",
                               style: TextStyle(fontWeight: FontWeight.w500),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 22),
-                            child: Column(
-                              children: [
-                                ExpansionTile(
-                                  shape: RoundedRectangleBorder(
-                                    //펼쳤을 때
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  collapsedShape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  title: const Text('2024/09/08'),
-                                  collapsedBackgroundColor:
-                                      Pallete.sodamReportPurple,
-                                  backgroundColor: Pallete.sodamReportPurple,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      height: 300,
-                                      child: SingleChildScrollView(
-                                        child: PastReport(
-                                          condition:
-                                              '무릎이 조금 아프시지만, 잠은 잘 \n주무시는 편이에요. 최근 보조제를\n드시고 계신다고 해요.',
-                                          memoryScore: 77.2,
-                                          emotions: [
-                                            EmotionData(
-                                                emotion: '당황',
-                                                percentage: 80.0),
-                                            EmotionData(
-                                                emotion: '불안',
-                                                percentage: 13.0),
-                                            EmotionData(
-                                                emotion: '행복', percentage: 7.0),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                  onExpansionChanged: (value) {
-                                    if (value) {
-                                      // ExpansionTile이 열릴 때 스크롤
-                                      scrollToPosition(expansionTileKey1);
-                                    }
-                                  },
+                        ),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 5),
+                                child: PastReportTile(
+                                  date: pastReports[index].date,
+                                  condition: pastReports[index].condition,
+                                  memoryScore: pastReports[index].correctRatio,
+                                  emotions: pastReports[index].emotions,
+                                  expansionTileKey: GlobalKey(),
+                                  scrollToPosition: scrollToPosition,
                                 ),
-                                const SizedBox(height: 10),
-                                ExpansionTile(
-                                  shape: RoundedRectangleBorder(
-                                    //펼쳤을 때
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  collapsedShape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  title: const Text('2024/09/07'),
-                                  collapsedBackgroundColor:
-                                      Pallete.sodamReportPurple,
-                                  backgroundColor: Pallete.sodamReportPurple,
-                                  children: <Widget>[
-                                    SizedBox(
-                                        height: 300,
-                                        child: SingleChildScrollView(
-                                          child: PastReport(
-                                            condition:
-                                                '무릎이 조금 아프시지만, 잠은 잘 \n주무시는 편이에요. 최근 보조제를\n드시고 계신다고 해요.',
-                                            memoryScore: 80.6,
-                                            emotions: [
-                                              EmotionData(
-                                                  emotion: '슬픔',
-                                                  percentage: 50.0),
-                                              EmotionData(
-                                                  emotion: '행복',
-                                                  percentage: 40.0),
-                                              EmotionData(
-                                                  emotion: '분노',
-                                                  percentage: 10.0),
-                                            ],
-                                          ),
-                                        )),
-                                  ],
-                                  onExpansionChanged: (value) {
-                                    if (value) {
-                                      // ExpansionTile이 열릴 때 스크롤
-                                      scrollToPosition(expansionTileKey2);
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
+                              );
+                            },
+                            childCount: pastReports.length,
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                        ),
+                      ],
+                    )),
               ],
             ),
     );
