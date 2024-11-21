@@ -73,351 +73,360 @@ class TodaysReportWidget extends StatelessWidget {
     String mainEmo = mainEmoToString();
     String notMainEmo = getNotMainEmo();
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          const SizedBox(width: 5),
-          Container(
-            width: width,
-            height: height,
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              color: boxColor,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3), // 그림자의 색상과 투명도
-                  spreadRadius: 2, // 그림자의 확산 정도
-                  blurRadius: 6, // 그림자의 블러 정도
-                  offset: const Offset(2, 2), // 그림자의 위치 (오프셋)
+    return SingleChildScrollView(
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              const SizedBox(width: 5),
+              Container(
+                width: width,
+                height: height,
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: boxColor,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3), // 그림자의 색상과 투명도
+                      spreadRadius: 2, // 그림자의 확산 정도
+                      blurRadius: 6, // 그림자의 블러 정도
+                      offset: const Offset(2, 2), // 그림자의 위치 (오프셋)
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    today,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontFamily: "IBMPlexSansKRRegular",
-                      color: dateColor,
-                    ),
-                  ),
-                  const SizedBox(height: 3),
-                  const Text(
-                    "감정 분석 결과",
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: "IBMPlexSansKRBold",
-                        color: titleColor),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    mainEmo,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontFamily: "IBMPlexSansKRBold",
-                      color: textColor,
-                      height: 1.5,
-                    ),
-                  ),
-                  Text(
-                    "이어서 $notMainEmo이 차지했어요.",
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontFamily: "IBMPlexSansKRRegular",
-                      color: textColor,
-                      height: 1.5,
-                    ),
-                  ),
-                  DoughnutChartWidget(
-                    emotions: emotions,
-                    doughnutSize: 37,
-                    doughnutWidth: 22,
-                    offsetX: 60,
-                    offsetY: 65,
-                    colors: colors,
-                    boxWidth: 135,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            width: width,
-            height: height,
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              color: boxColor,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3), // 그림자의 색상과 투명도
-                  spreadRadius: 2, // 그림자의 확산 정도
-                  blurRadius: 6, // 그림자의 블러 정도
-                  offset: const Offset(2, 2), // 그림자의 위치 (오프셋)
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    today,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontFamily: "IBMPlexSansKRRegular",
-                      color: dateColor,
-                    ),
-                  ),
-                  const SizedBox(height: 3),
-                  const Text(
-                    "컨디션",
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: "IBMPlexSansKRBold",
-                        color: titleColor),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    condition,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontFamily: "IBMPlexSansKRRegular",
-                      color: textColor,
-                      height: 1.5,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            width: width,
-            height: height,
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              color: boxColor,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3), // 그림자의 색상과 투명도
-                  spreadRadius: 2, // 그림자의 확산 정도
-                  blurRadius: 6, // 그림자의 블러 정도
-                  offset: const Offset(2, 2), // 그림자의 위치 (오프셋)
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    today,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontFamily: "IBMPlexSansKRRegular",
-                      color: dateColor,
-                    ),
-                  ),
-                  const SizedBox(height: 3),
-                  const Text(
-                    "기억점수",
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: "IBMPlexSansKRBold",
-                        color: titleColor),
-                  ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: MemoryChartWidget(
-                      memoryScoreDatas: memoryScoreDatas,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Center(
-                    child: SizedBox(
-                      width: 200,
-                      //height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MemoryscoreDetailScreen(
-                                memoryScoreDatas: memoryScoreDatas,
-                              ),
-                            ),
-                          );
-                        }, //다음 화면으로 이동
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Pallete.mainWhite,
-                          backgroundColor: Pallete.mainBlue, // 버튼 배경 색상
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(20), // 버튼 모서리 둥글기
-                          ),
-                        ),
-                        child: const Text(
-                          '자세히 살펴보기',
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontFamily: 'IBMPlexSansKRRegular',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            width: width,
-            height: height,
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              color: boxColor,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3), // 그림자의 색상과 투명도
-                  spreadRadius: 2, // 그림자의 확산 정도
-                  blurRadius: 6, // 그림자의 블러 정도
-                  offset: const Offset(2, 2), // 그림자의 위치 (오프셋)
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    today,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontFamily: "IBMPlexSansKRRegular",
-                      color: dateColor,
-                    ),
-                  ),
-                  const SizedBox(height: 3),
-                  const Text(
-                    "최근 자가진단 결과",
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: "IBMPlexSansKRBold",
-                        color: titleColor),
-                  ),
-                  const SizedBox(height: 10),
-                  Column(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        selfDiagnosisDatas != null
-                            ? selfDiagnosisDatas[0].date
-                            : today,
+                        today,
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 13,
                           fontFamily: "IBMPlexSansKRRegular",
+                          color: dateColor,
+                        ),
+                      ),
+                      const SizedBox(height: 3),
+                      const Text(
+                        "감정 분석 결과",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "IBMPlexSansKRBold",
+                            color: titleColor),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        mainEmo,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontFamily: "IBMPlexSansKRBold",
+                          color: textColor,
                           height: 1.5,
                         ),
                       ),
                       Text(
-                        selfDiagnosisDatas != null
-                            ? '✅${selfDiagnosisDatas[0].type}'
-                            : '기록없음',
+                        "이어서 $notMainEmo이 차지했어요.",
                         style: const TextStyle(
-                          fontSize: 25,
+                          fontSize: 13,
                           fontFamily: "IBMPlexSansKRRegular",
+                          color: textColor,
                           height: 1.5,
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      DoughnutChartWidget(
+                        emotions: emotions,
+                        doughnutSize: 37,
+                        doughnutWidth: 22,
+                        offsetX: 60,
+                        offsetY: 65,
+                        colors: colors,
+                        boxWidth: 135,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: width,
+                height: height,
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: boxColor,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3), // 그림자의 색상과 투명도
+                      spreadRadius: 2, // 그림자의 확산 정도
+                      blurRadius: 6, // 그림자의 블러 정도
+                      offset: const Offset(2, 2), // 그림자의 위치 (오프셋)
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        today,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontFamily: "IBMPlexSansKRRegular",
+                          color: dateColor,
+                        ),
+                      ),
+                      const SizedBox(height: 3),
+                      const Text(
+                        "컨디션",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "IBMPlexSansKRBold",
+                            color: titleColor),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        condition,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontFamily: "IBMPlexSansKRRegular",
+                          color: textColor,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: width,
+                height: height,
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: boxColor,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3), // 그림자의 색상과 투명도
+                      spreadRadius: 2, // 그림자의 확산 정도
+                      blurRadius: 6, // 그림자의 블러 정도
+                      offset: const Offset(2, 2), // 그림자의 위치 (오프셋)
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        today,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontFamily: "IBMPlexSansKRRegular",
+                          color: dateColor,
+                        ),
+                      ),
+                      const SizedBox(height: 3),
+                      const Text(
+                        "기억점수",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "IBMPlexSansKRBold",
+                            color: titleColor),
+                      ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: MemoryChartWidget(
+                          memoryScoreDatas: memoryScoreDatas,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                        child: SizedBox(
+                          width: 200,
+                          //height: 50,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MemoryscoreDetailScreen(
+                                    memoryScoreDatas: memoryScoreDatas,
+                                  ),
+                                ),
+                              );
+                            }, //다음 화면으로 이동
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Pallete.mainWhite,
+                              backgroundColor: Pallete.mainBlue, // 버튼 배경 색상
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 15),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(20), // 버튼 모서리 둥글기
+                              ),
+                            ),
+                            child: const Text(
+                              '자세히 살펴보기',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontFamily: 'IBMPlexSansKRRegular',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: width,
+                height: height,
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: boxColor,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3), // 그림자의 색상과 투명도
+                      spreadRadius: 2, // 그림자의 확산 정도
+                      blurRadius: 6, // 그림자의 블러 정도
+                      offset: const Offset(2, 2), // 그림자의 위치 (오프셋)
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        today,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontFamily: "IBMPlexSansKRRegular",
+                          color: dateColor,
+                        ),
+                      ),
+                      const SizedBox(height: 3),
+                      const Text(
+                        "최근 자가진단 결과",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "IBMPlexSansKRBold",
+                            color: titleColor),
+                      ),
+                      const SizedBox(height: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             selfDiagnosisDatas != null
-                                ? selfDiagnosisDatas[0].score.toString()
-                                : '기록없음',
+                                ? selfDiagnosisDatas[0].date
+                                : today,
                             style: const TextStyle(
-                              fontSize: 45,
-                              fontFamily: "IBMPlexSansKRBold",
+                              fontSize: 18,
+                              fontFamily: "IBMPlexSansKRRegular",
                               height: 1.5,
                             ),
                           ),
                           Text(
                             selfDiagnosisDatas != null
-                                ? (selfDiagnosisDatas[0].type == 'PRMQ'
-                                    ? "/80"
-                                    : "/30")
+                                ? '✅${selfDiagnosisDatas[0].type}'
                                 : '기록없음',
                             style: const TextStyle(
                               fontSize: 25,
                               fontFamily: "IBMPlexSansKRRegular",
-                              color: Pallete.mainBlack,
+                              height: 1.5,
                             ),
                           ),
-                          const SizedBox(
-                            width: 20,
-                          )
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                selfDiagnosisDatas != null
+                                    ? selfDiagnosisDatas[0].score.toString()
+                                    : '기록없음',
+                                style: const TextStyle(
+                                  fontSize: 45,
+                                  fontFamily: "IBMPlexSansKRBold",
+                                  height: 1.5,
+                                ),
+                              ),
+                              Text(
+                                selfDiagnosisDatas != null
+                                    ? (selfDiagnosisDatas[0].type == 'PRMQ'
+                                        ? "/80"
+                                        : "/30")
+                                    : '기록없음',
+                                style: const TextStyle(
+                                  fontSize: 25,
+                                  fontFamily: "IBMPlexSansKRRegular",
+                                  color: Pallete.mainBlack,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              )
+                            ],
+                          ),
                         ],
+                      ),
+                      Center(
+                        child: SizedBox(
+                          width: 200,
+                          //height: 50,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      SelfDiagnosisDetailScreen(
+                                    selfDiagnosisDatas: selfDiagnosisDatas,
+                                  ),
+                                ),
+                              );
+                            }, //다음 화면으로 이동
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Pallete.mainWhite,
+                              backgroundColor: Pallete.mainBlue, // 버튼 배경 색상
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 15),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(20), // 버튼 모서리 둥글기
+                              ),
+                            ),
+                            child: const Text(
+                              '자세히 살펴보기',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontFamily: 'IBMPlexSansKRRegular',
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  Center(
-                    child: SizedBox(
-                      width: 200,
-                      //height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SelfDiagnosisDetailScreen(
-                                selfDiagnosisDatas: selfDiagnosisDatas,
-                              ),
-                            ),
-                          );
-                        }, //다음 화면으로 이동
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Pallete.mainWhite,
-                          backgroundColor: Pallete.mainBlue, // 버튼 배경 색상
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(20), // 버튼 모서리 둥글기
-                          ),
-                        ),
-                        child: const Text(
-                          '자세히 살펴보기',
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontFamily: 'IBMPlexSansKRRegular',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+              const SizedBox(width: 5),
+            ],
           ),
-          const SizedBox(width: 5),
-        ],
+        ),
       ),
     );
   }
