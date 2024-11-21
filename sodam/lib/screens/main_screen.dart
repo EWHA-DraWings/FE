@@ -9,6 +9,8 @@ import 'package:sodam/models/login_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/calendar/diary_calendar_screen.dart';
 import 'package:sodam/screens/chat/diary_chat_screen2.dart';
+import 'package:sodam/screens/chat/memory_chat/memory_chat_screen.dart';
+import 'package:sodam/screens/chat/websocket_provider.dart';
 import 'package:sodam/screens/report/report_main_screen.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
@@ -89,6 +91,7 @@ class _MainScreenState extends State<MainScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MainPageButton(
+                      //destination: const DiaryChatScreen2(),
                       destination: const DiaryChatScreen2(),
                       text: "대화하기",
                       backColor: Pallete.mainBlue,
@@ -99,7 +102,7 @@ class _MainScreenState extends State<MainScreen> {
                     MainPageButton(
                       destination: const DiaryCalendarScreen(),
                       text: "일기장",
-                      backColor: Pallete.sodamButtonDarkGreen,
+                      backColor: Pallete.sodamButtonGreen,
                       iconPath: "lib/assets/images/diary.png",
                       isGuardian: widget.isGuardian,
                     ),
@@ -120,12 +123,10 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     const SizedBox(width: 20),
                     MainPageButton(
-                      destination: widget.isGuardian
-                          ? const GuardianDiagnosisScreen()
-                          : const UserDiagnosisScreen(),
-                      text: "자가진단",
-                      backColor: Pallete.sodamButtonSkyBlue,
-                      iconPath: "lib/assets/images/self_diagnosis.png",
+                      destination: const MemoryChatScreen(),
+                      text: "기억 테스트",
+                      backColor: Pallete.sodamButtonPink,
+                      iconPath: "lib/assets/images/memory.png",
                       isGuardian: widget.isGuardian,
                     ),
                   ],
