@@ -326,7 +326,9 @@ class TodaysReportWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        selfDiagnosisDatas[0].date,
+                        selfDiagnosisDatas != null
+                            ? selfDiagnosisDatas[0].date
+                            : today,
                         style: const TextStyle(
                           fontSize: 18,
                           fontFamily: "IBMPlexSansKRRegular",
@@ -334,7 +336,9 @@ class TodaysReportWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '✅${selfDiagnosisDatas[0].type}',
+                        selfDiagnosisDatas != null
+                            ? '✅${selfDiagnosisDatas[0].type}'
+                            : '기록없음',
                         style: const TextStyle(
                           fontSize: 25,
                           fontFamily: "IBMPlexSansKRRegular",
@@ -345,7 +349,9 @@ class TodaysReportWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            selfDiagnosisDatas[0].score.toString(),
+                            selfDiagnosisDatas != null
+                                ? selfDiagnosisDatas[0].score.toString()
+                                : '기록없음',
                             style: const TextStyle(
                               fontSize: 45,
                               fontFamily: "IBMPlexSansKRBold",
@@ -353,9 +359,11 @@ class TodaysReportWidget extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            selfDiagnosisDatas[0].type == 'PRMQ'
-                                ? "/80"
-                                : "/30",
+                            selfDiagnosisDatas != null
+                                ? (selfDiagnosisDatas[0].type == 'PRMQ'
+                                    ? "/80"
+                                    : "/30")
+                                : '기록없음',
                             style: const TextStyle(
                               fontSize: 25,
                               fontFamily: "IBMPlexSansKRRegular",
