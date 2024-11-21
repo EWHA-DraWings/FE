@@ -26,6 +26,19 @@ class DoughnutChartWidget extends StatefulWidget {
   State<DoughnutChartWidget> createState() => _DoughnutChartWidgetState();
 }
 
+//100보다 부족한 부분 emotion에 추가해서 도넛 꽉 채우기
+void fullEmotions(List<EmotionData> emotions) {
+  double total = 0;
+  for (int i = 0; i < emotions.length; i++) {
+    total += emotions[i].percentage;
+  }
+  if (total < 100) {
+    emotions.add(
+      EmotionData(emotion: '기타', percentage: 100.0 - total),
+    );
+  }
+}
+
 class _DoughnutChartWidgetState extends State<DoughnutChartWidget>
     with TickerProviderStateMixin {
   late AnimationController animationController;
