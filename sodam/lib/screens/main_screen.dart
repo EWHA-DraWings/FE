@@ -92,7 +92,7 @@ class _MainScreenState extends State<MainScreen> {
                   children: [
                     MainPageButton(
                       //destination: const DiaryChatScreen2(),
-                      destination: const MemoryChatScreen(),
+                      destination: const DiaryChatScreen2(),
                       text: "대화하기",
                       backColor: Pallete.mainBlue,
                       iconPath: "lib/assets/images/chat.png",
@@ -102,7 +102,7 @@ class _MainScreenState extends State<MainScreen> {
                     MainPageButton(
                       destination: const DiaryCalendarScreen(),
                       text: "일기장",
-                      backColor: Pallete.sodamButtonDarkGreen,
+                      backColor: Pallete.sodamButtonGreen,
                       iconPath: "lib/assets/images/diary.png",
                       isGuardian: widget.isGuardian,
                     ),
@@ -123,12 +123,10 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     const SizedBox(width: 20),
                     MainPageButton(
-                      destination: widget.isGuardian
-                          ? const GuardianDiagnosisScreen()
-                          : const UserDiagnosisScreen(),
-                      text: "자가진단",
-                      backColor: Pallete.sodamButtonSkyBlue,
-                      iconPath: "lib/assets/images/self_diagnosis.png",
+                      destination: const MemoryChatScreen(),
+                      text: "기억 테스트",
+                      backColor: Pallete.sodamButtonPink,
+                      iconPath: "lib/assets/images/memory.png",
                       isGuardian: widget.isGuardian,
                     ),
                   ],

@@ -31,9 +31,9 @@ class Pallete {
   static const sodamReportPurple = Color(0xFFE3CDF6);
   static const sodamReportGreen = Color(0xFFDFFBDA);
   //button
-  static const sodamButtonPurple = Color(0xFF8C6DB4);
-  static const sodamButtonSkyBlue = Color(0xFF97C5F0);
-  static const sodamButtonDarkGreen = Color(0xFF58A1A4);
+  static const sodamButtonPurple = Color(0xFFBFA6E6);
+  static const sodamButtonGreen = Color(0xFF6A9FA3);
+  static const sodamButtonPink = Color(0xFFD183B0);
   //additional colors
   static const signinInputGray = Color(0xFFD9D9D9);
 }
