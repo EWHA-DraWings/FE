@@ -349,7 +349,7 @@ class SelfDiagnosisResultWidget extends StatelessWidget {
                                   TextSpan(
                                     text: '소담',
                                     style: TextStyle(
-                                      color: Pallete.sodamButtonDarkGreen,
+                                      color: Pallete.sodamButtonGreen,
                                       fontSize: 25,
                                       fontFamily: 'IBMPlexSansKRBold',
                                       height: 0,
@@ -389,7 +389,7 @@ class SelfDiagnosisResultWidget extends StatelessWidget {
                                   TextSpan(
                                     text: '병원에 방문해보세요!',
                                     style: TextStyle(
-                                      color: Pallete.sodamButtonDarkGreen,
+                                      color: Pallete.sodamButtonGreen,
                                       fontSize: 25,
                                       fontFamily: 'IBMPlexSansKRBold',
                                       height: 0,

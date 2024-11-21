@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +54,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     ///api/reports/:date (2024-09-30 형식)
     //오늘 날짜 형태 바꾸기
     DateTime now = DateTime.now();
-    String today = '2024-11-09'; //임시 날짜(테스트용)
+    String today = '2024-11-07'; //임시 날짜(테스트용)
     //String today = DateFormat('yyyy-MM-dd').format(now);
 
     final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports/$today');
