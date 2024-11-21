@@ -9,15 +9,14 @@ class ReportData {
   ReportData({
     required this.condition,
     required this.date,
-    required this.correctRatio,
     required this.emotions,
+    required this.correctRatio,
   });
 
   //과거 리포트 가져올 때
-  factory ReportData.fromJsonPast(Map<String, dynamic> json) {
-    String date = json['date'];
-    String condition = json['conditions'];
+  factory ReportData.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> emotionMap = json['emotions'];
+    double correctRatio = json['correctRatio'] ?? 0;
 
     // EmotionData 리스트 생성
     List<EmotionData> emotionsList = emotionMap.entries
@@ -28,28 +27,14 @@ class ReportData {
         .toList();
 
     return ReportData(
-      date: date,
-      condition: condition,
+      date: json['date'],
+      condition: json['conditions'],
       emotions: emotionsList,
-      correctRatio: json['cdrScore'],
+      correctRatio: correctRatio,
     );
   }
 
-  factory ReportData.fromJson(Map<String, dynamic> json) {
-    // Convert emotions map to List<EmotionData>
-    Map<String, dynamic> emotionsMap = json['emotions'] ?? {};
-    List<EmotionData> emotionsList = emotionsMap.entries.map((entry) {
-      return EmotionData(
-        emotion: entry.key,
-        percentage: entry.value.toDouble(),
-      );
-    }).toList();
-
-    return ReportData(
-      date: DateTime.parse(json['date']).toString(),
-      correctRatio: json['cdrScore'] ?? -1, //기억점수 테스트(-1이면 다른 메시지로 대체)
-      emotions: emotionsList,
-      condition: json['conditions'] ?? 'No conditions available',
-    );
+  static List<ReportData> fromJsonList(List<dynamic> jsonList) {
+    return jsonList.map((json) => ReportData.fromJson(json)).toList();
   }
 }
