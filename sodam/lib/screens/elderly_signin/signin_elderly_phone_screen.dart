@@ -6,7 +6,8 @@ import 'package:sodam/global.dart';
 import 'package:sodam/models/elderly_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/elderly_signin/widgets/signin_elderly_input_container.dart';
-import 'package:http/http.dart' as http; //http 가져오기
+import 'package:http/http.dart' as http;
+import 'package:sodam/screens/time_select_screen.dart'; //http 가져오기
 
 class SigninElderlyPhoneScreen extends StatefulWidget {
   final ElderlyData data;
@@ -70,13 +71,13 @@ class _SigninElderlyPhoneScreenstate extends State<SigninElderlyPhoneScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('회원가입 성공!')),
         );
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) =>
-        //         const TimeSelectScreen(), // 회원가입 후 시간 설정 화면으로 이동
-        //   ),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                const TimeSelectScreen(), // 회원가입 후 시간 설정 화면으로 이동
+          ),
+        );
       } else if (response.statusCode == 400) {
         //보호자 정보 연동 실패
         ScaffoldMessenger.of(context).showSnackBar(
@@ -89,12 +90,6 @@ class _SigninElderlyPhoneScreenstate extends State<SigninElderlyPhoneScreen> {
           const SnackBar(content: Text('회원가입에 실패했습니다. 다시 시도해주세요.')),
         );
       }
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => const LoginScreen(), // 회원가입 후 로그인 화면으로 이동
-      //   ),
-      // );
     }
   }
 

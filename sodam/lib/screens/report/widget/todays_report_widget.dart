@@ -188,14 +188,18 @@ class TodaysReportWidget extends StatelessWidget {
                           fontFamily: "IBMPlexSansKRBold",
                           color: titleColor),
                     ),
-                    const SizedBox(height: 20),
-                    Text(
-                      condition,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontFamily: "IBMPlexSansKRRegular",
-                        color: textColor,
-                        height: 1.5,
+                    const SizedBox(height: 15),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Text(
+                          condition,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontFamily: "IBMPlexSansKRRegular",
+                            color: textColor,
+                            height: 1.5,
+                          ),
+                        ),
                       ),
                     ),
                   ],
