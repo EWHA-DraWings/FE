@@ -31,7 +31,10 @@ class PastReportTile extends StatelessWidget {
       collapsedShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      title: Text(date),
+      title: Text(
+        date.substring(0, 10),
+        style: const TextStyle(fontFamily: 'IBMPlexSansKRRegular'),
+      ),
       collapsedBackgroundColor: Pallete.sodamReportPurple,
       backgroundColor: Pallete.sodamReportPurple,
       children: <Widget>[

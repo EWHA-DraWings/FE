@@ -111,42 +111,52 @@ class PastReport extends StatelessWidget {
                     const SizedBox(height: 70),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            const TextSpan(
-                              text: '이어서 \n',
-                              style: TextStyle(
-                                color: Color(0xFF434857),
-                                fontSize: 20,
-                                fontFamily: 'IBMPlexSansKRRegular',
-                                fontWeight: FontWeight.w400,
-                                height: 0,
+                      child: emotions.length >= 2
+                          ? Text.rich(
+                              TextSpan(
+                                children: [
+                                  const TextSpan(
+                                    text: '이어서 \n',
+                                    style: TextStyle(
+                                      color: Color(0xFF434857),
+                                      fontSize: 20,
+                                      fontFamily: 'IBMPlexSansKRRegular',
+                                      fontWeight: FontWeight.w400,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: notMainEmo,
+                                    style: const TextStyle(
+                                      color: Color(0xFF434857),
+                                      fontSize: 20,
+                                      fontFamily: 'IBMPlexSansKRRegular',
+                                      fontWeight: FontWeight.w600,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  const TextSpan(
+                                    text: '이 차지했어요.',
+                                    style: TextStyle(
+                                      color: Color(0xFF434857),
+                                      fontSize: 20,
+                                      fontFamily: 'IBMPlexSansKRRegular',
+                                      fontWeight: FontWeight.w400,
+                                      height: 0,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            TextSpan(
-                              text: notMainEmo,
+                            )
+                          : Text(
+                              '$mainEmo \n',
                               style: const TextStyle(
                                 color: Color(0xFF434857),
                                 fontSize: 20,
                                 fontFamily: 'IBMPlexSansKRRegular',
-                                fontWeight: FontWeight.w600,
-                                height: 0,
-                              ),
-                            ),
-                            const TextSpan(
-                              text: '이 차지했어요.',
-                              style: TextStyle(
-                                color: Color(0xFF434857),
-                                fontSize: 20,
-                                fontFamily: 'IBMPlexSansKRRegular',
                                 fontWeight: FontWeight.w400,
-                                height: 0,
                               ),
                             ),
-                          ],
-                        ),
-                      ),
                     )
                   ],
                 ),
