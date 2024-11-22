@@ -1,19 +1,12 @@
-import 'dart:async';
-import 'dart:convert';
 // 웹소켓을 위해 추가
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sodam/global.dart';
-import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/models/login_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/calendar/diary_calendar_screen.dart';
 import 'package:sodam/screens/chat/diary_chat_screen2.dart';
 import 'package:sodam/screens/chat/memory_chat/memory_chat_screen.dart';
-import 'package:sodam/screens/chat/websocket_provider.dart';
 import 'package:sodam/screens/report/report_main_screen.dart';
-import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
-import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
 import 'package:sodam/widgets/logout_button_widget.dart';
 import 'package:sodam/widgets/main_page_button.dart';
 // 웹소켓 채널 추가
