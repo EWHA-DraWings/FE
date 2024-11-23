@@ -18,7 +18,8 @@ class MemoryScoreData {
     return MemoryScoreData(
       date: json['date'].substring(0, 10),
       cdrScore: json['cdrScore'].toDouble(),
-      correctRatio: json['correctRatio'].toDouble(),
+      correctRatio: double.parse(
+          (json['correctRatio'].toDouble()).toStringAsPrecision(3)),
       correctCount: json['correctCount'],
       questionCount: json['questionCount'],
     );
