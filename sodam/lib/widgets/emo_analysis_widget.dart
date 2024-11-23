@@ -1,8 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sodam/models/emotion_data.dart';
-import 'package:sodam/pallete.dart';
 
 class EmoAnalysisWidget extends StatelessWidget {
   final String user;

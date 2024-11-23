@@ -1,27 +1,24 @@
-import 'package:day_night_time_picker/lib/state/state_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:sodam/models/emotion_data.dart';
-import 'package:sodam/screens/chat/diary_chat_screen.dart';
-import 'package:sodam/screens/guardian_signin/signin_start_screen.dart';
-import 'package:sodam/screens/main_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:sodam/models/login_data.dart';
+import 'package:sodam/screens/chat/websocket_provider.dart';
+import 'package:sodam/screens/login_screen.dart';
+import 'package:sodam/screens/report/memoryscore_detail_screen.dart';
 import 'package:sodam/screens/report/report_detail_screen.dart';
-import 'package:sodam/screens/report/past_report.dart';
-import 'package:sodam/screens/report/report_main_screen.dart';
+import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 import 'package:sodam/screens/time_select_screen.dart';
-import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await initialization(null);
-
   await initializeDateFormatting();
+
   runApp(const MainApp());
 }
 
 Future initialization(BuildContext? context) async {
-  //splash 화면 3초간
+  // Splash screen for 3 seconds
   await Future.delayed(const Duration(seconds: 3));
 }
 
@@ -30,21 +27,19 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: //MainScreen(isGuardian: false),
-          //MembershipNameScreen(data: GuardianData(role:"guardian"),),
-          //UserDiagnosisScreen(),
-          //ReportMainScreen(),
-          //SigninStartScreen(),
-          //ReportDetailScreen(),
-          //DiaryChatScreen(),
-          //PastReport(),
-          TimeSelectScreen(),
-
-      //SigninStartScreen(),
-      //ReportDetailScreen(),
-      //DiaryChatScreen(),
-      //PastReport(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LoginDataProvider()),
+        ChangeNotifierProvider(
+            create: (_) =>
+                WebSocketProvider()), // Provide the LoginDataProvider
+      ],
+      child: MaterialApp(
+        builder: (context, child) {
+          return child!;
+        },
+        home: const LoginScreen(), // Your initial screen
+      ),
     );
   }
 }
