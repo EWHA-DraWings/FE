@@ -8,6 +8,7 @@ class MemoryScoreChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double score = percentile! * 100;
     return percentile != null
         ? SizedBox(
             width: MediaQuery.of(context).size.width * 0.2,
@@ -23,13 +24,13 @@ class MemoryScoreChart extends StatelessWidget {
                     sections: [
                       PieChartSectionData(
                         radius: 30,
-                        value: percentile,
+                        value: score,
                         showTitle: false,
                         color: Colors.cyan,
                       ),
                       PieChartSectionData(
                         radius: 20,
-                        value: 100 - percentile!,
+                        value: 100 - score,
                         showTitle: false,
                         color: Pallete.mainGray,
                       ),
@@ -41,7 +42,7 @@ class MemoryScoreChart extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: '$percentile',
+                        text: percentile != 0 ? '$score' : '기록 없음',
                         style: const TextStyle(
                           color: Colors.cyan,
                           fontSize: 30,
