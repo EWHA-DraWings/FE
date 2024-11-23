@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/pallete.dart';
-import 'package:sodam/screens/report/widget/build_emotion_row_widget.dart';
 import 'package:sodam/screens/report/widget/doughnut_chart_widget.dart';
-import 'package:sodam/widgets/emo_analysis_widget.dart';
 import 'package:sodam/widgets/memory_score_chart.dart';
 
 class PastReport extends StatelessWidget {
-  final String name;
   final String condition;
-  final double memoryScore;
+  final double? memoryScore;
   final List<EmotionData> emotions; //top3 감정 리스트
 
   const PastReport(
       {super.key,
-      required this.name,
       required this.condition,
-      required this.memoryScore,
+      this.memoryScore,
       required this.emotions});
 
 //main emotion이 2개 이상일 경우 체크
@@ -103,7 +99,7 @@ class PastReport extends StatelessWidget {
                           child: DoughnutChartWidget(
                             emotions: emotions,
                             doughnutSize: 60,
-                            doughnutWidth: 40,
+                            doughnutWidth: 30,
                             offsetX: 100,
                             offsetY: 90,
                             colors: colors,
@@ -115,42 +111,52 @@ class PastReport extends StatelessWidget {
                     const SizedBox(height: 70),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            const TextSpan(
-                              text: '이어서 \n',
-                              style: TextStyle(
-                                color: Color(0xFF434857),
-                                fontSize: 20,
-                                fontFamily: 'IBMPlexSansKRRegular',
-                                fontWeight: FontWeight.w400,
-                                height: 0,
+                      child: emotions.length >= 2
+                          ? Text.rich(
+                              TextSpan(
+                                children: [
+                                  const TextSpan(
+                                    text: '이어서 \n',
+                                    style: TextStyle(
+                                      color: Color(0xFF434857),
+                                      fontSize: 20,
+                                      fontFamily: 'IBMPlexSansKRRegular',
+                                      fontWeight: FontWeight.w400,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: notMainEmo,
+                                    style: const TextStyle(
+                                      color: Color(0xFF434857),
+                                      fontSize: 20,
+                                      fontFamily: 'IBMPlexSansKRRegular',
+                                      fontWeight: FontWeight.w600,
+                                      height: 0,
+                                    ),
+                                  ),
+                                  const TextSpan(
+                                    text: '이 차지했어요.',
+                                    style: TextStyle(
+                                      color: Color(0xFF434857),
+                                      fontSize: 20,
+                                      fontFamily: 'IBMPlexSansKRRegular',
+                                      fontWeight: FontWeight.w400,
+                                      height: 0,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            TextSpan(
-                              text: notMainEmo,
+                            )
+                          : Text(
+                              '$mainEmo \n',
                               style: const TextStyle(
                                 color: Color(0xFF434857),
                                 fontSize: 20,
                                 fontFamily: 'IBMPlexSansKRRegular',
-                                fontWeight: FontWeight.w600,
-                                height: 0,
-                              ),
-                            ),
-                            const TextSpan(
-                              text: '이 차지했어요.',
-                              style: TextStyle(
-                                color: Color(0xFF434857),
-                                fontSize: 20,
-                                fontFamily: 'IBMPlexSansKRRegular',
                                 fontWeight: FontWeight.w400,
-                                height: 0,
                               ),
                             ),
-                          ],
-                        ),
-                      ),
                     )
                   ],
                 ),

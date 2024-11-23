@@ -8,7 +8,9 @@ import '../../widgets/self_diagnosis_result_widget.dart';
 
 class GuardianTotalscoreScreen extends StatelessWidget {
   final int score;
-  const GuardianTotalscoreScreen({super.key, required this.score});
+  final String name;
+  const GuardianTotalscoreScreen(
+      {super.key, required this.score, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,9 @@ class GuardianTotalscoreScreen extends StatelessWidget {
               const SizedBox(height: 10),
               SelfDiagnosisResultWidget(
                 score: score,
-                name: '홍길동',
+                //사용자의 이름이어야함
+                name: name,
+                isElderly: false,
               ),
               const SizedBox(
                 height: 20,
@@ -40,7 +44,7 @@ class GuardianTotalscoreScreen extends StatelessWidget {
                 btnColor: Pallete.mainGray,
                 emoji: '🔗',
                 screen: MainScreen(
-                  isGuardian: false,
+                  isGuardian: true,
                 ), //임시
               ),
               const SizedBox(
@@ -51,7 +55,7 @@ class GuardianTotalscoreScreen extends StatelessWidget {
                 btnColor: Pallete.mainGray,
                 emoji: '🏥',
                 screen: MainScreen(
-                  isGuardian: false,
+                  isGuardian: true,
                 ), //임시
               ),
               const SizedBox(
@@ -62,7 +66,7 @@ class GuardianTotalscoreScreen extends StatelessWidget {
                 btnColor: Pallete.mainGray,
                 emoji: '📊',
                 screen: MainScreen(
-                  isGuardian: false,
+                  isGuardian: true,
                 ), //임시
               ),
             ],

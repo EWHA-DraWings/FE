@@ -1,19 +1,45 @@
+import 'dart:async';
+import 'dart:convert';
+// 웹소켓을 위해 추가
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sodam/global.dart';
+import 'package:sodam/models/emotion_data.dart';
+import 'package:sodam/models/login_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/calendar/diary_calendar_screen.dart';
-import 'package:sodam/screens/chat/diary_chat_screen.dart';
-import 'package:sodam/screens/calendar/report_calendar_screen.dart';
+import 'package:sodam/screens/chat/diary_chat_screen2.dart';
+import 'package:sodam/screens/chat/memory_chat/memory_chat_screen.dart';
+import 'package:sodam/screens/chat/websocket_provider.dart';
+import 'package:sodam/screens/report/report_main_screen.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart';
 import 'package:sodam/widgets/logout_button_widget.dart';
 import 'package:sodam/widgets/main_page_button.dart';
+// 웹소켓 채널 추가
 
-class MainScreen extends StatelessWidget {
-  final bool isGuardian; // 사용자 타입을 결정하는 변수(사용자 : false, 보호자: true)
-  const MainScreen({super.key, required this.isGuardian});
+class MainScreen extends StatefulWidget {
+  final bool isGuardian;
+  const MainScreen({
+    super.key,
+    required this.isGuardian,
+  });
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  // 사용자 타입을 결정하는 변수(사용자 : false, 보호자: true)
 
   @override
   Widget build(BuildContext context) {
+    final loginDataProvider =
+        Provider.of<LoginDataProvider>(context, listen: false);
+    final token = loginDataProvider.loginData?.token; // 토큰 값 가져오기
+    final name = loginDataProvider.loginData?.name; //사용자 이름
+
+    print("Token at MainScreen: $token"); // MainScreen에서 토큰 출력
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -65,19 +91,20 @@ class MainScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MainPageButton(
-                      destination: const DiaryChatScreen(),
+                      //destination: const DiaryChatScreen2(),
+                      destination: const DiaryChatScreen2(),
                       text: "대화하기",
                       backColor: Pallete.mainBlue,
                       iconPath: "lib/assets/images/chat.png",
-                      isGuardian: isGuardian,
+                      isGuardian: widget.isGuardian,
                     ),
                     const SizedBox(width: 20),
                     MainPageButton(
                       destination: const DiaryCalendarScreen(),
                       text: "일기장",
-                      backColor: Pallete.sodamButtonDarkGreen,
+                      backColor: Pallete.sodamButtonGreen,
                       iconPath: "lib/assets/images/diary.png",
-                      isGuardian: isGuardian,
+                      isGuardian: widget.isGuardian,
                     ),
                   ],
                 ),
@@ -86,21 +113,21 @@ class MainScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MainPageButton(
-                      destination: const ReportCalendarScreen(),
+                      destination: ReportMainScreen(
+                        name: name ?? '사용자',
+                      ),
                       text: "리포트",
                       backColor: Pallete.sodamButtonPurple,
                       iconPath: "lib/assets/images/report.png",
-                      isGuardian: isGuardian,
+                      isGuardian: widget.isGuardian,
                     ),
                     const SizedBox(width: 20),
                     MainPageButton(
-                      destination: isGuardian
-                          ? const GuardianDiagnosisScreen()
-                          : const UserDiagnosisScreen(),
-                      text: "자가진단",
-                      backColor: Pallete.sodamButtonSkyBlue,
-                      iconPath: "lib/assets/images/self_diagnosis.png",
-                      isGuardian: isGuardian,
+                      destination: const MemoryChatScreen(),
+                      text: "기억 테스트",
+                      backColor: Pallete.sodamButtonPink,
+                      iconPath: "lib/assets/images/memory.png",
+                      isGuardian: widget.isGuardian,
                     ),
                   ],
                 ),
