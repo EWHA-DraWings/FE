@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/models/memory_score_data.dart';
 import 'package:sodam/models/self_diagnosis_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/memoryscore_detail_screen.dart';
-import 'package:sodam/screens/report/report_detail_screen.dart';
 import 'package:sodam/screens/report/self_diagnosis_detail_screen.dart';
 import 'package:sodam/screens/report/widget/doughnut_chart_widget.dart';
 import 'package:sodam/screens/report/widget/memory_chart_widget.dart';

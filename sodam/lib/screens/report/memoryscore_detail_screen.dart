@@ -1,13 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-import 'package:sodam/models/login_data.dart';
 import 'package:sodam/models/memory_score_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/widgets/title_widget.dart';
-import 'package:http/http.dart' as http; //http 가져오기
+//http 가져오기
 
 class MemoryscoreDetailScreen extends StatelessWidget {
   final List<MemoryScoreData> memoryScoreDatas;

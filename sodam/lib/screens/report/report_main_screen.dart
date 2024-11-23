@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sodam/global.dart';
 import 'package:sodam/models/emotion_data.dart';
@@ -11,9 +9,7 @@ import 'package:sodam/models/report_data.dart';
 import 'package:sodam/models/self_diagnosis_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/widget/past_report_tile.dart';
-import 'package:sodam/screens/report/widget/past_reports_list.dart';
 import 'package:sodam/screens/report/widget/todays_report_widget.dart';
-import 'package:sodam/screens/report/past_report.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 import 'package:http/http.dart' as http; //http 가져오기
 
