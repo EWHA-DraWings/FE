@@ -1,0 +1,31 @@
+<variant
+    name="release"
+    package="xyz.canardoux.fluttersound"
+    minSdkVersion="18"
+    targetSdkVersion="18"
+    mergedManifest="C:\GitHub\FE\sodam\android\build\flutter_sound\intermediates\merged_manifest\release\processReleaseManifest\AndroidManifest.xml"
+    manifestMergeReport="C:\GitHub\FE\sodam\android\build\flutter_sound\outputs\logs\manifest-merger-release-report.txt"
+    proguardFiles="C:\GitHub\FE\sodam\android\build\flutter_sound\intermediates\default_proguard_files\global\proguard-android.txt-8.7.0"
+    partialResultsDir="C:\GitHub\FE\sodam\android\build\flutter_sound\intermediates\lint_partial_results\release\lintAnalyzeRelease\out">
+  <buildFeatures
+      namespacing="REQUIRED"/>
+  <sourceProviders>
+    <sourceProvider
+        manifests="src\main\AndroidManifest.xml"
+        javaDirectories="src\main\java;src\release\java;src\main\kotlin;src\release\kotlin"
+        resDirectories="src\main\res;src\release\res"
+        assetsDirectories="src\main\assets;src\release\assets"/>
+  </sourceProviders>
+  <testSourceProviders>
+  </testSourceProviders>
+  <testFixturesSourceProviders>
+  </testFixturesSourceProviders>
+  <artifact
+      classOutputs="C:\GitHub\FE\sodam\android\build\flutter_sound\intermediates\javac\release\compileReleaseJavaWithJavac\classes;C:\GitHub\FE\sodam\android\build\flutter_sound\intermediates\compile_r_class_jar\release\generateReleaseRFile\R.jar"
+      type="MAIN"
+      applicationId="xyz.canardoux.fluttersound"
+      generatedSourceFolders="C:\GitHub\FE\sodam\android\build\flutter_sound\generated\ap_generated_sources\release\out"
+      generatedResourceFolders="C:\GitHub\FE\sodam\android\build\flutter_sound\generated\res\resValues\release"
+      desugaredMethodsFiles="C:\Users\user\.gradle\caches\8.9\transforms\2c6d0c2205413f67ef209c8650214cdc\transformed\D8BackportedDesugaredMethods.txt">
+  </artifact>
+</variant>
