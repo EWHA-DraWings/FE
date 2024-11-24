@@ -12,7 +12,8 @@ import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/widget/past_report_tile.dart';
 import 'package:sodam/screens/report/widget/todays_report_widget.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
-import 'package:http/http.dart' as http; //http 가져오기
+import 'package:http/http.dart' as http;
+import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart'; //http 가져오기
 
 class ReportMainScreen extends StatefulWidget {
   final String name;
@@ -362,7 +363,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const GuardianDiagnosisScreen()),
+                                        const UserDiagnosisScreen()),
                               );
                             },
                             style: ElevatedButton.styleFrom(
