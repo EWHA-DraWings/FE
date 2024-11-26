@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:sodam/models/emotion_data.dart';
 import 'package:sodam/models/memory_score_data.dart';
 import 'package:sodam/models/self_diagnosis_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/memoryscore_detail_screen.dart';
-import 'package:sodam/screens/report/report_detail_screen.dart';
 import 'package:sodam/screens/report/self_diagnosis_detail_screen.dart';
 import 'package:sodam/screens/report/widget/doughnut_chart_widget.dart';
 import 'package:sodam/screens/report/widget/memory_chart_widget.dart';
@@ -27,6 +25,10 @@ class TodaysReportWidget extends StatelessWidget {
 
 //main emotion이 2개 이상일 경우 체크
   String mainEmoToString() {
+    if (emotions.length == 1 && emotions[0].emotion == "결과 없음") {
+      String mainEmo = '결과 없음';
+      return mainEmo;
+    }
     String mainEmo =
         '${emotions[0].emotion} ${emotions[0].percentage.toStringAsFixed(1)}%';
     emotions[0].isMainEmo = true;
@@ -118,25 +120,28 @@ class TodaysReportWidget extends StatelessWidget {
                           fontFamily: "IBMPlexSansKRBold",
                           color: titleColor),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 14),
                     Text(
                       mainEmo,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 20,
-                        fontFamily: "IBMPlexSansKRBold",
+                        fontFamily: mainEmo == "결과 없음"
+                            ? "IBMPlexSansKRRegular"
+                            : "IBMPlexSansKRBold",
                         color: textColor,
                         height: 1.5,
                       ),
                     ),
-                    Text(
-                      "이어서 $notMainEmo이 차지했어요.",
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontFamily: "IBMPlexSansKRRegular",
-                        color: textColor,
-                        height: 1.5,
+                    if (emotions[0].emotion != "결과 없음")
+                      Text(
+                        "이어서 $notMainEmo이 차지했어요.",
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontFamily: "IBMPlexSansKRRegular",
+                          color: textColor,
+                          height: 1.5,
+                        ),
                       ),
-                    ),
                     DoughnutChartWidget(
                       emotions: emotions,
                       doughnutSize: 37,

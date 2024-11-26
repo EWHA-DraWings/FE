@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sodam/models/self_diagnosis_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/widgets/title_widget.dart';

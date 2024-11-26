@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -11,9 +10,7 @@ import 'package:sodam/models/report_data.dart';
 import 'package:sodam/models/self_diagnosis_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/widget/past_report_tile.dart';
-import 'package:sodam/screens/report/widget/past_reports_list.dart';
 import 'package:sodam/screens/report/widget/todays_report_widget.dart';
-import 'package:sodam/screens/report/past_report.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
 import 'package:http/http.dart' as http; //http 가져오기
 
@@ -54,8 +51,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     ///api/reports/:date (2024-09-30 형식)
     //오늘 날짜 형태 바꾸기
     DateTime now = DateTime.now();
-    String today = '2024-11-19'; //임시 날짜(테스트용)
-    //String today = DateFormat('yyyy-MM-dd').format(now);
+    String today = DateFormat('yyyy-MM-dd').format(now);
 
     final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports/$today');
     final response = await http.post(
@@ -209,6 +205,8 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
       emotions.add(EmotionData(emotion: "결과 없음", percentage: 100));
       print('emotions is null or empty');
     }
+    // percentage를 기준으로 내림차순 정렬
+    emotions.sort((a, b) => b.percentage.compareTo(a.percentage));
     print('emotions: $emotions');
 
     //날짜 내림차순
