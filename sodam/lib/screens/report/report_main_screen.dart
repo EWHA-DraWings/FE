@@ -284,7 +284,6 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                                   fontSize: 30,
                                   fontFamily: "IBMPlexSansKRBold",
                                   color: Color.fromARGB(255, 65, 64, 64),
-
                                 ),
                               ),
                             ],

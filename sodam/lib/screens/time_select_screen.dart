@@ -1,12 +1,13 @@
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:sodam/global.dart';
 import 'package:sodam/models/login_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:http/http.dart' as http;
-import 'package:sodam/screens/login_screen.dart';
 import 'package:sodam/screens/main_screen.dart';
 
 class TimeSelectScreen extends StatefulWidget {
@@ -25,7 +26,25 @@ class _TimeSelectScreenState extends State<TimeSelectScreen> {
     });
   }
 
+  Future<void> requestNotificationPermission() async {
+    PermissionStatus status = await Permission.notification.status;
+    if (!status.isGranted) {
+      //알림 권한 허용
+      await Permission.notification.request();
+    }
+  }
+
+  //알림 설정이랑 기기 토큰 전송
   Future<void> sendTimeToBackend(Time time) async {
+    //알림 권한 확인
+    requestNotificationPermission();
+
+    //기기 토큰
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    String? deviceToken = await messaging.getToken();
+    print("FCM 토큰: $deviceToken");
+
     //token 가져오기
     final loginDataProvider =
         Provider.of<LoginDataProvider>(context, listen: false);
@@ -36,6 +55,7 @@ class _TimeSelectScreenState extends State<TimeSelectScreen> {
     final body = jsonEncode({
       "hour": time.hour,
       "minute": time.minute,
+      "deviceTokens": deviceToken,
     });
     print("encoded!!!!!!! $body");
 
