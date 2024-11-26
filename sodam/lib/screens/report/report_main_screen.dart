@@ -52,8 +52,8 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
     ///api/reports/:date (2024-09-30 형식)
     //오늘 날짜 형태 바꾸기
     DateTime now = DateTime.now();
-    String today = '2024-11-24';
-    //String today = DateFormat('yyyy-MM-dd').format(now);
+    //String today = '2024-11-24';
+    String today = DateFormat('yyyy-MM-dd').format(now);
     print(today);
 
     final url = Uri.parse('http://${Global.ipAddr}:3000/api/reports/$today');
