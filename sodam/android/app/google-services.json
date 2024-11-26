@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "394915139454",
+    "project_id": "sodam-2c951",
+    "storage_bucket": "sodam-2c951.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394915139454:android:24b1b362c41f295bbe6d2f",
+        "android_client_info": {
+          "package_name": "com.example.sodam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgibeVVw1oV_CFMS7f0-H0gK__KHpi6Dg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

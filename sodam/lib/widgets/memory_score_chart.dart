@@ -42,10 +42,10 @@ class MemoryScoreChart extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: percentile != 0 ? '$score' : '기록 없음',
-                        style: const TextStyle(
+                        text: percentile != 0 ? '$score' : '기록\n없음',
+                        style: TextStyle(
                           color: Colors.cyan,
-                          fontSize: 30,
+                          fontSize: percentile != 0 ? 30 : 25,
                           fontFamily: 'IBMPlexSansKRRegular',
                           fontWeight: FontWeight.bold,
                         ),
