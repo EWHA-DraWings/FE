@@ -8,7 +8,6 @@ import 'package:sodam/global.dart';
 import 'package:sodam/models/login_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:http/http.dart' as http;
-import 'package:sodam/screens/login_screen.dart';
 import 'package:sodam/screens/main_screen.dart';
 
 class TimeSelectScreen extends StatefulWidget {
@@ -56,7 +55,7 @@ class _TimeSelectScreenState extends State<TimeSelectScreen> {
     final body = jsonEncode({
       "hour": time.hour,
       "minute": time.minute,
-      //"deviceTokens": deviceToken,
+      "deviceTokens": deviceToken,
     });
     print("encoded!!!!!!! $body");
 
