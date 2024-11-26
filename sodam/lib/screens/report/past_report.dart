@@ -57,7 +57,7 @@ class PastReport extends StatelessWidget {
 
     return Container(
       decoration: const BoxDecoration(
-        color: Pallete.sodamReportPurple,
+        color: Color.fromARGB(255, 135, 188, 180),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(
