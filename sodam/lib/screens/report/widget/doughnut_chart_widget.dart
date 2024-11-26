@@ -96,6 +96,7 @@ class _DoughnutChartWidgetState extends State<DoughnutChartWidget>
                 } else {
                   // "기타" 항목이 추가된 경우 기본 색상 지정
                   color = Colors.grey;
+                }
 
                 return Column(
                   children: [
@@ -135,9 +136,7 @@ class _DoughnutChart extends CustomPainter {
 
     paint.strokeWidth = strokeWidth;
     paint.style = PaintingStyle.stroke; //stroke : 원의 테두리만 그림
-
     paint.strokeCap = StrokeCap.butt; //원의 끝모양을 둥글게
-
     double startPoint = 0.0;
     for (int i = 0; i < data.length; i++) {
       //원을 그리는 코드
