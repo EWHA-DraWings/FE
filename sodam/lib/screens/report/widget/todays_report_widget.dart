@@ -139,6 +139,7 @@ class TodaysReportWidget extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 13,
                         fontFamily: "IBMPlexSansKRRegular",
+
                         color: textColor,
                         height: 1.5,
                       ),
