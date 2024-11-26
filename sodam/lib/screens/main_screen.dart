@@ -36,16 +36,17 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Pallete.mainBlue, // 시작 색상 (블루)
-              Pallete.mainWhite,
-              Pallete.mainWhite // 끝 색상 (화이트)
-            ],
-          ),
-        ),
+            // gradient: LinearGradient(
+            //   begin: Alignment.topCenter,
+            //   end: Alignment.bottomCenter,
+            //   colors: [
+            //     Pallete.mainBlue, // 시작 색상 (블루)
+            //     Pallete.mainWhite,
+            //     Pallete.mainWhite // 끝 색상 (화이트)
+            //   ],
+            // ),
+            ),
+
         child: Column(
           children: [
             // 상단 텍스트 영역
@@ -58,7 +59,7 @@ class _MainScreenState extends State<MainScreen> {
                   "소담",
                   style: TextStyle(
                     fontSize: 90,
-                    color: Pallete.mainWhite,
+                    color: Color.fromARGB(255, 168, 186, 181),
                     fontFamily: "Gugi",
                     height: 1,
                   ),
@@ -66,8 +67,8 @@ class _MainScreenState extends State<MainScreen> {
                 const Text(
                   "나만의 작은 이야기",
                   style: TextStyle(
-                    fontSize: 20,
-                    color: Color.fromARGB(255, 29, 46, 105),
+                    fontSize: 21,
+                    color: Color.fromARGB(255, 130, 130, 130),
                     fontFamily: "Gugi",
                   ),
                 ),

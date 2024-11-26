@@ -46,6 +46,7 @@ class _DoughnutChartWidgetState extends State<DoughnutChartWidget>
   @override
   void initState() {
     super.initState();
+    fullEmotions(widget.emotions);
     animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
@@ -61,7 +62,6 @@ class _DoughnutChartWidgetState extends State<DoughnutChartWidget>
 
   @override
   Widget build(BuildContext context) {
-    
     return AnimatedBuilder(
       animation: animationController,
       builder: (context, child) {
@@ -90,19 +90,12 @@ class _DoughnutChartWidgetState extends State<DoughnutChartWidget>
               children: List.generate(widget.emotions.length, (index) {
                 Color color;
 
-                switch (index) {
-                  case 0:
-                    color = widget.colors[0];
-                    break;
-                  case 1:
-                    color = widget.colors[1];
-                    break;
-                  case 2:
-                    color = widget.colors[2];
-                    break;
-                  default:
-                    color = Colors.grey;
-                }
+                // 색상 추가 로직
+                if (index < widget.colors.length) {
+                  color = widget.colors[index];
+                } else {
+                  // "기타" 항목이 추가된 경우 기본 색상 지정
+                  color = Colors.grey;
 
                 return Column(
                   children: [
@@ -142,14 +135,24 @@ class _DoughnutChart extends CustomPainter {
 
     paint.strokeWidth = strokeWidth;
     paint.style = PaintingStyle.stroke; //stroke : 원의 테두리만 그림
-    paint.strokeCap = StrokeCap.round; //원의 끝모양을 둥글게
+
+    paint.strokeCap = StrokeCap.butt; //원의 끝모양을 둥글게
+
     double startPoint = 0.0;
     for (int i = 0; i < data.length; i++) {
       //원을 그리는 코드
       double count = data[i].percentage;
       count = (count * value + count) - data[i].percentage;
       double nextAngle = 2 * math.pi * (count / 100);
-      paint.color = colors[i];
+      //paint.color = colors[i];
+      //색상 적용
+      if (i < colors.length) {
+        paint.color = colors[i];
+      } else {
+        // 기타 감정의 색상 처리
+        paint.color = Colors.grey;
+      }
+
       canvas.drawArc(
         Rect.fromCircle(center: offset, radius: radius),
         -math.pi / 2 + startPoint,

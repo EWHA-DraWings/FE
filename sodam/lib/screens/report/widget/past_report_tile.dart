@@ -35,7 +35,7 @@ class PastReportTile extends StatelessWidget {
         date.substring(0, 10),
         style: const TextStyle(fontFamily: 'IBMPlexSansKRRegular'),
       ),
-      collapsedBackgroundColor: Pallete.sodamReportPurple,
+      collapsedBackgroundColor: const Color.fromARGB(255, 178, 219, 207),
       backgroundColor: Pallete.sodamReportPurple,
       children: <Widget>[
         SizedBox(

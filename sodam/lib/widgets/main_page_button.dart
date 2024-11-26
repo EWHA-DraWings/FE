@@ -134,7 +134,7 @@ class _MainPageButtonState extends State<MainPageButton>
           style: TextStyle(
             color: isDisabled
                 ? const Color.fromARGB(255, 162, 164, 186)
-                : Pallete.mainBlack, // 비활성화 시 텍스트 색상 변경
+                : const Color.fromARGB(255, 93, 93, 96), // 비활성화 시 텍스트 색상 변경
             fontSize: 20,
             fontFamily: "IBMPlexSansKRBold",
           ),

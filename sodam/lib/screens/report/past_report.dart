@@ -62,6 +62,7 @@ class PastReport extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 10,
+          vertical: 20,
         ),
         child: Column(
           children: [
@@ -193,16 +194,18 @@ class PastReport extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text(
-                      condition,
-                      style: const TextStyle(
-                        color: Color(0xFF434958),
-                        fontSize: 20,
-                        fontFamily: 'IBMPlexSansKRRegular',
-                        fontWeight: FontWeight.w500,
-                        height: 0,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: Text(
+                        condition,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontFamily: "IBMPlexSansKRRegular",
+                          color: Colors.black,
+                          height: 1.5,
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
