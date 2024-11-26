@@ -9,6 +9,7 @@ import 'package:sodam/models/login_data.dart';
 import 'package:sodam/pallete.dart';
 import 'package:http/http.dart' as http;
 import 'package:sodam/screens/login_screen.dart';
+import 'package:sodam/screens/main_screen.dart';
 
 class TimeSelectScreen extends StatefulWidget {
   const TimeSelectScreen({super.key});
@@ -51,16 +52,16 @@ class _TimeSelectScreenState extends State<TimeSelectScreen> {
     final token = loginDataProvider.loginData?.token;
     print("token $token");
     final url = Uri.parse(
-        'http://${Global.ipAddr}:3000/api/alarms/send-push-notice'); // 백엔드 URL
-    final body = json.encode({
-      'hour': time.hour,
-      'minute': time.minute,
-      //'deviceTokens': deviceToken,
+        'http://${Global.ipAddr}:3000/api/alarms/update-time'); // 백엔드 URL
+    final body = jsonEncode({
+      "hour": time.hour,
+      "minute": time.minute,
+      //"deviceTokens": deviceToken,
     });
     print("encoded!!!!!!! $body");
 
     try {
-      final response = await http.post(
+      final response = await http.put(
         url,
         headers: {
           'Content-Type': 'application/json',
@@ -74,7 +75,8 @@ class _TimeSelectScreenState extends State<TimeSelectScreen> {
         print('Time successfully sent to backend');
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-              builder: (context) => const LoginScreen()), //로그인 화면으로 이동
+              builder: (context) =>
+                  const MainScreen(isGuardian: false)), //로그인 화면으로 이동
         );
       } else {
         // 오류 발생
