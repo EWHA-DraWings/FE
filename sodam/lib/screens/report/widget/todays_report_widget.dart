@@ -132,7 +132,7 @@ class TodaysReportWidget extends StatelessWidget {
                         height: 1.5,
                       ),
                     ),
-                    if (emotions[0].emotion != "결과 없음")
+                    if (emotions[0].emotion != "결과 없음" && emotions.length != 1)
                       Text(
                         "이어서 $notMainEmo이 차지했어요.",
                         style: const TextStyle(
