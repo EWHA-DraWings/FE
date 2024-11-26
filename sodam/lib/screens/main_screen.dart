@@ -46,6 +46,7 @@ class _MainScreenState extends State<MainScreen> {
             //   ],
             // ),
             ),
+
         child: Column(
           children: [
             // 상단 텍스트 영역

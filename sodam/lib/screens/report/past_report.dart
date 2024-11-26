@@ -168,7 +168,7 @@ class PastReport extends StatelessWidget {
             ),
             Container(
               width: screenWidth * 0.9,
-              //height: 180,
+              height: 180,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
