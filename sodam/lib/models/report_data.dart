@@ -16,7 +16,7 @@ class ReportData {
   //과거 리포트 가져올 때
   factory ReportData.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> emotionMap = json['emotions'];
-    double correctRatio = json['correctRatio'] ?? 0;
+    double correctRatio = (json['correctRatio'] ?? 0).toDouble(); //원래 이거였음
 
     // EmotionData 리스트 생성
     List<EmotionData> emotionsList = emotionMap.entries

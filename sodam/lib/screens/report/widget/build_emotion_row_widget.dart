@@ -24,7 +24,7 @@ class BuildEmotionRow extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         Text(
-          emotion,
+          emotion == "결과 없음" ? "결과\n없음" : emotion,
           style: const TextStyle(
             color: Colors.black,
             fontFamily: "IBMPlexSansKRRegular",
