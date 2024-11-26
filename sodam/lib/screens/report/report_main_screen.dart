@@ -12,7 +12,8 @@ import 'package:sodam/pallete.dart';
 import 'package:sodam/screens/report/widget/past_report_tile.dart';
 import 'package:sodam/screens/report/widget/todays_report_widget.dart';
 import 'package:sodam/screens/self_diagnosis/guardian_diagnosis_screen.dart';
-import 'package:http/http.dart' as http; //http 가져오기
+import 'package:http/http.dart' as http;
+import 'package:sodam/screens/self_diagnosis/user_diagnosis_screen.dart'; //http 가져오기
 
 class ReportMainScreen extends StatefulWidget {
   final String name;
@@ -257,20 +258,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                       flexibleSpace: Container(
                         height: 250,
                         width: screenWidth,
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Pallete.mainBlue,
-                              Color.fromARGB(255, 186, 185, 195),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(40.0),
-                            bottomRight: Radius.circular(40.0),
-                          ),
-                        ),
+                        decoration: const BoxDecoration(color: Colors.white),
                         child: Padding(
                           padding: EdgeInsets.only(
                             top: 80,
@@ -286,7 +274,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontFamily: "IBMPlexSansKRBold",
-                                    color: Colors.white,
+                                    color: Color.fromARGB(255, 65, 64, 64),
                                   ),
                                 ),
                               ),
@@ -295,7 +283,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                                 style: const TextStyle(
                                   fontSize: 30,
                                   fontFamily: "IBMPlexSansKRBold",
-                                  color: Colors.white,
+                                  color: Color.fromARGB(255, 65, 64, 64),
                                 ),
                               ),
                             ],
@@ -333,7 +321,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                     height: greenContainerHeight,
                     width: screenWidth * 0.6,
                     decoration: BoxDecoration(
-                      color: Pallete.sodamReportGreen,
+                      color: const Color.fromARGB(255, 220, 232, 255),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Column(
@@ -342,7 +330,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                         Text(
                           daysPast > 0
                               ? '마지막으로 자가진단을 하신지\n$daysPast일이 지났어요!'
-                              : '',
+                              : '아래의 버튼을 클릭해 자가진단을 해볼 수 있어요!',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.black,
@@ -361,11 +349,12 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const GuardianDiagnosisScreen()),
+                                        const UserDiagnosisScreen()),
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
+                              backgroundColor:
+                                  const Color.fromARGB(255, 69, 69, 69),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
@@ -415,7 +404,7 @@ class _ReportMainScreenState extends State<ReportMainScreen> {
                             children: [
                               const Padding(
                                 padding: EdgeInsets.symmetric(
-                                    vertical: 13, horizontal: 22),
+                                    vertical: 8, horizontal: 22),
                                 child: Text(
                                   "오늘의 리포트",
                                   style: TextStyle(fontWeight: FontWeight.w500),
