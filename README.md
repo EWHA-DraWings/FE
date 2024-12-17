@@ -38,10 +38,10 @@
 
 <br><br>
 
-### 💻FE 사용 기술 및 프레임워크
+## 💻FE 사용 기술 및 프레임워크
 - Flutter: https://flutter.dev/
   
-### </>Source 코드 설명
+## </>Source 코드 설명
 - **lib**
   - **assets**: 앱에서 사용하는 리소스 파일을 포함하는 폴더
     - `fonts`: 폰트 파일을 저장하는 폴더
@@ -59,7 +59,7 @@
   - **global.dart**: 전역 변수를 정의하는 파일
   - **main.dart**: 앱의 시작점을 정의하며 초기화 및 라우팅을 담당하는 파일
 
-### 🛠️How to build
+## 🛠️How to build
 #### 1. git clone
 작업 폴더를 열고 터미널에
 ```git clone https://github.com/EWHA-DraWings/FE```
@@ -81,11 +81,11 @@ ex) 서버의 public IP 주소가 192.168.1.1이라면,<br>
 터미널에서 아래 명령어를 입력하여 빌드합니다.
 ```flutter build apk --release --target-platform=android-arm64```
 
-### ⬇️How to install
+## ⬇️How to install
 1. (경로 수정!) `FE/sodam/build/app/outputs/apk/release`에서 빌드된 앱 app-release.apk를 확인할 수 있습니다.
 2. apk 파일을 안드로이드 디바이스로 전송하여 설치합니다.
 
-### 📲How to test
+## 📲How to test
 앱을 실행하면 나타나는 로그인 화면에 아래의 테스트 계정을 입력하여 앱을 테스트할 수 있습니다.
 #### 테스트 계정
 ```
@@ -93,7 +93,7 @@ ID: jonggang
 Password: 20240929
 ```
 
-### 🌐Used Open Source
+## 🌐Used Open Source
 - **audio_wave**: 오디오 파형을 시각적으로 표시하는 기능 제공
 - **audioplayers**: 오디오 파일을 재생하고 제어하는 기능 설정
 - **web_socket_channel**: WebSocket을 통해 실시간 통신을 설정
