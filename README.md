@@ -1,4 +1,4 @@
-# 캡스톤디자인 그로쓰 05팀 그린나래 FE 레포
+# 캡스톤디자인 그로쓰 05팀 그린나래 FE Repository
 
 ### 😄Members
 - 프로젝트 기간: 24.03~24.12
@@ -58,14 +58,17 @@
   - **widgets**: UI 위젯 및 재사용 가능한 컴포넌트를 포함하는 폴더
   - **global.dart**: 전역 변수를 정의하는 파일
   - **main.dart**: 앱의 시작점을 정의하며 초기화 및 라우팅을 담당하는 파일
+<br><br><br><br>
 
 ## 🛠️How to build
 #### 1. git clone
 작업 폴더를 열고 터미널에
 ```git clone https://github.com/EWHA-DraWings/FE```
 를 입력하여 소담의 프론트엔드 레포지토리를 클론합니다.
- 
+<br><br>
+
 #### 2. 서버 IP 주소 확인
+**교수님이 테스트 서버를 진행할 때에는 2번을 진행하지 않고 3번으로 넘어가셔도 됩니다.**<br>
 앱이 정상적으로 작동하려면 소담 백엔드 코드가 실행되어야 합니다.<br>
 백엔드 서버를 실행하려면 소담 백엔드 레포의 리드미를(https://github.com/EWHA-DraWings/BE)를 참고해주세요.
 
@@ -73,17 +76,24 @@
 `sodam\lib\global.dart`의 ipAddr 변수에 해당 서버의 public IP 주소를 넣어줍니다.
 ex) 서버의 public IP 주소가 192.168.1.1이라면,<br>
 ```static const ipAddr = '192.168.1.1';```
-
+<br><br>
 #### 3. flutter 종속성 설치
+터미널을 키고 현재위치가 FE 폴더에 있다면,`cd sodam`을 입력하여 sodam으로 이동합니다.<br>
 터미널에 `flutter pub get`을 입력하여 종속성을 설치합니다.
-
+<br><br>
 #### 4. apk 파일 빌드하기
-터미널에서 아래 명령어를 입력하여 빌드합니다.
-```flutter build apk --release --target-platform=android-arm64```
+그 다음 터미널에서 아래 명령어를 입력하여 빌드합니다.<br>
+```flutter build apk --release --target-platform=android-arm64```<br><br>
+아래와 같은 결과가 터미널에 나타나면 빌드는 성공입니다.<br>
+![image](https://github.com/user-attachments/assets/4a0073ae-c3f0-4185-8b02-781a0dad5627)
 
+<br><br><br><br>
 ## ⬇️How to install
-1. (경로 수정!) `FE/sodam/build/app/outputs/apk/release`에서 빌드된 앱 app-release.apk를 확인할 수 있습니다.
-2. apk 파일을 안드로이드 디바이스로 전송하여 설치합니다.
+1. apk 파일은 다음과 같은 경로에서 확인할 수 있습니다 : `FE/sodam/build/app/outputs/flutter-apk/app-release.apk`
+2.`app-release.apk` 파일을 찾았다면, 해당 파일을 마우스로 우클릭하여 '파일 탐색기로 표시'를 클릭한 후 해당 파일을 안드로이드 디바이스로 전송하여 다운로드합니다.
+3. 다운로드가 완료되면 앱을 사용해볼 수 있습니다.
+<br><br><br><br><br>
+
 
 ## 📲How to test
 앱을 실행하면 나타나는 로그인 화면에 아래의 테스트 계정을 입력하여 앱을 테스트할 수 있습니다.
@@ -92,7 +102,7 @@ ex) 서버의 public IP 주소가 192.168.1.1이라면,<br>
 ID: jonggang
 Password: 20240929
 ```
-
+<br><br><br>
 ## 🌐Used Open Source
 - **audio_wave**: 오디오 파형을 시각적으로 표시하는 기능 제공
 - **audioplayers**: 오디오 파일을 재생하고 제어하는 기능 설정
